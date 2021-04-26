@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">PI_Android_inventaire</string>
+
+    <!-- String utilisé dans Main Activity -->
+    <string name="btn_produit">Produit</string>
+    <string name="btn_reservation">Réservation</string>
+    <string name="btn_compte">Compte</string>
+
+    <!-- String utilisé dans FaireReservation Activity -->
+    <string name="FaireReservation_nomEtudiant">PI_Android_inventaire</string>
 </resources>
