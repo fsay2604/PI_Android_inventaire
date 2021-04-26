@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intentReservation = new Intent(this,FaireReservation.class);
+                Intent intentReservation = new Intent(this, Reservation_index.class);
                 startActivity(intentReservation);
                 break;
             case R.id.btn_compte:
