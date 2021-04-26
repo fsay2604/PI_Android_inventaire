@@ -92,11 +92,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_produit:
                 // redirection a la page liste produit
+                Intent intentListeProduits = new Intent(this,liste_Produits.class);
+                startActivity(intentListeProduits);
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intent = new Intent(this,FaireReservation.class);
-                startActivity(intent);
+                Intent intentReservation = new Intent(this,FaireReservation.class);
+                startActivity(intentReservation);
                 break;
             case R.id.btn_compte:
                 // redirection vers la page de compte
