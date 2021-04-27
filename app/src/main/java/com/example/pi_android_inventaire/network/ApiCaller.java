@@ -44,7 +44,7 @@ class Factory<T> {
  * TODO: Verify if it is possible to avoid on type conversion by directly returning a JsonElement directly from the callApi() method using this function -> gson.toJsonTree()
  */
 
-public class ApiCaller<T> implements Callable<T> {
+public class ApiCaller {
 
     public static final int DEFAULT_BUFFER_SIZE = 8192;
     private static ExecutorService executor;
@@ -60,12 +60,7 @@ public class ApiCaller<T> implements Callable<T> {
         this.gson = new Gson();
     }
 
-    @Override
-    public T call() throws Exception {
-        return null;
-    }
-
-    public ArrayList<T> getList(Class<T> requestedObject, String urlString) {
+    public <T> ArrayList<T> getList(Class<T> requestedObject, String urlString) {
         // Starting the API Request on another thread.
         Future<Result<List<T>>> future = executor.submit(() -> {
             Result<List<T>> response;
@@ -98,7 +93,7 @@ public class ApiCaller<T> implements Callable<T> {
         return (ArrayList<T>) value;
     }
 
-    public T getSingleOrDefault(Class<T> requestedObject, String urlString){
+    public <T> T getSingleOrDefault(Class<T> requestedObject, String urlString){
         // Starting the API Request on another thread.
         Future<Result<T>> future = executor.submit(() -> {
             Result<T> response;
@@ -131,7 +126,7 @@ public class ApiCaller<T> implements Callable<T> {
         return (value);
     }
 
-    private JsonObject callApi(Class<T> requestedObject, String urlString) {
+    private <T> JsonObject callApi(Class<T> requestedObject, String urlString) {
 
         try {
             // The fetched response
@@ -166,7 +161,7 @@ public class ApiCaller<T> implements Callable<T> {
         return null;
     }
 
-    private Result<List<T>> parseJsonList(Class<T> requestedObject, String urlString) {
+    private <T> Result<List<T>> parseJsonList(Class<T> requestedObject, String urlString) {
         // Getting our Json Object from the API
         JsonObject responseJsonObject = callApi(requestedObject, urlString);
 
@@ -180,7 +175,7 @@ public class ApiCaller<T> implements Callable<T> {
         return new Result.Success<>(list);
     }
 
-    private Result<T> parseJsonObject(Class<T> requestedObject, String urlString){
+    private <T> Result<T> parseJsonObject(Class<T> requestedObject, String urlString){
         // Getting our Json Object from the API
         JsonObject responseJsonObject = callApi(requestedObject, urlString);
 
@@ -191,7 +186,7 @@ public class ApiCaller<T> implements Callable<T> {
         return new Result.Success<>(object);
     }
 
-    private List<T> fromJsonList(String json, Class<T> klass) {
+    private <T> List<T> fromJsonList(String json, Class<T> klass) {
         Gson gson = new Gson();
         return gson.fromJson(json, new ListOfSomething<T>(klass));
     }
