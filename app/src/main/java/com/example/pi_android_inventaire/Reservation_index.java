@@ -28,6 +28,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+
+/**
+ * SERA DESUET, LA PAGE FAIRERESERVATION DOIT ETRE APPELER AVEC LE BOuTON SuR LA PAGE "DETAIL PRODUIT"
+ * Donc, le bouton du menu principale "Reservatin" amenera sur la page Voir les reservation. Chaque element sera clicakble pour amener vers la page Modifier Reservation (avec un bouton supprimer si l'etat est encore en attnte).
+ */
 public class Reservation_index extends AppCompatActivity   implements View.OnClickListener{
 
     // Boutons
@@ -45,9 +50,10 @@ public class Reservation_index extends AppCompatActivity   implements View.OnCli
     }
 
     /**
-     * Fonction qui initialise les bouttons du menu afin de rediriger vers les bonnes pages
+     * Fonction qui initialise les boutons du menu afin de rediriger vers les bonnes pages
      */
-    private void setupBtn() {
+    private void setupBtn()
+    {
         // Recuperation des boutons
         btn_faireReservation = (Button) findViewById(R.id.btn_faireReservation);
         btn_faireReservation.setText(R.string.btn_faireReservation);
@@ -57,20 +63,21 @@ public class Reservation_index extends AppCompatActivity   implements View.OnCli
         btn_voirReservation.setText(R.string.btn_voirReservation);
         btn_voirReservation.setOnClickListener(this);
     }
-        @Override
-    public void onClick(View v) {
-            // Switch case en fonction du bouton appuyer
-            switch (v.getId()) {
-                case R.id.btn_faireReservation:
-                    // redirection a la page liste produit
-                    Intent intentListeProduits = new Intent(this,FaireReservation.class);
-                    startActivity(intentListeProduits);
-                    break;
-                case R.id.btn_voirReservation:
-                    // redirection vers la page pour faire une reservation
-                    //Intent intentReservation = new Intent(this,.class);
-                    //startActivity(intentReservation);
-                    break;
-            }
+    @Override
+    public void onClick(View v)
+    {
+        // Switch case en fonction du bouton appuyer
+        switch (v.getId()) {
+            case R.id.btn_faireReservation:
+                // redirection a la page liste produit
+                Intent intentListeProduits = new Intent(this,FaireReservation.class);
+                startActivity(intentListeProduits);
+                break;
+            case R.id.btn_voirReservation:
+                // redirection vers la page pour faire une reservation
+                Intent intentReservation = new Intent(this, VoirReservations.class);
+                startActivity(intentReservation);
+                break;
+        }
     }
-}
+} // class ends here
