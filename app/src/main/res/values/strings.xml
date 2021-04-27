@@ -7,6 +7,7 @@
     <string name="btn_compte">Compte</string>
 
     <!-- String utilisé pour les Reservation Activity -->
+    <string name="FaireReservation_nomEtudiant">Nom Etudiant</string>
     <string name="btn_faireReservation">Faire une nouvelle réservation</string>
     <string name="btn_voirReservation">Voir les réservations existantes</string>
 
@@ -35,5 +36,14 @@
     <string name="row_reservations_etat">En Attente</string>
     <string name="btn_modifier">Modifier</string>
     <string name="btn_annuler">Annuler</string>
+    <!-- String utilisé pour liste_Produits et infos produit Activity -->
+    <string name="liste_Produits_nom">Nom: </string>
+    <string name="liste_Produits_categorie">Catégorie: </string>
+    <string name="liste_Produits_qteRestante">Quantité restante: </string>
+
+    <!-- String utilisé pour infos_produit Activity -->
+    <string name="btn_Reserver">Réserver</string>
+    <string name="info_produit_description">Description</string>
+
 
 </resources>

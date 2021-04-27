@@ -19,7 +19,7 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,6 +43,9 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
     // Boutons
     private Button btn_reserver;
     private Button btn_annuler;
+import com.example.pi_android_inventaire.R;
+
+public class FaireReservation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

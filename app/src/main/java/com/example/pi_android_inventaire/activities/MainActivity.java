@@ -17,15 +17,28 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.pi_android_inventaire.PIAndroidInventaire;
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.Liste_produits;
+import com.example.pi_android_inventaire.models.Product;
+import com.example.pi_android_inventaire.network.ApiCaller;
+import com.example.pi_android_inventaire.network.ApiCallerCallback;
+import com.example.pi_android_inventaire.utils.Result;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static SQLiteDatabase mydb;
@@ -35,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  Button btn_reservation;
     private  Button btn_compte;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +56,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Database
         setupDBConnection();
+
+        // TEST DU API CALLER
+        ApiCaller<Product> apiCaller = new ApiCaller<>(PIAndroidInventaire.executorService);
+        ArrayList<Product> products = apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
+
+        Product product = apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
+
+        int alllo = 0;
+        // FIN TEST DU API CALLER
         // Menu
         setupMenu();
+
+
     }
 
     private void setupDBConnection() {
@@ -89,14 +114,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Switch case en fonction du bouton appuyer
         switch (v.getId()) {
             case R.id.btn_produit:
-                // redirection a la page liste produit
-                Intent intentListeProduits = new Intent(this,liste_Produits.class);
-                startActivity(intentListeProduits);
+                Intent intentListeProduit = new Intent(this, Liste_produits.class);
+                startActivity(intentListeProduit);
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intentReservation = new Intent(this, Reservation_index.class);
-                startActivity(intentReservation);
+                Intent intent = new Intent(this,FaireReservation.class);
+                startActivity(intent);
                 break;
             case R.id.btn_compte:
                 // redirection vers la page de compte

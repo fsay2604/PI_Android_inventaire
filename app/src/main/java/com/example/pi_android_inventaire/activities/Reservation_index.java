@@ -19,7 +19,7 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +33,9 @@ import android.widget.Button;
  * SERA DESUET, LA PAGE FAIRERESERVATION DOIT ETRE APPELER AVEC LE BOuTON SuR LA PAGE "DETAIL PRODUIT"
  * Donc, le bouton du menu principale "Reservatin" amenera sur la page Voir les reservation. Chaque element sera clicakble pour amener vers la page Modifier Reservation (avec un bouton supprimer si l'etat est encore en attnte).
  */
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.FaireReservation;
+
 public class Reservation_index extends AppCompatActivity   implements View.OnClickListener{
 
     // Boutons
@@ -52,8 +55,7 @@ public class Reservation_index extends AppCompatActivity   implements View.OnCli
     /**
      * Fonction qui initialise les boutons du menu afin de rediriger vers les bonnes pages
      */
-    private void setupBtn()
-    {
+    private void setupBtn() {
         // Recuperation des boutons
         btn_faireReservation = (Button) findViewById(R.id.btn_faireReservation);
         btn_faireReservation.setText(R.string.btn_faireReservation);
@@ -80,4 +82,4 @@ public class Reservation_index extends AppCompatActivity   implements View.OnCli
                 break;
         }
     }
-} // class ends here
+}
