@@ -17,7 +17,7 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.models;
 
 import java.util.ArrayList;
 

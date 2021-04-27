@@ -18,13 +18,17 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.adapters.Reservation_adapter;
+import com.example.pi_android_inventaire.models.Reservation;
 
 import java.util.ArrayList;
 

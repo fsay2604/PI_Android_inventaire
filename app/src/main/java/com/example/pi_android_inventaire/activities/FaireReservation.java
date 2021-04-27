@@ -34,7 +34,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.util.Calendar;
-
+import com.example.pi_android_inventaire.R;
 public class FaireReservation extends AppCompatActivity implements View.OnClickListener {
     // Selection de date avec fenetre popup
     private TextView mDisplayDate;
@@ -43,9 +43,6 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
     // Boutons
     private Button btn_reserver;
     private Button btn_annuler;
-import com.example.pi_android_inventaire.R;
-
-public class FaireReservation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

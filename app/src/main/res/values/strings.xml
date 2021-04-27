@@ -7,7 +7,6 @@
     <string name="btn_compte">Compte</string>
 
     <!-- String utilisé pour les Reservation Activity -->
-    <string name="FaireReservation_nomEtudiant">Nom Etudiant</string>
     <string name="btn_faireReservation">Faire une nouvelle réservation</string>
     <string name="btn_voirReservation">Voir les réservations existantes</string>
 

@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupDBConnection();
 
         // TEST DU API CALLER
-        ApiCaller<Product> apiCaller = new ApiCaller<>(PIAndroidInventaire.executorService);
+        ApiCaller apiCaller = new ApiCaller<>(PIAndroidInventaire.executorService);
         ArrayList<Product> products = apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
 
-        Product product = apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
+        //Product product = apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
 
         int alllo = 0;
         // FIN TEST DU API CALLER
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intent = new Intent(this,FaireReservation.class);
+                Intent intent = new Intent(this, VoirReservations.class);
                 startActivity(intent);
                 break;
             case R.id.btn_compte:

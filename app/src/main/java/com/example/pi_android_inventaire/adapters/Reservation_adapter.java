@@ -17,7 +17,7 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -29,6 +29,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.models.Reservation;
 
 import java.util.ArrayList;
 
