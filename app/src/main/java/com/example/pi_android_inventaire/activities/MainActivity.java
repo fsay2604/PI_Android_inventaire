@@ -1,9 +1,20 @@
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import com.example.pi_android_inventaire.PIAndroidInventaire;
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.models.Product;
+import com.example.pi_android_inventaire.network.ApiCaller;
+import com.example.pi_android_inventaire.network.ApiCallerCallback;
+import com.example.pi_android_inventaire.utils.Result;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static SQLiteDatabase mydb;
@@ -13,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupDBConnection();
+
+        // TEST DU API CALLER
+        ApiCaller<Product> apiCaller = new ApiCaller<>(PIAndroidInventaire.executorService);
+        ArrayList<Product> products = apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
+        int alllo = 0;
+        // FIN TEST DU API CALLER
     }
     private void setupDBConnection() {
         mydb = openOrCreateDatabase("pi_inventaire_android",MODE_PRIVATE,null);
