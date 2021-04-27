@@ -65,10 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int alllo = 0;
         // FIN TEST DU API CALLER
+
         // Menu
         setupMenu();
-
-
     }
 
     private void setupDBConnection() {
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intent = new Intent(this, VoirReservations.class);
+                Intent intent = new Intent(this, FaireReservation.class);
                 startActivity(intent);
                 break;
             case R.id.btn_compte:

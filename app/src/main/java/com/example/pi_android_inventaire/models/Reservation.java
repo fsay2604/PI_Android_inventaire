@@ -30,6 +30,8 @@ public class Reservation {
     private int quantite;
     private String date_retour_reel;
 
+    private Product p;
+
     /**
      * Constructeur d'une réservation avec params.
      * @param id
@@ -47,6 +49,8 @@ public class Reservation {
         this.date_retour_prevue = date_retour_prevue;
         this.quantite = quantite;
         this.date_retour_reel = date_retour_reel;
+
+        // Construire le produit p correspondant a la reservation
     }
 
     /**
@@ -158,20 +162,18 @@ public class Reservation {
     }
 
     /**
-     * Retourne un tableau des reservations associé au user_id.
+     * Retourne une reservations associé au user_id.
      * @param user_id   le user_id de l'utilisateur.
      * @return ArrayList<Reservation>    Contient tout les reservations associées au user_id.
      */
-    public ArrayList<Reservation> get_all_reservations(int user_id)
+    public Reservation get_reservation(int user_id)
     {
-        ArrayList<Reservation> r = new ArrayList<Reservation>(); // conteneur des reservations
-
         // Query to DB locale (mise a jour au depart de l'appli avec la classe api, si ya connection)
-        // String query = 'SELECT * FROM Reservation WHERE numero_utilisateur = user_id';
+        // String query = 'SELECT * FROM Reservation WHERE numero_utilisateur = user_id'; + join table produit pour le nom
         // queryResponse = db.execSQL(query);
         // r = queryResponse;
 
-        return r;
+        return this;
     }
 
     /**
@@ -188,5 +190,13 @@ public class Reservation {
      */
     public void setEtat_id(int etat_id) {
         this.etat_id = etat_id;
+    }
+
+    /**
+     * Envoit l'objet dans la bd locale si il n'existe pas (modifierReservation et FaireReservation)
+     */
+    public void put_db()
+    {
+        // Query pour add une row dans les bonnes tables
     }
 }
