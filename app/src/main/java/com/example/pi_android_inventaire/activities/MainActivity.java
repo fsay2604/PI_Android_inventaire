@@ -32,6 +32,7 @@ import android.widget.Button;
 
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.Liste_produits;
 import com.example.pi_android_inventaire.models.Product;
 import com.example.pi_android_inventaire.network.ApiCaller;
 import com.example.pi_android_inventaire.network.ApiCallerCallback;
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TEST DU API CALLER
         ApiCaller<Product> apiCaller = new ApiCaller<>(PIAndroidInventaire.executorService);
         ArrayList<Product> products = apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
+
+        Product product = apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
+
         int alllo = 0;
         // FIN TEST DU API CALLER
         // Menu

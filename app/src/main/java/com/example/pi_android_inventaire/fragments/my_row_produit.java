@@ -1,8 +1,8 @@
 /****************************************
- Fichier : infos_produit.java
+ Fichier : my_row_produit.java
  Auteur : Julien Fortier
- Fonctionnalité : Affiche info sur un produit
- Date : 2021-04-26
+ Fonctionnalité : Représente une ligne avec un produit
+ Date : 2021-04-27
  Vérification :
  Date                       Nom                   Approuvé
  =========================================================
@@ -12,17 +12,19 @@
  =========================================================
 
  ****************************************/
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class infos_produit extends AppCompatActivity {
+import com.example.pi_android_inventaire.R;
+
+public class my_row_produit extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infos_produit);
+        setContentView(R.layout.activity_my_row_produit);
     }
 }

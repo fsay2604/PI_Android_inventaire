@@ -19,7 +19,7 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +27,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.FaireReservation;
 
 public class Reservation_index extends AppCompatActivity   implements View.OnClickListener{
 
@@ -63,7 +66,7 @@ public class Reservation_index extends AppCompatActivity   implements View.OnCli
             switch (v.getId()) {
                 case R.id.btn_faireReservation:
                     // redirection a la page liste produit
-                    Intent intentListeProduits = new Intent(this,FaireReservation.class);
+                    Intent intentListeProduits = new Intent(this, FaireReservation.class);
                     startActivity(intentListeProduits);
                     break;
                 case R.id.btn_voirReservation:

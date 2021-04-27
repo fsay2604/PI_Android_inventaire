@@ -3,6 +3,21 @@ package com.example.pi_android_inventaire.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Product {
+    public Product(int id, int categorie, String nom, String description, String commentaire, int qteDisponible, String image) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.commentaire = commentaire;
+        this.qteDisponible = qteDisponible;
+        this.categorie = categorie;
+        this.image = image;
+    }
+
+    /**
+     * id
+     */
+    @SerializedName("id")
+    private int id;
     /**
      * nom
      */
@@ -23,6 +38,26 @@ public class Product {
      */
     @SerializedName("qte_disponible")
     private Integer qteDisponible;
+    /**
+     * categorie
+     */
+    @SerializedName("categorieId")
+    private Integer categorie;
+
+    /**
+     * image
+     */
+    @SerializedName("image")
+    private String image;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
@@ -54,5 +89,21 @@ public class Product {
 
     public void setQteDisponible(Integer qteDisponible) {
         this.qteDisponible = qteDisponible;
+    }
+
+    public Integer getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Integer categorie) {
+        this.categorie = categorie;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

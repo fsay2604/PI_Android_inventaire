@@ -13,7 +13,7 @@
  =========================================================
 
  ****************************************/
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +26,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.infos_produit;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
     private String nom[];
@@ -78,7 +81,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context,infos_produit.class);
+            Intent intent = new Intent(context, infos_produit.class);
             intent.putExtra("nom",nom.getText().toString());
             intent.putExtra("categorie",categorie.getText().toString());
             intent.putExtra("qte",qte.getText().toString());

@@ -19,11 +19,13 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.pi_android_inventaire.R;
 
 public class FaireReservation extends AppCompatActivity {
 

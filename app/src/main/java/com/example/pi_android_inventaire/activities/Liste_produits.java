@@ -12,12 +12,14 @@
  =========================================================
 
  ****************************************/
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.pi_android_inventaire.R;
 
 public class Liste_produits extends AppCompatActivity {
     //Variables pour listes produits
@@ -26,7 +28,6 @@ public class Liste_produits extends AppCompatActivity {
     private String qte[];
     private int image[]={
             //aller chercher avec bd
-
     };
     RecyclerView recyclerView;
 
