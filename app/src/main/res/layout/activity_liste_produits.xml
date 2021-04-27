@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/****************************************
+ Fichier : activity_liste_produits.xml
+ Auteur : Julien Fortier
+ Fonctionnalité : Affiche une liste de produit avec un recyclerView.
+ Date : 2021-04-26
+ Vérification :
+ Date                       Nom                   Approuvé
+ =========================================================
+
+ Historique de modifications :
+ Date                       Nom                 Description
+ =========================================================
+
+ ****************************************/
+ -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Liste_produits">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
