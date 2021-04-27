@@ -22,6 +22,7 @@
 package com.example.pi_android_inventaire;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  Button btn_reservation;
     private  Button btn_compte;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupDBConnection();
         // Menu
         setupMenu();
+
+
     }
 
     private void setupDBConnection() {
@@ -91,14 +95,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Switch case en fonction du bouton appuyer
         switch (v.getId()) {
             case R.id.btn_produit:
-                // redirection a la page liste produit
-                Intent intentListeProduits = new Intent(this,liste_Produits.class);
-                startActivity(intentListeProduits);
+                Intent intentListeProduit = new Intent(this, Liste_produits.class);
+                startActivity(intentListeProduit);
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intentReservation = new Intent(this, Reservation_index.class);
-                startActivity(intentReservation);
+                Intent intent = new Intent(this,FaireReservation.class);
+                startActivity(intent);
                 break;
             case R.id.btn_compte:
                 // redirection vers la page de compte

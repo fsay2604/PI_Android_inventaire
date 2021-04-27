@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PI_Android_inventaire">
-        <activity android:name=".Reservation_index"></activity>
-        <activity android:name=".FaireReservation" />
+        <activity android:name=".Liste_produits"></activity>
+        <activity android:name=".my_row_produit" />
         <activity android:name=".infos_produit" />
-        <activity android:name=".liste_Produits" />
+        <activity android:name=".FaireReservation" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
