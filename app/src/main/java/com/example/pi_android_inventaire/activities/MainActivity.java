@@ -32,6 +32,7 @@ import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.activities.Liste_produits;
 import com.example.pi_android_inventaire.models.Product;
+import com.example.pi_android_inventaire.models.Reservation;
 import com.example.pi_android_inventaire.network.ApiCaller;
 import com.example.pi_android_inventaire.network.ApiCallerCallback;
 import com.example.pi_android_inventaire.utils.Result;
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intent = new Intent(this, FaireReservation.class);
+                Intent intent = new Intent(this, VoirReservations.class);
                 startActivity(intent);
                 break;
             case R.id.btn_compte:

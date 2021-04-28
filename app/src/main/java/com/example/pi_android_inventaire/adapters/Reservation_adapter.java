@@ -2,7 +2,7 @@
  Fichier : VoirReservation.java
  Auteur : Francois Charles Hebert
  Fonctionnalité : a-03 - Gestion des réservation
-    - Adapteur pour utiliser un recyclerView pour lister toute les réservations
+    - Adapteur pour utiliser un recyclerView pour lister toutes les réservations
 
  Date : 2021-04-27
 
@@ -19,7 +19,11 @@
 
 package com.example.pi_android_inventaire.adapters;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +35,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.MainActivity;
+import com.example.pi_android_inventaire.activities.VoirReservations;
 import com.example.pi_android_inventaire.models.Reservation;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapter.MyViewHolder> {
 
@@ -63,6 +70,21 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
         holder.etat.setText(Integer.toString(mAll_reservations.get(position).getEtat_id()));          // Aller chercher le nom de l'etat de la reservation avec le id dans la reservation
         holder.qte.setText(Integer.toString(mAll_reservations.get(position).getQuantite()));          // La quantité est la bonne.
        // holder.image_prod.setImageResource();                                                       // Aller chercher l'image du produit.
+        holder.btn_modifier.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, MainActivity.class);                                   // A changer pour ModifierReservation.class une fois l'activity cree.
+                holder.context.startActivity(i);
+            }
+        });
+
+        holder.btn_annuler.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // Query pour supprimer la reservation faites.
+            }
+        });
     }
 
     @Override
@@ -70,19 +92,20 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
         return mAll_reservations.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
+    public class MyViewHolder extends RecyclerView.ViewHolder
+    {
         private TextView nomProduit;
         private TextView nomCategorie;
         private TextView qte;
         private TextView etat;
         private ImageView image_prod;
-
         private Button btn_modifier;
         private Button btn_annuler;
+        private Context context;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
             nomProduit = itemView.findViewById(R.id.TextView_voirReservation_nom);
             nomCategorie = itemView.findViewById(R.id.textView_voirReservation_categorie);
             qte = itemView.findViewById(R.id.textView_voirReservation_qte);
@@ -91,9 +114,10 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
 
             btn_modifier = itemView.findViewById(R.id.btn_VoirReservation_modifier);
             btn_modifier.setText(R.string.btn_modifier);
-            //btn_modifier.setOnClickListener();
+
+            btn_annuler = itemView.findViewById(R.id.btn_VoirReservation_annuler);
+            btn_annuler.setText(R.string.btn_annuler);
         }
+
     }
-
-
 }

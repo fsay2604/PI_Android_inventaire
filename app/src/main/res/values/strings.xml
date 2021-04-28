@@ -35,6 +35,18 @@
     <string name="row_reservations_etat">En Attente</string>
     <string name="btn_modifier">Modifier</string>
     <string name="btn_annuler">Annuler</string>
+
+    <!-- String utilisé pour modifier reservation Activity -->
+    <string name="modifierReservation_nomEtudiant">Nom Etudiant</string>
+    <string name="modifierReservation_label_ProduitSelect">Produit sélectionné</string>
+    <string name="modifierReservation_label_nomProduit">Nom du produit:</string>
+    <string name="modifierReservation_nomProduit">Boutton</string>
+    <string name="modifierReservation_label_quantite">Quantite</string>
+    <string name="modifierReservation_quantite">X</string>
+    <string name="modifierReservation_label_date">Date de remise</string>
+    <string name="btn_modifierReservation_confirmer">Modifier</string>
+    <string name="btn_modifierReservation_annuler">Annuler</string>
+
     <!-- String utilisé pour liste_Produits et infos produit Activity -->
     <string name="liste_Produits_nom">Nom: </string>
     <string name="liste_Produits_categorie">Catégorie: </string>
