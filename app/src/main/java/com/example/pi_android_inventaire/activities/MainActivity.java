@@ -1,10 +1,8 @@
 /****************************************
- Fichier : FaireReservation.java
+ Fichier : MainActivity.java
  Auteur : Francois Charles Hebert
- Fonctionnalité : a-03 - Gestion des réservation
- - Faire une une réservation avec le statut en attente (pour l'utilisateur connecté)
- - Modifier une réservation en attente (de l'utilisateur connecté)
- - Supprimer une réservation en attente (de l'utilisateur connecté)
+ Fonctionnalité :
+    - Page d'accueil avec un menu.
 
  Date : 2021-04-26
 
@@ -19,15 +17,29 @@
 
  ****************************************/
 
-package com.example.pi_android_inventaire;
+package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.pi_android_inventaire.PIAndroidInventaire;
+import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.Liste_produits;
+import com.example.pi_android_inventaire.models.Product;
+import com.example.pi_android_inventaire.models.Reservation;
+import com.example.pi_android_inventaire.network.ApiCaller;
+import com.example.pi_android_inventaire.network.ApiCallerCallback;
+import com.example.pi_android_inventaire.utils.Result;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static SQLiteDatabase mydb;
@@ -40,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_inscription;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +61,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Database
         setupDBConnection();
+
+        // TEST DU API CALLER
+        ApiCaller apiCaller = new ApiCaller(PIAndroidInventaire.executorService);
+        ArrayList<Product> products = apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
+
+        Product product = apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
+
+        int alllo = 0;
+        // FIN TEST DU API CALLER
+
         // Menu
         setupMenu();
     }
@@ -58,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mydb.execSQL("CREATE TABLE IF NOT EXISTS produit(id INTEGER PRIMARY KEY,categorie_id INTEGER NOT NULL,nom VARCHAR NOT NULL,description VARCHAR,commentaire VARCHAR,qte_disponible INTEGER NOT NULL,qte_reserve INTEGER NOT NULL,qte_defectueux INTEGER NOT NULL,image VARCHAR,FOREIGN KEY(categorie_id) REFERENCES categorie(id))");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS categorie(id INTEGER PRIMARY KEY,nom VARCHAR)");
         //mydb.execSQL("DROP TABLE reservation");
-        mydb.execSQL("CREATE TABLE IF NOT EXISTS reservation(id INTEGER PRIMARY KEY,etat_reservation_id INTEGER NOT NULL,produit_id INTEGER NOT NULL,numero_utilisateur_id INTEGER NOT NULL,date_retour_prevue DATE NOT NULL,quantite INTEGER NOT NULL,date_retour_reel VARCHAR,FOREIGN KEY(etat_reservation_id) REFERENCES type_rapport(id),FOREIGN KEY(produit_id) REFERENCES produit(id))");
-        mydb.execSQL("CREATE TABLE IF NOT EXISTS etat_reservation(id INTEGER PRIMARY KEY,libelle VARCHAR NOT NULL)");
+        mydb.execSQL("CREATE TABLE IF NOT EXISTS reservation(id INTEGER PRIMARY KEY, etat_reservation_id INTEGER NOT NULL,produit_id INTEGER NOT NULL,numero_utilisateur_id INTEGER NOT NULL, date_retour_prevue varchar NOT NULL, quantite INTEGER NOT NULL, date_retour_reel VARCHAR, FOREIGN KEY(etat_reservation_id) REFERENCES type_rapport(id),FOREIGN KEY(produit_id) REFERENCES produit(id))");
+        mydb.execSQL("CREATE TABLE IF NOT EXISTS etat_reservation(id INTEGER PRIMARY KEY, libelle VARCHAR NOT NULL)");
         //mydb.execSQL("DROP TABLE rapport");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS rapport(id INTEGER PRIMARY KEY,produit_id INTEGER NOT NULL,user_id INTEGER NOT NULL,type_rapport_id INTEGER NOT NULL,description VARCHAR NOT NULL,FOREIGN KEY(produit_id) REFERENCES produit(id),FOREIGN KEY(type_rapport_id) REFERENCES type_rapport(id))");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS type_rapport(id INTEGER PRIMARY KEY,type VARCHAR NOT NULL)");
@@ -101,14 +124,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Switch case en fonction du bouton appuyer
         switch (v.getId()) {
             case R.id.btn_produit:
-                // redirection a la page liste produit
-                Intent intentListeProduits = new Intent(this,liste_Produits.class);
-                startActivity(intentListeProduits);
+                Intent intentListeProduit = new Intent(this, Liste_produits.class);
+                startActivity(intentListeProduit);
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intentReservation = new Intent(this,FaireReservation.class);
-                startActivity(intentReservation);
+                Intent intent = new Intent(this, VoirReservations.class);
+                startActivity(intent);
                 break;
             case R.id.btn_compte:
                 // redirection vers la page de compte
