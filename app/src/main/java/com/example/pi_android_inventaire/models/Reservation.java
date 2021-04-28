@@ -19,27 +19,47 @@
 
 package com.example.pi_android_inventaire.models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Reservation {
+/**
+ * Classe representant une reservation.
+ */
+public class Reservation implements Serializable { // l<implementation de Serializable permet de passer l'objet en extra a l'intent et de le recuperer.
+
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("produit_id")
     private int produit_id;
+
+    @SerializedName("etat_id")
     private int etat_id;
+
+    @SerializedName("numero_utilisateur")
     private int numero_utilisateur;
+
+    @SerializedName("date_retour_prevue")
     private String date_retour_prevue;
+
+    @SerializedName("quantite")
     private int quantite;
+
+    @SerializedName("date_retour_reel")
     private String date_retour_reel;
 
     private Product p;
 
     /**
      * Constructeur d'une réservation avec params.
-     * @param id
-     * @param produit_id
-     * @param numero_utilisateur
-     * @param date_retour_prevue
-     * @param quantite
-     * @param date_retour_reel
+     * @param id    correspond a l;id de la reservation
+     * @param produit_id    correspond au id du produit lié a cette reservation
+     * @param numero_utilisateur    correspond a l'id de l'utilisateur auquel la reservation est associe
+     * @param date_retour_prevue    correspond a la date de retour prevue
+     * @param quantite              corespond a la quantite du produit que l'utilisateur a reserve
+     * @param date_retour_reel      correspond a la date de retour reel des produits chez le fournisseur.
      */
     public Reservation(int id, int etat_id, int produit_id, int numero_utilisateur, String date_retour_prevue, int quantite, String date_retour_reel) {
         this.id = id;
@@ -51,6 +71,7 @@ public class Reservation {
         this.date_retour_reel = date_retour_reel;
 
         // Construire le produit p correspondant a la reservation
+        setProduit(); //(contiendra la requete a la bd en fonction de this.produit_id)
     }
 
     /**
@@ -162,6 +183,24 @@ public class Reservation {
     }
 
     /**
+     * Retourne un objet produit associé a cette reservation (pour recuperer le nom facilement)
+     * @return
+     */
+    public Product getProduit() {
+        return p;
+    }
+
+    /**
+     * Permet d'associé le bon objet de produit en fonction de l'id
+     *
+     */
+    private void setProduit() {
+        // QUERY = 'SELECT * FROM Produits WHERE id = this.produit_id'
+        // this.p = QueryResponse
+        this.p = p;
+    }
+
+    /**
      * Retourne une reservations associé au user_id.
      * @param user_id   le user_id de l'utilisateur.
      * @return ArrayList<Reservation>    Contient tout les reservations associées au user_id.
@@ -195,8 +234,25 @@ public class Reservation {
     /**
      * Envoit l'objet dans la bd locale si il n'existe pas (modifierReservation et FaireReservation)
      */
-    public void put_db()
+    public void put_in_db()
     {
         // Query pour add une row dans les bonnes tables
     }
+
+    /**
+     * Fonction qui va permettre de détruire cette reservation de la BD si elle est encore en attente
+     */
+    public void delete_from_db()
+    {
+        if(this.etat_id == 1) // 1= En attente
+        {
+            //query = 'Delete from Reservation WHERE id = this.id'
+        }
+        else
+        {
+            // Impossible puisque la reservation n'est pas en attente, et donc les capteurs ont deja ete recuperer.
+        }
+    }
+
+
 }

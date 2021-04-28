@@ -132,7 +132,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_modifierReservation_reserve"
+                    android:id="@+id/btn_modifierReservation_confirmer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -143,7 +143,7 @@
                     android:text="@string/btn_modifierReservation_confirmer" />
 
                 <Button
-                    android:id="@+id/btn_modifierReservation_annuler"
+                    android:id="@+id/btn_modifierReservation_supprimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -151,7 +151,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:text="@string/btn_modifierReservation_annuler"
+                    android:text="@string/btn_modifierReservation_supprimer"
                     app:backgroundTint="#DA0808" />
 
             </LinearLayout>

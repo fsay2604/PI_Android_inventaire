@@ -122,21 +122,9 @@
                 android:layout_width="114dp"
                 android:layout_height="36dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
                 android:text="@string/btn_modifier"
-                app:layout_constraintEnd_toStartOf="@+id/btn_VoirReservation_annuler"
-                app:layout_constraintTop_toBottomOf="@+id/textView_voirReservation_label_quantite" />
-
-            <Button
-                android:id="@+id/btn_VoirReservation_annuler"
-                android:layout_width="114dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/btn_annuler"
-                app:backgroundTint="#E91E63"
-                app:layout_constraintStart_toStartOf="@+id/textView_voirReservation_label_categorie"
-                app:layout_constraintTop_toBottomOf="@+id/textView_voirReservation_etat" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_voirReservation_label_quantite"
+                tools:layout_editor_absoluteX="118dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

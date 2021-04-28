@@ -45,7 +45,7 @@
     <string name="modifierReservation_quantite">X</string>
     <string name="modifierReservation_label_date">Date de remise</string>
     <string name="btn_modifierReservation_confirmer">Modifier</string>
-    <string name="btn_modifierReservation_annuler">Annuler</string>
+    <string name="btn_modifierReservation_supprimer">Supprimer</string>
 
     <!-- String utilisé pour liste_Produits et infos produit Activity -->
     <string name="liste_Produits_nom">Nom: </string>

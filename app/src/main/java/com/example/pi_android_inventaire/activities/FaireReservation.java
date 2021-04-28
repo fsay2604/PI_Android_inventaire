@@ -53,6 +53,9 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         SelectDateWithPopup();
     }
 
+    /**
+     * Initialise les bouttons de cette view
+     */
     private void SetupButton()
     {
         btn_reserver = (Button) findViewById(R.id.btn_faireReservation_reserve);
@@ -60,6 +63,7 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         btn_reserver.setOnClickListener(this);
         btn_annuler = (Button) findViewById(R.id.btn_faireReservation_annuler);
         btn_annuler.setText(R.string.btn_faireReservation_annuler);
+        btn_annuler.setOnClickListener(this);
     }
 
     /**
@@ -103,10 +107,10 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.btn_faireReservation_reserve:
                 // Lance la requete api pour ajouter une reservation / stock dans la BD la reservation si pas de connection
+                // put_in_db();
                 break;
             case R.id.btn_faireReservation_annuler:
-                // Lance la requete api pour supprimer cette reservation
-                // finish(); // ferme cette activit/ puisque cette reservation n'existe plus.
+                finish(); // ferme cette activite sans sauvegarder la reservation
                 break;
         }
     }
