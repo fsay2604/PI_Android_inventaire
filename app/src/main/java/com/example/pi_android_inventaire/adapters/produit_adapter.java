@@ -28,15 +28,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.activities.Liste_produits;
 import com.example.pi_android_inventaire.activities.infos_produit;
+import com.example.pi_android_inventaire.models.Product;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
-    private String nom[];
-    private String categorie[];
-    private String qte[];
-    private int images[];
+import java.util.ArrayList;
+
+public class produit_adapter extends RecyclerView.Adapter<produit_adapter.MyViewHolder>{
+    private ArrayList<Product> all_products;
     private Context context;
     private AdapterView.OnItemClickListener mListener;
+
+    public produit_adapter(Context c, ArrayList<Product> products)
+    {
+        context =c;
+        all_products = products;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,38 +52,35 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
         View view = inflater.inflate(R.layout.activity_my_row_produit,parent,false);
         return new MyViewHolder(view);
     }
-    public Adapter(Context context, String[] nom, String[] categorie, String[] qte, int[] images){
-        this.context = context;
-        this.nom = nom;
-        this.categorie = categorie;
-        this.qte = qte;
-        this.images = images;
-    }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.nom.setText(nom[position]);
-        holder.categorie.setText(categorie[position]);
-        holder.qte.setText(qte[position]);
-        holder.image.setImageResource(images[position]);
+        holder.nom.setText(all_products.get(position).getNom());
+        holder.categorie.setText(Integer.toString(all_products.get(position).getCategorie()));
+        holder.qte.setText(Integer.toString(all_products.get(position).getQteDisponible()));
+        holder.id.setText(Integer.toString(all_products.get(position).getQteDisponible()));
+        //holder.image.setImageResource(all_products.get(position).getImage());
 
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return all_products.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView nom;
+        TextView id;
         TextView categorie;
         TextView qte;
         ImageView image;
         public MyViewHolder(@NonNull View itemView){
             super(itemView);
-            nom = (TextView)itemView.findViewById(R.id.name);
-            categorie = (TextView)itemView.findViewById(R.id.categorie);
-            qte = (TextView)itemView.findViewById(R.id.quantite);
-            image = (ImageView) itemView.findViewById(R.id.imageButton);
+            context = itemView.getContext();
+            nom = itemView.findViewById(R.id.name);
+            id = itemView.findViewById(R.id.id);
+            categorie = itemView.findViewById(R.id.categorie);
+            qte = itemView.findViewById(R.id.qte);
+            image = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);
         }
 
@@ -83,9 +88,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
         public void onClick(View v) {
             Intent intent = new Intent(context, infos_produit.class);
             intent.putExtra("nom",nom.getText().toString());
+            intent.putExtra("description",all_products.get(Integer.valueOf(id.getText().toString())).getDescription());
             intent.putExtra("categorie",categorie.getText().toString());
             intent.putExtra("qte",qte.getText().toString());
-            intent.putExtra("image",images[getLayoutPosition()]);
+            intent.putExtra("id",id.getText().toString());
+            //intent.putExtra("image",images[getLayoutPosition()]);
             context.startActivity(intent);
         }
     }

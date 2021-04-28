@@ -12,6 +12,15 @@ public class Product {
         this.categorie = categorie;
         this.image = image;
     }
+    public Product() {
+        this.id = 0;
+        this.nom = "";
+        this.description = "";
+        this.commentaire = "";
+        this.qteDisponible = 0;
+        this.categorie = 0;
+        this.image = "";
+    }
 
     /**
      * id
@@ -49,6 +58,8 @@ public class Product {
      */
     @SerializedName("image")
     private String image;
+
+
 
 
     public int getId() {
