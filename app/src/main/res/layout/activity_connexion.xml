@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Connexion">
+    tools:context=".activities.Connexion">
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -15,13 +15,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/passwordLayout">
-       />/ app:layout_constraintVertical_chainStyle="packed">
+
 
         <EditText
             android:id="@+id/emailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Adresse courriel"
+            android:hint="@string/adresse_courriel"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"/>
@@ -40,7 +40,7 @@
             android:id="@+id/passwordText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mot de passe"
+            android:hint="@string/mot_de_passe"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"/>
@@ -50,7 +50,7 @@
         android:id="@+id/connexionBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Connexion"
+        android:text="@string/connexion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
