@@ -8,4 +8,5 @@
 
     <!-- String utilisé dans FaireReservation Activity -->
     <string name="FaireReservation_nomEtudiant">PI_Android_inventaire</string>
+    <item name="btn_login" type="id" />
 </resources>

@@ -36,11 +36,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  Button btn_produit;
     private  Button btn_reservation;
     private  Button btn_compte;
+    private Button btn_connexion;
+    private Button btn_inscription;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Accueil");
 
         // Database
         setupDBConnection();
@@ -69,16 +73,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         // Recuperation des btn
         btn_produit = (Button) findViewById(R.id.btn_produit);
-        btn_produit.setText(R.string.btn_produit);
+       // btn_produit.setText(R.string.btn_produit);
         btn_produit.setOnClickListener(this);
 
         btn_reservation = (Button) findViewById(R.id.btn_reservation);
-        btn_reservation.setText(R.string.btn_reservation);
+       // btn_reservation.setText(R.string.btn_reservation);
         btn_reservation.setOnClickListener(this);
 
         btn_compte = (Button) findViewById(R.id.btn_compte);
-        btn_compte.setText(R.string.btn_compte);
+       // btn_compte.setText(R.string.btn_compte);
         btn_compte.setOnClickListener(this);
+
+        btn_connexion=(Button)findViewById(R.id.login_btn);
+        btn_connexion.setOnClickListener(this);
+
+        btn_inscription=(Button)findViewById(R.id.Suscribe_btn);
+        btn_inscription.setOnClickListener(this);
     }
 
     /**
