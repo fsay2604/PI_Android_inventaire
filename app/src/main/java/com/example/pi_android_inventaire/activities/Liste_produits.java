@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 import com.example.pi_android_inventaire.adapters.produit_adapter;
 import com.example.pi_android_inventaire.R;
@@ -55,4 +58,5 @@ public class Liste_produits extends AppCompatActivity {
         recyclerView_products.setAdapter(adapter);
         recyclerView_products.setLayoutManager(new LinearLayoutManager(this));
     }
+
 }
