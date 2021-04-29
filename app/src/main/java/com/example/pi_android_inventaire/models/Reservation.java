@@ -19,6 +19,14 @@
 
 package com.example.pi_android_inventaire.models;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -52,6 +60,7 @@ public class Reservation implements Serializable { // l<implementation de Serial
 
     private Product p;
 
+
     /**
      * Constructeur d'une réservation avec params.
      * @param id    correspond a l;id de la reservation
@@ -72,6 +81,7 @@ public class Reservation implements Serializable { // l<implementation de Serial
 
         // Construire le produit p correspondant a la reservation
         setProduit(); //(contiendra la requete a la bd en fonction de this.produit_id)
+
     }
 
     /**
@@ -234,23 +244,34 @@ public class Reservation implements Serializable { // l<implementation de Serial
     /**
      * Envoit l'objet dans la bd locale si il n'existe pas (modifierReservation et FaireReservation)
      */
-    public void put_in_db()
+    public void put_in_db(Context ct)
     {
-        // Query pour add une row dans les bonnes tables
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+        // Ajout dans la BD
+        Cursor cursor = DB.rawQuery("", new String[]{Integer.toString(this.id)});
+
+        // Fermeture du curseur.
+        cursor.close();
     }
 
     /**
      * Fonction qui va permettre de détruire cette reservation de la BD si elle est encore en attente
      */
-    public void delete_from_db()
+   public void delete_from_db()
     {
         if(this.etat_id == 1) // 1= En attente
         {
-            //query = 'Delete from Reservation WHERE id = this.id'
-        }
-        else
-        {
-            // Impossible puisque la reservation n'est pas en attente, et donc les capteurs ont deja ete recuperer.
+            // Aller chercher la DB
+            SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+            // Suppression de l'enregistrement
+            Cursor cursor = DB.rawQuery("Delete from Reservation WHERE id = ?", new String[]{Integer.toString(this.id)});
+
+            // Fermeture du curseur.
+            cursor.close();
+
         }
     }
 
