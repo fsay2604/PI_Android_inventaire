@@ -19,23 +19,31 @@
 
 package com.example.pi_android_inventaire.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.activities.Liste_produits;
 import com.example.pi_android_inventaire.models.Product;
 import com.example.pi_android_inventaire.models.Reservation;
+import com.example.pi_android_inventaire.models.User;
 import com.example.pi_android_inventaire.network.ApiCaller;
 import com.example.pi_android_inventaire.network.ApiCallerCallback;
+import com.example.pi_android_inventaire.network.FireBaseMessagingService;
 import com.example.pi_android_inventaire.utils.Result;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -52,6 +60,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_inscription;
 
 
+    //ApiCaller
+    public static ApiCaller apiCaller;
+
+    // Utilisateur de l'appli??
+    public static User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +76,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupDBConnection();
 
         // TEST DU API CALLER
-        ApiCaller apiCaller = new ApiCaller(PIAndroidInventaire.executorService);
+        apiCaller = new ApiCaller(PIAndroidInventaire.executorService);
         ArrayList<Product> products = apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
 
         Product product = apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
 
         int alllo = 0;
         // FIN TEST DU API CALLER
+
+        // TEST DE FirebaseMessaging
+        Bundle b = getIntent().getExtras();
+        if(b != null){
+            int userId = b.getInt("userId");
+            this.currentUser = new User(userId, "marc.xd866@gmail.com", "");
+
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull Task<String> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("FirebaseToken", "Fetching FCM registration token failed", task.getException());
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                            String token = task.getResult();
+
+                            // Log and toast
+                            String msg = getString(R.string.msg_token_fmt, token);
+                            Log.d("FirebaseToken", msg);
+                            MainActivity.currentUser.setFirebaseToken(token);
+                            FireBaseMessagingService.sendRegistrationToServer(token);
+                            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+
+
+        // FIN TEST De FirebaseMessaging
 
         // Menu
         setupMenu();
@@ -134,6 +179,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_compte:
                 // redirection vers la page de compte
+                break;
+            case R.id.login_btn:
+                // redirection vers la page de login
+                Intent intentLogin = new Intent(this, Connexion.class);
+                startActivity(intentLogin);
                 break;
             default:
                 break;

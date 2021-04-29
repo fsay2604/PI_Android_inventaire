@@ -56,5 +56,17 @@
     <string name="btn_Reserver">Réserver</string>
     <string name="info_produit_description">Description</string>
 
+    <!-- String utilisé pour les channels de notifications. -->
+    <string name="default_notification_channel_id">Default</string>
+    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
+
+    <!-- String utilisé pour connexion Activity -->
+    <string name="adresse_courriel">Adresse courriel</string>
+    <string name="mot_de_passe">Mot de Passe</string>
+    <string name="connexion">Connexion</string>
+
+
+
+
 
 </resources>

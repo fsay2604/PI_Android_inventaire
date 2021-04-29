@@ -22,9 +22,11 @@ import com.google.gson.JsonObject;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -126,6 +128,88 @@ public class ApiCaller {
         return (value);
     }
 
+    public <T> String putSingleOrDefault(T toSend, String urlString){
+        // Starting the API Request on another thread.
+        Future<Result<String>> future = executor.submit(() -> {
+            Result<String> response;
+            try {
+                // The fetched response
+                response = sendJsonObject(toSend, urlString);
+                return response;
+            } catch (Exception e) {
+                // Retrieve the error message
+                Result<T> errorResult = new Result.Error<>(e);
+                // Printing it to the console
+                System.out.println("La requête à l'API à échouée pour la raison suivante : "
+                        + errorResult.toString());
+            }
+            return null;
+        });
+
+        // Retrieving the value from the API request if it is successful.
+        String value = null;
+        try {
+            Result<String> returned = future.get();
+            if (returned instanceof Result.Success) {
+                value = ((Result.Success<String>) returned).data;
+            } else {
+                value = null;
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
+
+    private <T> Result<String> sendJsonObject(T toSend, String urlString) {
+        try {
+            // The fetched response
+            String response = "";
+
+            // Creating the url object to make our query
+            URL url = new URL(urlString);
+
+            // Opening the connection to the requested url
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Setting the connection request Method
+            urlConnection.setRequestMethod("PUT");
+
+            // Setting the connection header to state that we are sending JSON data
+            urlConnection.setRequestProperty("Content-Type", "application/json; utf-8");
+
+            // Ensure the connection will be used to send content
+            urlConnection.setDoOutput(true);
+
+            // Creating our request body from converting the toSend object to a JSON String
+            String jsonObject = gson.toJson(toSend);
+
+            // Writting our string to the connection
+            sendRequestString(jsonObject, urlConnection);
+
+            // Opening the stream in order to be able to read the response.
+            BufferedInputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+            // Reading the response into a String
+            response = readResponse(in);
+
+            // Closing the connection
+            urlConnection.disconnect();
+
+            /* Returning a json object from the received response string
+             * (Assuming this is a JSON string)
+             */
+            return new Result.Success<>(response);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     private <T> JsonObject callApi(Class<T> requestedObject, String urlString) {
 
         try {
@@ -211,6 +295,16 @@ public class ApiCaller {
 
         // Returning the result after we read the entire response.
         return result.toString();
+    }
+
+    private void sendRequestString(String requestBody, HttpURLConnection urlConnection){
+        try(OutputStream os = urlConnection.getOutputStream()) {
+            byte[] input = requestBody.getBytes("utf-8");
+            os.write(input, 0, input.length);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 
 
