@@ -21,15 +21,10 @@
         <activity android:name=".activities.VoirReservations" />
         <activity android:name=".activities.infos_produit" />
         <activity android:name=".activities.Liste_produits" />
-        <activity android:name=".activities.MainActivity"/>
 
         <activity android:name=".activities.Liste_Rappots"></activity>
-        <activity android:name=".Reservation_index" />
-        <activity android:name=".FaireReservation" />
-        <activity android:name=".infos_produit" />
-        <activity android:name=".liste_Produits" />
-        <activity android:name=".MainActivity">
 
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
