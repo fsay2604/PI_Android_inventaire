@@ -55,8 +55,8 @@ public class infos_produit extends AppCompatActivity {
         btn_reserver.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(infos_produit.this, MainActivity.class);
-                intent.putExtra("id",id);
+                Intent intent = new Intent(infos_produit.this, FaireReservation.class);
+                intent.putExtra("id","666");
                 startActivity(intent);
             }
         });
