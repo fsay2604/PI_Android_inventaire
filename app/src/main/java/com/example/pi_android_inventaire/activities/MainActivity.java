@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_connexion;
     private Button btn_inscription;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,10 +105,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        // btn_compte.setText(R.string.btn_compte);
         btn_compte.setOnClickListener(this);
 
-        btn_connexion=(Button)findViewById(R.id.login_btn);
+        btn_connexion=(Button) findViewById(R.id.login_btn);
         btn_connexion.setOnClickListener(this);
 
-        btn_inscription=(Button)findViewById(R.id.Suscribe_btn);
+        btn_inscription=(Button) findViewById(R.id.Suscribe_btn);
         btn_inscription.setOnClickListener(this);
     }
 
@@ -132,8 +130,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, VoirReservations.class);
                 startActivity(intent);
                 break;
-            case R.id.btn_compte:
-                // redirection vers la page de compte
+            case R.id.login_btn:
+                // redirection vers la page de connexion
+                Intent intentConnexion = new Intent(MainActivity.this,Connexion.class);
+                startActivity(intentConnexion);
+                break;
+            case R.id.btn_inscription:
+                // redirection vers la page d'enregistrement
                 break;
             default:
                 break;

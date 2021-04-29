@@ -56,5 +56,17 @@
     <string name="btn_Reserver">Réserver</string>
     <string name="info_produit_description">Description</string>
 
+    <string name="produit">Produit</string>
+    <string name="r_servation">Réservation</string>
+    <string name="compte">Compte</string>
 
+    <!-- String utilisé pour connexion à un compte -->
+    <string name="adresse_courriel">Adresse courriel</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="connexion">Connexion</string>
+    <string name="mot_de_passe_oubl">Mot de passe oublé</string>
+    <string name="pas_enregistr_cr_er_un_compte">Pas enregistré?  Créer un compte</string>
+
+    <item name="btn_connexion" type="id" />
+    <item name="btn_inscription" type="id" />
 </resources>
