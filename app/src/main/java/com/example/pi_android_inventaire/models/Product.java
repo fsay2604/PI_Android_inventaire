@@ -131,17 +131,17 @@ public class Product {
     {
             // Aller chercher la DB
             SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
-            String countQuery = "SELECT COUNT(*) FROM produit WHERE id=" + this.id;
+            String countQuery = "SELECT id FROM produit WHERE id=" + this.id;
             Cursor cursor = DB.rawQuery(countQuery, null);
             int count = cursor.getCount();
             if(count > 0)
             {
-                DB.rawQuery("UPDATE produit SET id = ?,categorie_id = ?,nom = ?,description = ?,commentaire = ?,qte_disponible = ?, image = ? WHERE id = ?",
+                DB.execSQL("UPDATE produit SET id = ?,categorie_id = ?,nom = ?,description = ?,commentaire = ?,qte_disponible = ?, image = ? WHERE id = ?",
                         new String[]{Integer.toString(this.id),Integer.toString(this.categorie),this.nom,this.description,this.commentaire,Integer.toString(this.qteDisponible),this.image,Integer.toString(this.id)});
             }
             else
             {
-                DB.rawQuery("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible,image) " +
+                DB.execSQL("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible,image) " +
                         "VALUES (?,?,?,?,?,?,?)", new String[]{Integer.toString(this.id),Integer.toString(this.categorie),this.nom,this.description,this.commentaire,Integer.toString(this.qteDisponible),this.image});
             }
             cursor.close();
