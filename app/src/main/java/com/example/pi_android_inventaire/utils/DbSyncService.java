@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.interfaces.SyncableModel;
 import com.example.pi_android_inventaire.models.Product;
+import com.example.pi_android_inventaire.models.Reservation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -51,10 +52,13 @@ public class DbSyncService {
                 switch (tableName){
                     case "produit":
                         ArrayList<Product> remoteProducts =  fetchFromRemoteDb(Product.class,
-                                "https://7cb6dae8616b.ngrok.io/api/produits?page=1");
-                        synchronizeLocalDatabase(remoteProducts, tableName);
+                                PIAndroidInventaire.apiUrlDomain + "produits?page=1");
+                        synchronizeLocalDatabase(Product.class,remoteProducts, tableName);
                         break;
                     case "reservation":
+                        ArrayList<Reservation> remoteReservations =  fetchFromRemoteDb(Reservation.class,
+                                PIAndroidInventaire.apiUrlDomain + "reservations?page=1");
+                        synchronizeLocalDatabase(Reservation.class,remoteReservations, tableName);
                         break;
                     case "rapport":
                         break;
@@ -94,11 +98,13 @@ public class DbSyncService {
             try {
                 Constructor<T> ctor = impl.getConstructor();
                 // Looping throught every row and initializing an object from it
-                while (cursor.moveToNext()) {
+                do {
                     object = ctor.newInstance();
                     T initialized = impl.cast(object.initializeFromCursor(cursor));
                     retreivedObjects.add(initialized);
                 }
+                while (cursor.moveToNext());
+
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
                 return null;
@@ -118,7 +124,7 @@ public class DbSyncService {
         return retreivedObjects;
     }
 
-    private <T extends SyncableModel> void synchronizeLocalDatabase(ArrayList<T> remoteList, String tableName)
+    private <T extends SyncableModel> void synchronizeLocalDatabase(Class<T> requestedType,ArrayList<T> remoteList, String tableName)
     {
         // Iterates throught the new list of objects and inserts them into the database
         for (SyncableModel syncable :
@@ -127,7 +133,7 @@ public class DbSyncService {
         }
 
         // Retreiving every objects from the local database
-        ArrayList<Product> localProducts = fetchFromLocalDb(Product.class, tableName);
+        ArrayList<T> localProducts = fetchFromLocalDb(requestedType, tableName);
 
         // Iterates throught the list of objects in the database and removes them if they are not in the remoteList
         if (localProducts != null)

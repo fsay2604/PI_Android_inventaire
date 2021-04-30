@@ -27,6 +27,7 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pi_android_inventaire.PIAndroidInventaire;
+import com.example.pi_android_inventaire.interfaces.SyncableModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -35,18 +36,18 @@ import java.util.ArrayList;
 /**
  * Classe representant une reservation.
  */
-public class Reservation implements Serializable { // l<implementation de Serializable permet de passer l'objet en extra a l'intent et de le recuperer.
+public class Reservation implements Serializable, SyncableModel { // l<implementation de Serializable permet de passer l'objet en extra a l'intent et de le recuperer.
 
     @SerializedName("id")
     private int id;
 
-    @SerializedName("produit_id")
+    @SerializedName("produitId")
     private int produit_id;
 
-    @SerializedName("etat_id")
+    @SerializedName("etatReservationId")
     private int etat_id;
 
-    @SerializedName("numero_utilisateur")
+    @SerializedName("utilisateurId")
     private int numero_utilisateur;
 
     @SerializedName("date_retour_prevue")
@@ -55,7 +56,7 @@ public class Reservation implements Serializable { // l<implementation de Serial
     @SerializedName("quantite")
     private int quantite;
 
-    @SerializedName("date_retour_reel")
+    @SerializedName("DateRetourReel")
     private String date_retour_reel;
 
     private Product p;
@@ -283,6 +284,7 @@ public class Reservation implements Serializable { // l<implementation de Serial
         // Construction du conteneur des informations a update
         //ValuesToUpdate.put("db_col_name", values_to_put);
         ContentValues ValuesToUpdate = new ContentValues();
+        ValuesToUpdate.put("id",Integer.toString(this.id));
         ValuesToUpdate.put("etat_reservation_id",Integer.toString(this.etat_id));
         ValuesToUpdate.put("produit_id",Integer.toString(this.produit_id));
         ValuesToUpdate.put("numero_utilisateur_id",Integer.toString(this.numero_utilisateur));
@@ -292,23 +294,6 @@ public class Reservation implements Serializable { // l<implementation de Serial
 
         // Update
         DB.update("reservation", ValuesToUpdate,"id = ?", new String[] {Integer.toString(this.id)});
-    }
-
-    /**
-     * Fonction qui va permettre de détruire cette reservation de la BD si elle est encore en attente
-     *
-     */
-   public void delete_from_db()
-    {
-        if(this.etat_id == 1) // 1= En attente
-        {
-            // Aller chercher la DB
-            SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
-
-            // Suppression de l'enregistrement
-            String query = "Delete from reservation WHERE id = ?";
-            DB.execSQL(query, new String[] {Integer.toString(this.id)} );
-        }
     }
 
     /**
@@ -348,6 +333,81 @@ public class Reservation implements Serializable { // l<implementation de Serial
         }
 
         return all_reservations;
+    }
+
+    @Override
+    public SyncableModel initializeFromCursor(Cursor cursor) {
+        this.id = cursor.getInt(0);
+        this.etat_id = cursor.getInt(1);
+        this.produit_id = cursor.getInt(2);
+        this.numero_utilisateur = cursor.getInt(3);
+        this.date_retour_prevue = cursor.getString(4);
+        this.quantite = cursor.getInt(5);
+        this.date_retour_reel = cursor.getString(6);
+
+        return this;
+    }
+
+    @Override
+    public void insertIntoDb() {
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+        String countQuery = "SELECT id FROM reservation WHERE id=" + this.id;
+        Cursor cursor = DB.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        if(count > 0)
+        {
+            // Update dans la BD
+            this.update_db();
+        }
+        else
+        {
+            // Ajout dans la BD
+            String query = "INSERT INTO reservation (id,etat_reservation_id, produit_id, numero_utilisateur_id, date_retour_prevue, quantite, date_retour_reel) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            DB.execSQL(query, new String[]{ Integer.toString(this.id) , Integer.toString(this.etat_id), Integer.toString(this.produit_id), Integer.toString(this.numero_utilisateur), this.date_retour_prevue, Integer.toString(this.quantite), this.date_retour_reel});
+        }
+        cursor.close();
+    }
+
+    /**
+     * Fonction qui va permettre de détruire cette reservation de la BD si elle est encore en attente
+     *
+     */
+    @Override
+    public void deleteFromDb() {
+        if(this.etat_id == 1) // 1= En attente
+        {
+            // Aller chercher la DB
+            SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+            // Suppression de l'enregistrement
+            String query = "Delete from reservation WHERE id = ?";
+            DB.execSQL(query, new String[] {Integer.toString(this.id)} );
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Reservation other = (Reservation) obj;
+        if (id != other.id)
+            return false;
+        if (etat_id != other.etat_id)
+            return false;
+        if (produit_id != other.produit_id)
+            return false;
+        if (numero_utilisateur != other.numero_utilisateur)
+            return false;
+        if (!date_retour_prevue.equals(other.date_retour_prevue))
+            return false;
+        if (quantite != other.quantite)
+            return false;
+        return date_retour_reel.equals(other.date_retour_reel);
     }
 }
 

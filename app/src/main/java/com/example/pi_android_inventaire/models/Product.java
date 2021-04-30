@@ -67,14 +67,6 @@ public class Product implements SyncableModel {
     /**
      * qteReserve
      */
-    @SerializedName("qte_reserve")
-    private Integer qteReserve;
-    /**
-     * qteDefectueux
-     */
-    @SerializedName("qte_defectueux")
-    private Integer qteDefectueux;
-
 
 
     public int getId() {
@@ -144,9 +136,7 @@ public class Product implements SyncableModel {
         this.description = cursor.getString(3);
         this.commentaire = cursor.getString(4);
         this.qteDisponible = cursor.getInt(5);
-        this.qteDefectueux = cursor.getInt(6);
-        this.qteReserve = cursor.getInt(7);
-        this.image = cursor.getColumnName(8);
+        this.image = cursor.getString(6);
         return this;
     }
 
@@ -181,31 +171,10 @@ public class Product implements SyncableModel {
         SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
 
         // Suppression de l'enregistrement
-        Cursor cursor = DB.rawQuery("Delete from produit WHERE id = ?", new String[]{Integer.toString(this.id)});
-
-        // Fermeture du curseur.
-        cursor.close();
+        DB.execSQL("Delete from produit WHERE id = ?", new String[]{Integer.toString(this.id)});
     }
 
-    public Integer getQteReserve() {
-        return qteReserve;
-    }
-
-    public void setQteReserve(Integer qteReserve) {
-        this.qteReserve = qteReserve;
-    }
-
-    public Integer getQteDefectueux() {
-        return qteDefectueux;
-    }
-
-    public void setQteDefectueux(Integer qteDefectueux) {
-        this.qteDefectueux = qteDefectueux;
-    }
-
-    }
     public Product get_produit_by_id(int id) {
-
         int id_produit = 0;
         int categorie = 0;
         String nom = "";
@@ -248,23 +217,16 @@ public class Product implements SyncableModel {
         Product other = (Product) obj;
         if (id != other.id)
             return false;
-        if (categorie != other.categorie)
+        if (!categorie.equals(other.categorie))
             return false;
-        if (nom != other.nom)
+        if (!nom.equals(other.nom))
             return false;
-        if (description != other.description)
+        if (!description.equals(other.description))
             return false;
-        if (commentaire != other.commentaire)
+        if (!commentaire.equals(other.commentaire))
             return false;
-        if (qteDisponible != other.qteDisponible)
+        if (!qteDisponible.equals(other.qteDisponible))
             return false;
-        if (image != other.image)
-            return false;
-        if (qteDefectueux != other.qteDefectueux)
-            return false;
-        if (qteReserve != other.qteReserve)
-            return false;
-
-        return true;
+        return image.equals(other.image);
     }
 }

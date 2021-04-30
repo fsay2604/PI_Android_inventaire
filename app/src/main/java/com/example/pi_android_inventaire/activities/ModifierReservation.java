@@ -139,12 +139,12 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
 
                 r.setQuantite(Integer.parseInt(String.valueOf(qty.getText())));
                 r.setDate_retour_prevue(String.valueOf(date_retour.getText()));
-                r.update_db();
+                r.insertIntoDb();
                 Toast.makeText(this, "Reservation mise à jour avec succès.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_modifierReservation_supprimer:
                 // Supprime la reservation de la BD
-                r.delete_from_db();
+                r.deleteFromDb();
                 Toast.makeText(this, "Reservation supprimer avec succès.", Toast.LENGTH_SHORT).show();
                 finish(); // ferme cette activite puisque cette reservation n'existe plus.
                 break;

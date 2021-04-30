@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class FireBaseMessagingService extends FirebaseMessagingService {
 
-    private static final String apiUpdateTokenBaseUrl = "https://7cb6dae8616b.ngrok.io/api/users/";
+    private static final String apiUpdateTokenBaseUrl = PIAndroidInventaire.apiUrlDomain + "users/";
 
     @Override
     public void onNewToken(String token) {
@@ -53,15 +53,25 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
 
             Map<String, String> messageData = remoteMessage.getData();
 
-            // If a table needs to be updated
-            if (messageData.containsKey("tableUpdate"))
+            // If one or more tables needs to be updated
+            if (messageData.containsKey("updatedTable"))
             {
                 // Getting the table name
-                String tableName = messageData.get("tableUpdate");
+                String[] tables = messageData.get("updatedTable").split(":");
 
-                // Requesting a table update for the specified table to the DbSyncService
+                // Creating our dbSyncerService to sync the database
                 DbSyncService dbSyncer = new DbSyncService();
-                dbSyncer.syncTable(tableName);
+
+                // Syncing all the received tables
+                for (String tableName :
+                        tables) {
+                    // Requesting a table update for the specified table to the DbSyncService
+                    dbSyncer.syncTable(tableName);
+                }
+
+
+
+
             }
 
         }

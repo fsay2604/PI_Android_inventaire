@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // TEST DU API CALLER
 
-        ArrayList<Product> products = PIAndroidInventaire.apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
+        ArrayList<Product> products = PIAndroidInventaire.apiCaller.getList(Product.class,PIAndroidInventaire.apiUrlDomain + "produits?page=1");
 
-        Product product = PIAndroidInventaire.apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
+        Product product = PIAndroidInventaire.apiCaller.getSingleOrDefault(Product.class, PIAndroidInventaire.apiUrlDomain + "produits/2");
 
         int alllo = 0;
         // FIN TEST DU API CALLER
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             /* Authenticating the User via the API and setting the current application's user
              * to the retreived user from the database
              */
-            currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, "https://7cb6dae8616b.ngrok.io/api/login");
+            currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
 
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
