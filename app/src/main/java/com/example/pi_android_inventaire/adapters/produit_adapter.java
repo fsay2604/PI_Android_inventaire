@@ -80,7 +80,7 @@ public class produit_adapter extends RecyclerView.Adapter<produit_adapter.MyView
             id = itemView.findViewById(R.id.id);
             categorie = itemView.findViewById(R.id.categorie);
             qte = itemView.findViewById(R.id.qte);
-            image = itemView.findViewById(R.id.imageView);
+            //image = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);
         }
 
@@ -92,7 +92,7 @@ public class produit_adapter extends RecyclerView.Adapter<produit_adapter.MyView
             intent.putExtra("categorie",categorie.getText().toString());
             intent.putExtra("qte",qte.getText().toString());
             intent.putExtra("id",id.getText().toString());
-            //intent.putExtra("image",images[getLayoutPosition()]);
+            //intent.putExtra("image","noimage.jpg");
             context.startActivity(intent);
         }
     }

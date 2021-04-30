@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Product {
     public Product(int id, int categorie, String nom, String description, String commentaire, int qteDisponible, String image) {
         this.id = id;
@@ -140,7 +142,7 @@ public class Product {
             else
             {
                 DB.rawQuery("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible,image) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?)", new String[]{Integer.toString(this.id),Integer.toString(this.categorie),this.nom,this.description,this.commentaire,Integer.toString(this.qteDisponible),this.image});
+                        "VALUES (?,?,?,?,?,?,?)", new String[]{Integer.toString(this.id),Integer.toString(this.categorie),this.nom,this.description,this.commentaire,Integer.toString(this.qteDisponible),this.image});
             }
             cursor.close();
 
@@ -161,5 +163,38 @@ public class Product {
         cursor.close();
 
 
+    }
+    public Product get_produit_by_id(int id) {
+
+        int id_produit = 0;
+        int categorie = 0;
+        String nom = "";
+        String description = "";
+        String commentaire = "";
+        int qte_disponible = 0;
+        String image = "";
+
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+        Cursor c = DB.rawQuery("SELECT  * FROM produit WHERE id = ?", new String[]{Integer.toString(id)}, null);
+
+        if(c.moveToFirst()){
+            do{
+
+                //assing values
+                id_produit = c.getInt(0);
+                categorie = c.getInt(1);
+                nom = c.getString(2);
+                description = c.getString(3);
+                commentaire = c.getString(4);
+                qte_disponible = c.getInt(5);
+                image = c.getString(6);
+
+
+
+            }while(c.moveToNext());
+        }
+        Product produit = new Product(id_produit,categorie,nom,description,commentaire,qte_disponible,image);
+        c.close();
+        return produit;
     }
 }

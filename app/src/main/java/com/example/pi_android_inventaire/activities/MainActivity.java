@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupMenu();
 
         // Test Query BD insert
-        Reservation TestReservation = new Reservation(1,1,1,1,"2021-04-26",5,"");
+//        Reservation TestReservation = new Reservation(1,1,1,1,"2021-04-26",5,"");
        // TestReservation.put_in_db();
 
         /*TestReservation.setDate_retour_reel("2025-06-27");

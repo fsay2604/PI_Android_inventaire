@@ -17,6 +17,7 @@ package com.example.pi_android_inventaire.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class infos_produit extends AppCompatActivity {
         TextView descriptionView = (TextView)findViewById(R.id.description);
         TextView categorieView = (TextView)findViewById(R.id.categorie);
         TextView quantiteView = (TextView) findViewById(R.id.quantite);
+        //ImageView image = (ImageView) findViewById(R.id.imageView);
 
         String nom = data.getStringExtra("nom");
         String description = data.getStringExtra("description");
@@ -50,6 +52,8 @@ public class infos_produit extends AppCompatActivity {
         descriptionView.setText(description);
         categorieView.setText(categorie);
         quantiteView.setText(qte);
+        //image.setImageResource(sourceImage);
+
         Button btn_reserver = (Button) findViewById(R.id.reserver);
 
         btn_reserver.setOnClickListener(new View.OnClickListener(){

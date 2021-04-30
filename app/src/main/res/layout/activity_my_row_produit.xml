@@ -42,7 +42,7 @@
             android:layout_width="246dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_menu_crop" />
+            app:srcCompat="@drawable/noimage" />
 
         <LinearLayout
             android:layout_width="match_parent"
