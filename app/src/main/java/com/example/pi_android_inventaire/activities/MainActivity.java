@@ -68,8 +68,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Menu
         setupMenu();
-    }
 
+        // Test Query BD insert
+//        Reservation TestReservation = new Reservation(1,1,1,1,"2021-04-26",5,"");
+       // TestReservation.put_in_db();
+
+        /*TestReservation.setDate_retour_reel("2025-06-27");
+        TestReservation.update_db();
+
+        Product p = new Product();
+        p.setId(800);
+        p.setNom("Un produit");
+        p.setCategorie(1);
+        p.setImage("allo.png");
+        p.setQteDisponible(50);
+        p.setDescription("Salut je suis le produit"+Integer.toString(p.getId()));
+
+        TestReservation.setProduit_id(p.getId());
+        TestReservation.update_db();*/
+    }
 
     /**
      * Fonction qui initialise les bouttons du menu afin de rediriger vers les bonnes pages
@@ -116,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intent = new Intent(this, VoirReservations.class);
-                startActivity(intent);
+                Intent intentVoirReservation = new Intent(this, VoirReservations.class);
+                startActivity(intentVoirReservation);
                 break;
             case R.id.login_btn:
                 // redirection vers la page de connexion

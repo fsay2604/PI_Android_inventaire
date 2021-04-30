@@ -122,10 +122,16 @@ public class Reservation implements Serializable { // l<implementation de Serial
 
     /**
      * Set reservation produit_id
+     * Et set le this.produit associé a cette produit_id
      * @param produit_id
      */
     public void setProduit_id(int produit_id) {
+
         this.produit_id = produit_id;
+        /**
+         * TODO: Decommenter la fonction setProduit quand il y aura de l'info dans la BD.
+         */
+        //this.setProduit(); // Met a jour l'objet produit
     }
 
     /**
@@ -201,29 +207,38 @@ public class Reservation implements Serializable { // l<implementation de Serial
     }
 
     /**
-     * Permet d'associé le bon objet de produit en fonction de l'id
-     *
+     * Permet d'associé le bon objet de produit en fonction de l'id_produit
+     * Il faut que this.produit_id ai ete set avant.
+     * TODO: Requete a tester quand des produits auront ete ajouter a la bds
      */
-    private void setProduit() {
-        // QUERY = 'SELECT * FROM Produits WHERE id = this.produit_id'
-        // this.p = QueryResponse
-        this.p = p;
+   private void setProduit() {
+
+        if(this.produit_id != 0) {
+            // Aller chercher la DB
+            SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+            // Query
+            Cursor c = DB.rawQuery("SELECT * FROM produit WHERE id = ?", new String[]{Integer.toString(this.produit_id)});
+
+            // Parcours l'ensemble de la reponse du Select contenu dans le cursor c
+            if (c.moveToFirst()) {
+                Product p = new Product();
+
+                // Construction de du produit
+                p.setId(c.getInt(1));
+                p.setCategorie(c.getInt(2));
+                p.setNom(c.getString(3));
+                p.setDescription(c.getString(4));
+                p.setCommentaire(c.getString(5));
+                p.setQteDisponible(c.getInt(6));
+                p.setImage(c.getString(9));
+
+                // Set le produit construit a la variable this.produit
+                this.p = p;
+            }
+        }
     }
 
-    /**
-     * Retourne une reservations associé au user_id.
-     * @param user_id   le user_id de l'utilisateur.
-     * @return ArrayList<Reservation>    Contient tout les reservations associées au user_id.
-     */
-    public Reservation get_reservation(int user_id)
-    {
-        // Query to DB locale (mise a jour au depart de l'appli avec la classe api, si ya connection)
-        // String query = 'SELECT * FROM Reservation WHERE numero_utilisateur = user_id'; + join table produit pour le nom
-        // queryResponse = db.execSQL(query);
-        // r = queryResponse;
-
-        return this;
-    }
 
     /**
      * get etat_id
@@ -241,23 +256,47 @@ public class Reservation implements Serializable { // l<implementation de Serial
         this.etat_id = etat_id;
     }
 
+
+
     /**
      * Envoit l'objet dans la bd locale si il n'existe pas (modifierReservation et FaireReservation)
+     *
      */
-    public void put_in_db(Context ct)
+    public void put_in_db()
     {
         // Aller chercher la DB
         SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
 
         // Ajout dans la BD
-        Cursor cursor = DB.rawQuery("", new String[]{Integer.toString(this.id)});
+        String query = "INSERT INTO reservation (etat_reservation_id, produit_id, numero_utilisateur_id, date_retour_prevue, quantite, date_retour_reel) VALUES (?, ?, ?, ?, ?, ?)";
+        DB.execSQL(query, new String[]{ Integer.toString(this.etat_id), Integer.toString(this.produit_id), Integer.toString(this.numero_utilisateur), this.date_retour_prevue, Integer.toString(this.quantite), this.date_retour_reel});
+    }
 
-        // Fermeture du curseur.
-        cursor.close();
+    /**
+     * Update de l'enregistrement
+     */
+    public void update_db()
+    {
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+        // Construction du conteneur des informations a update
+        //ValuesToUpdate.put("db_col_name", values_to_put);
+        ContentValues ValuesToUpdate = new ContentValues();
+        ValuesToUpdate.put("etat_reservation_id",Integer.toString(this.etat_id));
+        ValuesToUpdate.put("produit_id",Integer.toString(this.produit_id));
+        ValuesToUpdate.put("numero_utilisateur_id",Integer.toString(this.numero_utilisateur));
+        ValuesToUpdate.put("date_retour_prevue",this.date_retour_prevue);
+        ValuesToUpdate.put("quantite",Integer.toString(this.quantite));
+        ValuesToUpdate.put("date_retour_reel",this.date_retour_reel);
+
+        // Update
+        DB.update("reservation", ValuesToUpdate,"id = ?", new String[] {Integer.toString(this.id)});
     }
 
     /**
      * Fonction qui va permettre de détruire cette reservation de la BD si elle est encore en attente
+     *
      */
    public void delete_from_db()
     {
@@ -267,13 +306,49 @@ public class Reservation implements Serializable { // l<implementation de Serial
             SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
 
             // Suppression de l'enregistrement
-            Cursor cursor = DB.rawQuery("Delete from Reservation WHERE id = ?", new String[]{Integer.toString(this.id)});
-
-            // Fermeture du curseur.
-            cursor.close();
-
+            String query = "Delete from reservation WHERE id = ?";
+            DB.execSQL(query, new String[] {Integer.toString(this.id)} );
         }
     }
 
+    /**
+     * Fonction qui retourne l'ensemble des réservations avec l'etat 'en attente' relié a un utilisateur
+     * @param User_id   Le numero de l'utilisateur pour lequel on veut avoir ses reservations
+     * @return ArrayList<Reservation> contenant l'ensemble des reservation 'en attente' de l'utilisateur spécifier en parametre,
+     */
+    public static ArrayList<Reservation> get_all_reservations(int User_id)
+    {
+        // Conteneur des reservations a retourné
+        ArrayList<Reservation> all_reservations = new ArrayList<Reservation>();
 
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+        // Query
+        Cursor c = DB.rawQuery("SELECT * FROM reservation WHERE numero_utilisateur_id = ? AND etat_reservation_id = 1", new String[] {Integer.toString(User_id)} ); //etat_reservation_id = 1 -> reservation en attente
+
+        // Parcours l'ensemble de la reponse du Select contenu dans le cursor c
+        if(c.moveToFirst())
+        {
+            do {
+                Reservation r = new Reservation();
+
+                // Construction de la reservation
+                r.setId(c.getInt(0));
+                r.setEtat_id(c.getInt(1));
+                r.setProduit_id(c.getInt(2));
+                r.setNumero_utilisateur(c.getInt(3));
+                r.setDate_retour_prevue(c.getString(4));
+                r.setQuantite(c.getInt(5));
+                r.setDate_retour_reel(c.getString(6));
+
+                // Ajout de la reservation a l'array que l'on retourne
+                all_reservations.add(r);
+            }while(c.moveToNext());  // Avance d'une row
+        }
+
+        return all_reservations;
+    }
 }
+
+
