@@ -4,9 +4,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.pi_android_inventaire.PIAndroidInventaire;
+import com.example.pi_android_inventaire.interfaces.SyncableModel;
 import com.google.gson.annotations.SerializedName;
 
-public class Product {
+public class Product implements SyncableModel {
     public Product(int id, int categorie, String nom, String description, String commentaire, int qteDisponible, String image) {
         this.id = id;
         this.nom = nom;
@@ -62,7 +63,16 @@ public class Product {
      */
     @SerializedName("image")
     private String image;
-
+    /**
+     * qteReserve
+     */
+    @SerializedName("qte_reserve")
+    private Integer qteReserve;
+    /**
+     * qteDefectueux
+     */
+    @SerializedName("qte_defectueux")
+    private Integer qteDefectueux;
 
 
 
@@ -123,13 +133,30 @@ public class Product {
     }
 
     /**
+     * Fonction qui va permettre l'initialisation a partir d'un curseur
+     */
+    @Override
+    public Product initializeFromCursor(Cursor cursor) {
+        this.id = cursor.getInt(0);
+        this.categorie = cursor.getInt(1);
+        this.nom = cursor.getString(2);
+        this.description = cursor.getString(3);
+        this.commentaire = cursor.getString(4);
+        this.qteDisponible = cursor.getInt(5);
+        this.qteDefectueux = cursor.getInt(6);
+        this.qteReserve = cursor.getInt(7);
+        this.image = cursor.getColumnName(8);
+        return this;
+    }
+
+    /**
      * Fonction qui va permettre d'insérer un produit à la bd si il n'est pas déjà dans la bd
      */
-    public void insert_from_bd()
+    public void insertIntoDb()
     {
             // Aller chercher la DB
             SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
-            String countQuery = "SELECT COUNT(*) FROM produit WHERE id=" + this.id;
+            String countQuery = "SELECT id FROM produit WHERE id=" + this.id;
             Cursor cursor = DB.rawQuery(countQuery, null);
             int count = cursor.getCount();
             if(count > 0)
@@ -139,17 +166,15 @@ public class Product {
             }
             else
             {
-                DB.rawQuery("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible,image) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?)", new String[]{Integer.toString(this.id),Integer.toString(this.categorie),this.nom,this.description,this.commentaire,Integer.toString(this.qteDisponible),this.image});
+                DB.rawQuery("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible, qte_reserve, qte_defectueux,image) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?)", new String[]{Integer.toString(this.id),Integer.toString(this.categorie),this.nom,this.description,this.commentaire,Integer.toString(this.qteDisponible), Integer.toString(this.qteReserve), Integer.toString(this.qteDefectueux),this.image});
             }
             cursor.close();
-
-
     }
     /**
      * Fonction qui va permettre de supprimer un produit à la bd
      */
-    public void delete_from_bd()
+    public void deleteFromDb()
     {
         // Aller chercher la DB
         SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
@@ -159,7 +184,52 @@ public class Product {
 
         // Fermeture du curseur.
         cursor.close();
+    }
 
+    public Integer getQteReserve() {
+        return qteReserve;
+    }
 
+    public void setQteReserve(Integer qteReserve) {
+        this.qteReserve = qteReserve;
+    }
+
+    public Integer getQteDefectueux() {
+        return qteDefectueux;
+    }
+
+    public void setQteDefectueux(Integer qteDefectueux) {
+        this.qteDefectueux = qteDefectueux;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        if (id != other.id)
+            return false;
+        if (categorie != other.categorie)
+            return false;
+        if (nom != other.nom)
+            return false;
+        if (description != other.description)
+            return false;
+        if (commentaire != other.commentaire)
+            return false;
+        if (qteDisponible != other.qteDisponible)
+            return false;
+        if (image != other.image)
+            return false;
+        if (qteDefectueux != other.qteDefectueux)
+            return false;
+        if (qteReserve != other.qteReserve)
+            return false;
+
+        return true;
     }
 }

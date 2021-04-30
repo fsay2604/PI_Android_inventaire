@@ -13,11 +13,20 @@ import java.util.concurrent.Executors;
 
 public class PIAndroidInventaire extends Application {
     private static SQLiteDatabase mydb;
+    
+    // Thread pool for background services execution
     public static ExecutorService executorService = Executors.newFixedThreadPool(4);
 
+    // ApiCaller to make calls to the api using the background threads
+    public static ApiCaller apiCaller;
+    
     @Override
     public void onCreate() {
         super.onCreate();
+        // Creating the apiCaller
+        PIAndroidInventaire.apiCaller = new ApiCaller(PIAndroidInventaire.executorService);
+
+        // Initializing/Creating the database
         mydb = openOrCreateDatabase("pi_inventaire_android",MODE_PRIVATE,null);
         //mydb.execSQL("DROP TABLE produit");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS produit(id INTEGER PRIMARY KEY,categorie_id INTEGER NOT NULL,nom VARCHAR NOT NULL,description VARCHAR,commentaire VARCHAR,qte_disponible INTEGER NOT NULL,qte_reserve INTEGER NOT NULL,qte_defectueux INTEGER NOT NULL,image VARCHAR,FOREIGN KEY(categorie_id) REFERENCES categorie(id))");

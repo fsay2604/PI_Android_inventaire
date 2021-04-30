@@ -114,10 +114,11 @@ public class Connexion extends AppCompatActivity {
                     return;
                 }
 
-                progessBar.setVisibility(View.VISIBLE);
+                //progessBar.setVisibility(View.VISIBLE);
 
                 Intent intentmain = new Intent(Connexion.this,MainActivity.class);
-                intentmain.putExtra("userId", 13);
+                intentmain.putExtra("email", courriel);
+                intentmain.putExtra("password", motDePasse);
                 startActivity(intentmain);
                 // Toast.makeText(Connexion.this, "Courriel: "+courriel+" Mot de passe: "+motDePasse,Toast.LENGTH_LONG).show();
             }

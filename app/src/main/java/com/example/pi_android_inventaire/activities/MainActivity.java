@@ -59,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  Button btn_inscription;
 
 
-    //ApiCaller
-    public static ApiCaller apiCaller;
+
 
     // Utilisateur de l'appli??
     public static User currentUser;
@@ -72,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setTitle("Accueil");
 
         // TEST DU API CALLER
-        apiCaller = new ApiCaller(PIAndroidInventaire.executorService);
-        ArrayList<Product> products = apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
 
-        Product product = apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
+        ArrayList<Product> products = PIAndroidInventaire.apiCaller.getList(Product.class,"https://7cb6dae8616b.ngrok.io/api/produits?page=1");
+
+        Product product = PIAndroidInventaire.apiCaller.getSingleOrDefault(Product.class, "https://7cb6dae8616b.ngrok.io/api/produits/2");
 
         int alllo = 0;
         // FIN TEST DU API CALLER
@@ -83,8 +82,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TEST DE FirebaseMessaging
         Bundle b = getIntent().getExtras();
         if(b != null){
-            int userId = b.getInt("userId");
-            this.currentUser = new User(userId, "marc.xd866@gmail.com", "");
+            // Extracting the user info from the bundled data
+            String email = b.getString("email");
+            String password = b.getString("password");
+
+            /* Authenticating the User via the API and setting the current application's user
+             * to the retreived user from the database
+             */
+            currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, "https://7cb6dae8616b.ngrok.io/api/login");
 
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -101,8 +106,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // Log and toast
                             String msg = getString(R.string.msg_token_fmt, token);
                             Log.d("FirebaseToken", msg);
-                            MainActivity.currentUser.setFirebaseToken(token);
-                            FireBaseMessagingService.sendRegistrationToServer(token);
+                            /* Send the token to the server if it is different from the one
+                             * currently stored in the remote database
+                             */
+                            if ( !MainActivity.currentUser.getFirebaseToken().equals(token) )
+                            {
+                                MainActivity.currentUser.setFirebaseToken(token);
+                                FireBaseMessagingService.sendRegistrationToServer(token);
+                            }
                             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     });
