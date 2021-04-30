@@ -18,6 +18,7 @@ public class Product implements SyncableModel {
         this.categorie = categorie;
         this.image = image;
     }
+
     public Product() {
         this.id = 0;
         this.nom = "";
