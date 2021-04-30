@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  Button btn_compte;
     private  Button btn_connexion;
     private  Button btn_inscription;
+    private Button  rapportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_inscription=(Button) findViewById(R.id.Suscribe_btn);
         btn_inscription.setOnClickListener(this);
+
+        rapportButton=(Button) findViewById(R.id.rapportButton);
+        rapportButton.setOnClickListener(this);
+
+
     }
 
     /**
@@ -120,6 +126,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_inscription:
                 // redirection vers la page d'enregistrement
+                break;
+            case R.id.rapportButton:
+                Intent intentRapport = new Intent(MainActivity.this,Liste_Rappots.class);
+                startActivity(intentRapport);
                 break;
             default:
                 break;

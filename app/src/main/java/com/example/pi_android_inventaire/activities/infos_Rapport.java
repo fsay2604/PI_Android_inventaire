@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.pi_android_inventaire.R;
 
-public class Rapport extends AppCompatActivity{
+public class infos_Rapport extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

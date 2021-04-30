@@ -16,6 +16,7 @@ public class Product {
         this.categorie = categorie;
         this.image = image;
     }
+
     public Product() {
         this.id = 0;
         this.nom = "";
