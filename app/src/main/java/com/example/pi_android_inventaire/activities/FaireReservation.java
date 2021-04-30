@@ -31,10 +31,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.models.Reservation;
+
 public class FaireReservation extends AppCompatActivity implements View.OnClickListener {
     // Selection de date avec fenetre popup
     private TextView mDisplayDate;
@@ -44,13 +48,41 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
     private Button btn_reserver;
     private Button btn_annuler;
 
+    private TextView nom_etudiant;
+    private TextView nom_produit;
+    private EditText qty;
+
+    private Reservation r;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faire_reservation);
 
-        // Gere la fenetre popup pour la date
+        // Gere la fenetre popup pour la selectionner une date
         SelectDateWithPopup();
+        SetupButton();
+
+        // Recuperation de l'id du produit passer dans l'intent
+        // Et assignation de cette id a la reservation.
+        // La variable Product p de l'objet Reservation s'initialise automatiquement lors de l'appel de r.setProduit_id().
+        r = new Reservation();
+
+        r.setProduit_id(Integer.parseInt(getIntent().getExtras().getString("id")));
+
+        /**
+         * TODO: Decommenter 1 quand  on aura acces au nom de l'utilisateur
+         */
+        //nom_produit = (TextView) findViewById(R.id.textView_faireReservation_nomProduit);
+        //nom_produit.setText(Produit.get_produit_by_id(getIntent().getExtras().getInt("id")).getNom());
+
+
+
+        /**
+         * TODO:Changer le text pour avoir le nom de l'etudiant
+         */
+        nom_etudiant = (TextView) findViewById(R.id.textView_ModifierReservation_nomClient);
+
     }
 
     /**
@@ -106,8 +138,21 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         // Switch case en fonction du bouton appuyer
         switch (v.getId()) {
             case R.id.btn_faireReservation_reserve:
-                // Lance la requete api pour ajouter une reservation / stock dans la BD la reservation si pas de connection
-                // put_in_db();
+                // Batir l'objet r en fonction des champs du formulaire
+                qty = (EditText) findViewById(R.id.editTextNumber_faireReservation_quantite);
+                r.setQuantite(Integer.parseInt(String.valueOf(qty.getText())));
+                r.setEtat_id(1);    // 1 == En attente
+                r.setDate_retour_prevue(String.valueOf(mDisplayDate.getText()));
+
+                /**
+                 * TODO: Changer 1 pour l'id de l'utilisateur quand on l'aura
+                 */
+                r.setNumero_utilisateur(1);
+                r.setDate_retour_reel("");
+
+                r.put_in_db();  // Enregistre dans la BD la réservation
+                Toast.makeText(this, "Reservation ajouter avec succès.", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             case R.id.btn_faireReservation_annuler:
                 finish(); // ferme cette activite sans sauvegarder la reservation

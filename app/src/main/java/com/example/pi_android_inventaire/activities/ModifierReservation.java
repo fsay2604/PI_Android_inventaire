@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.models.Reservation;
@@ -53,6 +54,8 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
     private TextView date;
     private EditText qte;
 
+    private Reservation r;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +65,13 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
         SelectDateWithPopup();
 
         // Recuperation de l'objet reservation pour preremplir les champs.
-        Reservation r = (Reservation) getIntent().getSerializableExtra("Reservation");
+        r = (Reservation) getIntent().getSerializableExtra("Reservation");
 
         nomProduit = (TextView) findViewById(R.id.textView_modifierReservation_nomProduit);
-        nomProduit.setText(Integer.toString(r.getProduit_id()));                                    // A changer pour avoir le nom du produit a la place de son id
+        /**
+         * TODO: Changer ce setText pour avoir le nom du produit a la place de son id -> nomProduit.setText(r.getProduit().getNom());
+         */
+        nomProduit.setText(Integer.toString(r.getProduit_id()));
 
         date = (TextView) findViewById(R.id.textView_modifierReservation_selectDate);
         date.setText(r.getDate_retour_prevue());
@@ -120,17 +126,27 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
     /**
      * Gere les clicks des boutons confirmer/supprimer de la view.
      * @param v
+     *
      */
     @Override
     public void onClick(View v) {
         // Switch case en fonction du bouton appuyer
         switch (v.getId()) {
             case R.id.btn_modifierReservation_confirmer:
-                // Lance la requete api pour update une reservation / stock dans la BD la reservation si pas de connection
+                // Update la reservation dans la base de données
+                EditText qty = (EditText) findViewById(R.id.editTextNumber_modifierReservation_quantite);
+                TextView date_retour = (TextView) findViewById(R.id.textView_modifierReservation_selectDate);
+
+                r.setQuantite(Integer.parseInt(String.valueOf(qty.getText())));
+                r.setDate_retour_prevue(String.valueOf(date_retour.getText()));
+                r.update_db();
+                Toast.makeText(this, "Reservation mise à jour avec succès.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_modifierReservation_supprimer:
-                // Lance la requete api pour supprimer cette reservation
-                // finish(); // ferme cette activite puisque cette reservation n'existe plus.
+                // Supprime la reservation de la BD
+                r.delete_from_db();
+                Toast.makeText(this, "Reservation supprimer avec succès.", Toast.LENGTH_SHORT).show();
+                finish(); // ferme cette activite puisque cette reservation n'existe plus.
                 break;
         }
     }

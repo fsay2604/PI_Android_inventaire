@@ -79,9 +79,8 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
             public void onClick(View v) {
                 Intent i = new Intent(mContext, ModifierReservation.class);
 
-                // Passe l'objet de la reservtation dans l'intent pour preremplir les champs dans la page ModifierReservation
+                // Passe l'objet de la reservation dans l'intent pour preremplir les champs dans la page ModifierReservation
                 i.putExtra("Reservation", mAll_reservations.get(position));
-                i.putExtras(i);
                 holder.context.startActivity(i);
             }
         });
