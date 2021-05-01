@@ -82,7 +82,7 @@ public class Rapport implements Serializable {
 
         // Fermeture du curseur.
         //cursor.close();
-        
+
     }
 
     public static ArrayList<Rapport> get_all_rapport(int numero_utilisateur)
