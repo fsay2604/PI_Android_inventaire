@@ -36,7 +36,7 @@ public class PIAndroidInventaire extends Application {
         //mydb.execSQL("DROP TABLE produit");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS produit(id INTEGER PRIMARY KEY,categorie_id INTEGER NOT NULL,nom VARCHAR NOT NULL,description VARCHAR,commentaire VARCHAR,qte_disponible INTEGER NOT NULL,image VARCHAR,FOREIGN KEY(categorie_id) REFERENCES categorie(id))");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS categorie(id INTEGER PRIMARY KEY ,nom VARCHAR)");
-        mydb.execSQL("DROP TABLE reservation");
+        //mydb.execSQL("DROP TABLE reservation");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS reservation(id INTEGER PRIMARY KEY, etat_reservation_id INTEGER NOT NULL,produit_id INTEGER NOT NULL,numero_utilisateur_id INTEGER NOT NULL, date_retour_prevue VARCHAR NOT NULL, quantite INTEGER NOT NULL, date_retour_reel VARCHAR, FOREIGN KEY(etat_reservation_id) REFERENCES etat_reservation(id),FOREIGN KEY(produit_id) REFERENCES produit(id))");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS etat_reservation(id INTEGER PRIMARY KEY , libelle VARCHAR NOT NULL)");
         //mydb.execSQL("DROP TABLE rapport");

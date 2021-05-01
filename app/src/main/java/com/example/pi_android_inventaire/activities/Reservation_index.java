@@ -58,11 +58,9 @@ public class Reservation_index extends AppCompatActivity   implements View.OnCli
     private void setupBtn() {
         // Recuperation des boutons
         btn_faireReservation = (Button) findViewById(R.id.btn_faireReservation);
-        btn_faireReservation.setText(R.string.btn_faireReservation);
         btn_faireReservation.setOnClickListener(this);
 
         btn_voirReservation = (Button) findViewById(R.id.btn_voirReservation);
-        btn_voirReservation.setText(R.string.btn_voirReservation);
         btn_voirReservation.setOnClickListener(this);
     }
     @Override

@@ -48,11 +48,11 @@ public class VoirReservations extends AppCompatActivity {
         setContentView(R.layout.activity_voir_reservations);
 
         // Init du array
-        all_reservations = new ArrayList<Reservation>();
+        all_reservations = new ArrayList<>();
         /**
          * TODO: Changer le parametre User_id de la methode Reservation.get_all_reservations(User_id) pour celui de l'utilisateur connecté.
          */
-        all_reservations = Reservation.get_all_reservations(1);
+        all_reservations = Reservation.get_all_reservations(13);
 
         // Init du recycler
         RecyclerView_VoirReservations = (RecyclerView) findViewById(R.id.Recycler_VoirReservation);
