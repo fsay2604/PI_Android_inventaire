@@ -144,6 +144,7 @@ public class Product implements SyncableModel {
     /**
      * Fonction qui va permettre d'insérer un produit à la bd si il n'est pas déjà dans la bd
      */
+    @Override
     public void insertIntoDb()
     {
             // Aller chercher la DB
@@ -161,11 +162,13 @@ public class Product implements SyncableModel {
                 DB.execSQL("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible,image) " +
                         "VALUES (?,?,?,?,?,?,?)", new String[]{Integer.toString(this.id),Integer.toString(this.categorie),this.nom,this.description,this.commentaire,Integer.toString(this.qteDisponible),this.image});
             }
+
             cursor.close();
     }
     /**
      * Fonction qui va permettre de supprimer un produit à la bd
      */
+    @Override
     public void deleteFromDb()
     {
         // Aller chercher la DB

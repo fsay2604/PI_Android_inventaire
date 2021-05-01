@@ -13,6 +13,7 @@
  ****************************************/
 package com.example.pi_android_inventaire.models;
 
+import com.example.pi_android_inventaire.activities.MainActivity;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
@@ -69,6 +70,9 @@ public class User {
     }
 
     public String getFirebaseToken() {
+        if(firebaseToken== null){
+            return new String("");
+        }
         return firebaseToken;
     }
 

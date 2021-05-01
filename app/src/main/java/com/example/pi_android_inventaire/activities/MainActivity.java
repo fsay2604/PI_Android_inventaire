@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             /* Send the token to the server if it is different from the one
                              * currently stored in the remote database
                              */
+
                             if ( !MainActivity.currentUser.getFirebaseToken().equals(token) )
                             {
                                 MainActivity.currentUser.setFirebaseToken(token);
