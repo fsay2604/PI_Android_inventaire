@@ -222,6 +222,11 @@ public class Rapport implements Serializable, SyncableModel {
 
     @Override
     public void deleteFromDb() {
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+        // Suppression de l'enregistrement
+        DB.execSQL("Delete from rapport WHERE id = ?", new String[]{Integer.toString(this.id)});
 
     }
 }
