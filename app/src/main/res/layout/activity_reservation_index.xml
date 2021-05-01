@@ -24,13 +24,13 @@
             android:id="@+id/btn_faireReservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/btn_faireReservation" />
 
         <Button
             android:id="@+id/btn_voirReservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/btn_voirReservation" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

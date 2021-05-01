@@ -310,7 +310,7 @@ public class Reservation implements Serializable, SyncableModel { // l<implement
         SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
 
         // Query
-        Cursor c = DB.rawQuery("SELECT * FROM reservation WHERE numero_utilisateur_id = ? AND etat_reservation_id = 1", new String[] {Integer.toString(User_id)} ); //etat_reservation_id = 1 -> reservation en attente
+        Cursor c = DB.rawQuery("SELECT * FROM reservation WHERE numero_utilisateur_id = ? AND (etat_reservation_id = 1 OR etat_reservation_id = 2)", new String[] {Integer.toString(User_id)} ); //etat_reservation_id = 1 -> reservation en attente
 
         // Parcours l'ensemble de la reponse du Select contenu dans le cursor c
         if(c.moveToFirst())

@@ -57,14 +57,14 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
 
     @NonNull
     @Override
-    public Reservation_adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.row_voir_reservations, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Reservation_adapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // Produit p = new Produit(); // Creer un produit avec le id contenu dans le mAll_reservations.get(position).getProduit_id()
 
         holder.nomProduit.setText(Integer.toString(mAll_reservations.get(position).getProduit_id())); // Aller chercher le nom du produit avec le id dans la reservation
