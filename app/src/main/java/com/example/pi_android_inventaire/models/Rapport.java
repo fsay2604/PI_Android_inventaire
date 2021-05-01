@@ -227,6 +227,25 @@ public class Rapport implements Serializable, SyncableModel {
 
         // Suppression de l'enregistrement
         DB.execSQL("Delete from rapport WHERE id = ?", new String[]{Integer.toString(this.id)});
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Rapport other = (Rapport) obj;
+        if (id != other.id)
+            return false;
+        if (produit_id != other.produit_id)
+            return false;
+        if (user_id != other.user_id)
+            return false;
+        if (type_rapport_id != other.type_rapport_id)
+            return false;
+        return description.equals(other.description);
     }
 }

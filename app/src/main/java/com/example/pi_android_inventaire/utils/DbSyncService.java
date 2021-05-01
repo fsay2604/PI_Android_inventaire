@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.interfaces.SyncableModel;
 import com.example.pi_android_inventaire.models.Product;
+import com.example.pi_android_inventaire.models.Rapport;
 import com.example.pi_android_inventaire.models.Reservation;
 
 import java.lang.reflect.Constructor;
@@ -61,6 +62,9 @@ public class DbSyncService {
                         synchronizeLocalDatabase(Reservation.class,remoteReservations, tableName);
                         break;
                     case "rapport":
+                        ArrayList<Rapport> remoteReports =  fetchFromRemoteDb(Rapport.class,
+                                PIAndroidInventaire.apiUrlDomain + "rapports?page=1");
+                        synchronizeLocalDatabase(Rapport.class,remoteReports, tableName);
                         break;
                     case "utilisateur":
                         break;
@@ -126,22 +130,23 @@ public class DbSyncService {
 
     private <T extends SyncableModel> void synchronizeLocalDatabase(Class<T> requestedType,ArrayList<T> remoteList, String tableName)
     {
-        // Iterates throught the new list of objects and inserts them into the database
-        for (SyncableModel syncable :
-                remoteList) {
-            syncable.insertIntoDb();
-        }
-
-        // Retreiving every objects from the local database
-        ArrayList<T> localProducts = fetchFromLocalDb(requestedType, tableName);
-
-        // Iterates throught the list of objects in the database and removes them if they are not in the remoteList
-        if (localProducts != null)
-        {
+        if (remoteList != null) {
+            // Iterates throught the new list of objects and inserts them into the database
             for (SyncableModel syncable :
-                    localProducts) {
-                if (!remoteList.contains(syncable)) {
-                    syncable.deleteFromDb();
+                    remoteList) {
+                syncable.insertIntoDb();
+            }
+
+            // Retreiving every objects from the local database
+            ArrayList<T> localList = fetchFromLocalDb(requestedType, tableName);
+
+            // Iterates throught the list of objects in the database and removes them if they are not in the remoteList
+            if (localList != null) {
+                for (SyncableModel syncable :
+                        localList) {
+                    if (!remoteList.contains(syncable)) {
+                        syncable.deleteFromDb();
+                    }
                 }
             }
         }

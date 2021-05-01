@@ -57,7 +57,8 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             if (messageData.containsKey("updatedTable"))
             {
                 // Getting the table name
-                String[] tables = messageData.get("updatedTable").split(":");
+                String data = messageData.get("updatedTable");
+                String[] tables = data.split(":");
 
                 // Creating our dbSyncerService to sync the database
                 DbSyncService dbSyncer = new DbSyncService();
@@ -68,10 +69,6 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
                     // Requesting a table update for the specified table to the DbSyncService
                     dbSyncer.syncTable(tableName);
                 }
-
-
-
-
             }
 
         }
