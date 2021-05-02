@@ -71,17 +71,14 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         r.setProduit_id(Integer.parseInt(getIntent().getExtras().getString("id")));
 
         /**
-         * TODO: Decommenter 1 quand  on aura acces au nom de l'utilisateur
+         * TODO: Decommenter 1 quand  on aura acces au nom du produit
          */
         //nom_produit = (TextView) findViewById(R.id.textView_faireReservation_nomProduit);
         //nom_produit.setText(Produit.get_produit_by_id(getIntent().getExtras().getInt("id")).getNom());
 
 
-
-        /**
-         * TODO:Changer le text pour avoir le nom de l'etudiant
-         */
-        nom_etudiant = (TextView) findViewById(R.id.textView_ModifierReservation_nomClient);
+        nom_etudiant = (TextView) findViewById(R.id.textView_faireReservation_NomClient);
+        nom_etudiant.setText(MainActivity.currentUser.getFirstName() + " " + MainActivity.currentUser.getLastName());
 
     }
 

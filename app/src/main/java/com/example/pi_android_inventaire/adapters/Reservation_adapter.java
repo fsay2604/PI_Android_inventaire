@@ -65,12 +65,21 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        // Produit p = new Produit(); // Creer un produit avec le id contenu dans le mAll_reservations.get(position).getProduit_id()
 
-        holder.nomProduit.setText(Integer.toString(mAll_reservations.get(position).getProduit_id())); // Aller chercher le nom du produit avec le id dans la reservation
-        holder.nomCategorie.setText(Integer.toString(mAll_reservations.get(position).getId()));       // Aller chercher le nom de la categorie avec le id contenu dans le produit
-        holder.etat.setText(Integer.toString(mAll_reservations.get(position).getEtat_id()));          // Aller chercher le nom de l'etat de la reservation avec le id dans la reservation
-        holder.qte.setText(Integer.toString(mAll_reservations.get(position).getQuantite()));          // La quantité est la bonne.
+        /**
+         * TODO: Changer le param pour Integer.toString(mAll_reservations.get(position).getProduit().getName(); un fois la classe produit termine
+         */
+        holder.nomProduit.setText(Integer.toString(mAll_reservations.get(position).getProduit_id()));
+
+        /**
+         * TODO: Changer le param pour Integer.toString(mAll_reservations.get(position).getProduit().getCategorieName(); un fois la classe produit termine
+         */
+        holder.nomCategorie.setText(Integer.toString(mAll_reservations.get(position).getId()));
+
+        // Vue que l'on affiche seulement les reservation en attente, pas besoin de faire de requete a la bd.
+        holder.etat.setText("En attente");
+
+        holder.qte.setText(Integer.toString(mAll_reservations.get(position).getQuantite()));
        // holder.image_prod.setImageResource();                                                       // Aller chercher l'image du produit.
 
         // Amene vers la page ModifierReservation, qui permet de supprimer/modifier une reservation

@@ -6,9 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.interfaces.SyncableModel;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Product implements SyncableModel {
+// Serializable permet de passer l'objet en intent.putExtra(), chose que l'on pourra faire lors du transfert de VoirDetailProduit vers FaireReservation
+public class Product implements Serializable, SyncableModel {
     public Product(int id, int categorie, String nom, String description, String commentaire, int qteDisponible, String image) {
         this.id = id;
         this.nom = nom;

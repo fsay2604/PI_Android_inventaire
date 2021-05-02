@@ -150,11 +150,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        // btn_compte.setText(R.string.btn_compte);
         btn_compte.setOnClickListener(this);
 
-        btn_connexion=(Button) findViewById(R.id.login_btn);
+       /*btn_connexion=(Button) findViewById(R.id.login_btn);
         btn_connexion.setOnClickListener(this);
 
         btn_inscription=(Button) findViewById(R.id.Suscribe_btn);
-        btn_inscription.setOnClickListener(this);
+        btn_inscription.setOnClickListener(this);*/
 
         rapportButton=(Button) findViewById(R.id.rapportButton);
         rapportButton.setOnClickListener(this);

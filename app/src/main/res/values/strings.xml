@@ -5,6 +5,7 @@
     <string name="btn_produit">Produit</string>
     <string name="btn_reservation">Réservation</string>
     <string name="btn_compte">Compte</string>
+    <string name="btn_register">S\'enregistrer</string>
 
     <!-- String utilisé pour les Reservation Activity -->
     <string name="btn_faireReservation">Faire une nouvelle réservation</string>

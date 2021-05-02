@@ -50,6 +50,7 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
     private Button btn_modifier;
     private Button btn_annuler;
 
+    private TextView nom_etudiant;
     private TextView nomProduit;
     private TextView date;
     private EditText qte;
@@ -63,6 +64,9 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
 
         SetupButton();
         SelectDateWithPopup();
+
+        nom_etudiant = (TextView) findViewById(R.id.textView_ModifierReservation_nomClient);
+        nom_etudiant.setText(MainActivity.currentUser.getFirstName() + " " + MainActivity.currentUser.getLastName());
 
         // Recuperation de l'objet reservation pour preremplir les champs.
         r = (Reservation) getIntent().getSerializableExtra("Reservation");

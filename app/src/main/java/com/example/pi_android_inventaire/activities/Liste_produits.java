@@ -41,6 +41,9 @@ public class Liste_produits extends AppCompatActivity {
 
         products = new ArrayList<Product>();
 
+        /**
+         * TODO: Query qui va chercher all_products() plutot qu'un array de produit fictifs.
+         */
         // Remplit le array avec des donnees fictives, A changer pour avoir les donnes la BD.
         for(int i =0; i<8; i++) {
             Product p = new Product();
