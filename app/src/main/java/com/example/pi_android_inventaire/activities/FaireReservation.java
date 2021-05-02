@@ -121,7 +121,7 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month+1;
+                month = month+1; // +1 parce que janvier = 0
                 String date = Integer.toString(year) + '-' + Integer.toString(month) + '-' + Integer.toString(dayOfMonth);
                 mDisplayDate.setText(date);
             }
@@ -141,13 +141,10 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
                 // Batir l'objet r en fonction des champs du formulaire
                 qty = (EditText) findViewById(R.id.editTextNumber_faireReservation_quantite);
                 r.setQuantite(Integer.parseInt(String.valueOf(qty.getText())));
-                r.setEtat_id(1);    // 1 == En attente
+                r.setEtat_id(1);
                 r.setDate_retour_prevue(String.valueOf(mDisplayDate.getText()));
 
-                /**
-                 * TODO: Changer 1 pour l'id de l'utilisateur quand on l'aura
-                 */
-                r.setNumero_utilisateur(1);
+                r.setNumero_utilisateur(MainActivity.currentUser.getId());
                 r.setDate_retour_reel("");
 
                 r.put_in_db();  // Enregistre dans la BD la réservation

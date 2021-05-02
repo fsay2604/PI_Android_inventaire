@@ -40,6 +40,7 @@ import com.example.pi_android_inventaire.models.User;
 import com.example.pi_android_inventaire.network.ApiCaller;
 import com.example.pi_android_inventaire.network.ApiCallerCallback;
 import com.example.pi_android_inventaire.network.FireBaseMessagingService;
+import com.example.pi_android_inventaire.utils.DbSyncService;
 import com.example.pi_android_inventaire.utils.Result;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -74,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TEST DU API CALLER
 
         ArrayList<Product> products = PIAndroidInventaire.apiCaller.getList(Product.class,PIAndroidInventaire.apiUrlDomain + "produits?page=1");
+        ArrayList<Reservation> Reservation = PIAndroidInventaire.apiCaller.getList(Reservation.class,PIAndroidInventaire.apiUrlDomain + "reservations?page=1");
 
         Product product = PIAndroidInventaire.apiCaller.getSingleOrDefault(Product.class, PIAndroidInventaire.apiUrlDomain + "produits/2");
+
 
         int alllo = 0;
         // FIN TEST DU API CALLER
@@ -127,24 +130,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Menu
         setupMenu();
-
-        // Test Query BD insert
-//        Reservation TestReservation = new Reservation(1,1,1,1,"2021-04-26",5,"");
-       // TestReservation.put_in_db();
-
-        /*TestReservation.setDate_retour_reel("2025-06-27");
-        TestReservation.update_db();
-
-        Product p = new Product();
-        p.setId(800);
-        p.setNom("Un produit");
-        p.setCategorie(1);
-        p.setImage("allo.png");
-        p.setQteDisponible(50);
-        p.setDescription("Salut je suis le produit"+Integer.toString(p.getId()));
-
-        TestReservation.setProduit_id(p.getId());
-        TestReservation.update_db();*/
     }
 
     /**
@@ -192,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reservation:
                 // redirection vers la page pour faire une reservation
-                Intent intentReservationIndex = new Intent(this, Reservation_index.class);
+                Intent intentReservationIndex = new Intent(this, VoirReservations.class);
                 startActivity(intentReservationIndex);
                 break;
             case R.id.login_btn:

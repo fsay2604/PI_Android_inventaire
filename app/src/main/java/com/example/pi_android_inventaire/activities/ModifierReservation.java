@@ -145,7 +145,7 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
             case R.id.btn_modifierReservation_supprimer:
                 // Supprime la reservation de la BD
                 r.deleteFromDb();
-                Toast.makeText(this, "Reservation supprimer avec succès.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Reservation supprimé avec succès.", Toast.LENGTH_SHORT).show();
                 finish(); // ferme cette activite puisque cette reservation n'existe plus.
                 break;
         }

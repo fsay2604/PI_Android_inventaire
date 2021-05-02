@@ -41,10 +41,10 @@ public class Reservation implements Serializable, SyncableModel { // l<implement
     @SerializedName("id")
     private int id;
 
-    @SerializedName("produitId")
+    @SerializedName("idProd")
     private int produit_id;
 
-    @SerializedName("etatReservationId")
+    @SerializedName("etatId")
     private int etat_id;
 
     @SerializedName("utilisateurId")

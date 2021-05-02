@@ -49,35 +49,37 @@ public class VoirReservations extends AppCompatActivity {
 
         // Init du array
         all_reservations = new ArrayList<>();
-        /**
-         * TODO: Changer le parametre User_id de la methode Reservation.get_all_reservations(User_id) pour celui de l'utilisateur connecté.
-         */
-        all_reservations = Reservation.get_all_reservations(13);
+
+        all_reservations = Reservation.get_all_reservations(MainActivity.currentUser.getId());
 
         // Init du recycler
-        RecyclerView_VoirReservations = (RecyclerView) findViewById(R.id.Recycler_VoirReservation);
-        Reservation_adapter adapter = new Reservation_adapter(this, all_reservations);
-        RecyclerView_VoirReservations.setAdapter(adapter);
-        RecyclerView_VoirReservations.setLayoutManager(new LinearLayoutManager(this));
+        if(!all_reservations.isEmpty())
+        {
+            RecyclerView_VoirReservations = (RecyclerView) findViewById(R.id.Recycler_VoirReservation);
+            Reservation_adapter adapter = new Reservation_adapter(this, all_reservations);
+            RecyclerView_VoirReservations.setAdapter(adapter);
+            RecyclerView_VoirReservations.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
+
 
     /**
      * Update la liste des reservations quand on revient sur la page.
-
      */
     @Override
     protected void onResume() {
         super.onResume();
         all_reservations = new ArrayList<Reservation>();
-        /**
-         * TODO: Changer le parametre User_id de la methode Reservation.get_all_reservations(User_id) pour celui de l'utilisateur connecté.
-         */
-        all_reservations = Reservation.get_all_reservations(1);
+
+        all_reservations = Reservation.get_all_reservations(MainActivity.currentUser.getId());
 
         // Update le recyclerView
-        RecyclerView_VoirReservations = (RecyclerView) findViewById(R.id.Recycler_VoirReservation);
-        Reservation_adapter adapter = new Reservation_adapter(this, all_reservations);
-        RecyclerView_VoirReservations.setAdapter(adapter);
-        RecyclerView_VoirReservations.setLayoutManager(new LinearLayoutManager(this));
+        if(!all_reservations.isEmpty())
+        {
+            RecyclerView_VoirReservations = (RecyclerView) findViewById(R.id.Recycler_VoirReservation);
+            Reservation_adapter adapter = new Reservation_adapter(this, all_reservations);
+            RecyclerView_VoirReservations.setAdapter(adapter);
+            RecyclerView_VoirReservations.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 }
