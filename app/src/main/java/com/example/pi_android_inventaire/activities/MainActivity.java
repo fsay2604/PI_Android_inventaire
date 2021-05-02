@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // TEST DE FirebaseMessaging
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if(MainActivity.currentUser != null){
             // Extracting the user info from the bundled data
             String email = b.getString("email");
             String password = b.getString("password");

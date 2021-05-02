@@ -143,6 +143,48 @@ public class Product implements Serializable, SyncableModel {
         this.image = cursor.getString(6);
         return this;
     }
+    /**
+     * Fonction qui va permettre d'aller chercher les produits à la bd
+     */
+    public static ArrayList<Product> selectProducts()
+    {
+        ArrayList<Product> list = new ArrayList<Product>();
+
+        int id_produit = 0;
+        int categorie = 0;
+        String nom = "";
+        String description = "";
+        String commentaire = "";
+        int qte_disponible = 0;
+        String image = "";
+
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+        // Suppression de l'enregistrement
+        Cursor c = DB.rawQuery("SELECT * from produit",null);
+
+        if (c.moveToFirst()) {
+            do {
+                //assing values
+                id_produit = c.getInt(0);
+                categorie = c.getInt(1);
+                nom = c.getString(2);
+                description = c.getString(3);
+                commentaire = c.getString(4);
+                qte_disponible = c.getInt(5);
+                image = c.getString(6);
+
+                Product product = new Product(id_produit, categorie, nom, description, commentaire, qte_disponible, image);
+
+                list.add(product);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+
+        return list;
+    }
 
     /**
      * Fonction qui va permettre d'insérer un produit à la bd si il n'est pas déjà dans la bd

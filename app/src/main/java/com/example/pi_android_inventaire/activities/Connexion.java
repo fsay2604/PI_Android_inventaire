@@ -113,34 +113,34 @@ public class Connexion extends AppCompatActivity {
         String motDePasse = mMotDePasse.getText().toString();
         Log.i("courriel", courriel);
 
-        // Recuperation des btn
-        mProduit = (Button) findViewById(R.id.btn_produit);
+//        // Recuperation des btn
+//        mProduit = (Button) findViewById(R.id.btn_produit);
+//
+//        mProduit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intentListeProduit = new Intent(Connexion.this, Liste_produits.class);
+//                startActivity(intentListeProduit);
+//            }
+//        });
+//        mReservation = (Button) findViewById(R.id.btn_reservation);
+//        // btn_reservation.setText(R.string.btn_reservation);
+//        mReservation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intentListeProduit = new Intent(Connexion.this, VoirReservations.class);
+//                startActivity(intentListeProduit);
+//            }
+//        });
 
-        mProduit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentListeProduit = new Intent(Connexion.this, Liste_produits.class);
-                startActivity(intentListeProduit);
-            }
-        });
-        mReservation = (Button) findViewById(R.id.btn_reservation);
-        // btn_reservation.setText(R.string.btn_reservation);
-        mReservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentListeProduit = new Intent(Connexion.this, VoirReservations.class);
-                startActivity(intentListeProduit);
-            }
-        });
-
-        mCompte = (Button) findViewById(R.id.btn_compte);
-        // btn_compte.setText(R.string.btn_compte);
-        mCompte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Connexion.this, "You click compte button", Toast.LENGTH_LONG).show();
-            }
-        });
+//        mCompte = (Button) findViewById(R.id.btn_compte);
+//        // btn_compte.setText(R.string.btn_compte);
+//        mCompte.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(Connexion.this, "You click compte button", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         singUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
