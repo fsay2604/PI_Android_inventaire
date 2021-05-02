@@ -23,7 +23,7 @@ public class PIAndroidInventaire extends Application {
 
     // ApiCaller to make calls to the api using the background threads
     public static ApiCaller apiCaller;
-    public static final String apiUrlDomain = "https://8d13dfefab02.ngrok.io/api/";
+    public static final String apiUrlDomain = "https://8aa64083fc2c.ngrok.io/api/";
 
     @Override
     public void onCreate() {
