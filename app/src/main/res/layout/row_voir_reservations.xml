@@ -18,19 +18,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="186dp">
 
             <ImageView
                 android:id="@+id/imageView_voirReservation_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:contentDescription="TODO"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView_voirReservation_label_nom"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_launcher_foreground"
@@ -40,33 +39,30 @@
                 android:id="@+id/textView_voirReservation_label_nom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/row_reservations_label_nom"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageView_voirReservation_img"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="116dp" />
 
             <TextView
                 android:id="@+id/TextView_voirReservation_nom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="@string/row_reservations_nom"
                 app:layout_constraintStart_toStartOf="@+id/textView_voirReservation_label_nom"
-                app:layout_constraintTop_toTopOf="@+id/textView_voirReservation_label_nom" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_voirReservation_label_nom" />
 
             <TextView
                 android:id="@+id/textView_voirReservation_label_categorie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="104dp"
-                android:layout_marginLeft="104dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="56dp"
                 android:text="@string/row_reservations_label_categorie"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/textView_voirReservation_label_nom"
+                app:layout_constraintStart_toEndOf="@+id/imageView_voirReservation_img"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -81,50 +77,52 @@
                 android:id="@+id/textView_voirReservation_label_quantite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="60dp"
                 android:text="@string/row_reservations_label_qte"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView_voirReservation_label_nom"
+                app:layout_constraintStart_toEndOf="@+id/imageView_voirReservation_img"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_voirReservation_nom" />
 
             <TextView
                 android:id="@+id/textView_voirReservation_qte"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:text="@string/row_reservations_qte"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_voirReservation_label_quantite"
-                app:layout_constraintStart_toEndOf="@+id/textView_voirReservation_label_quantite"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_voirReservation_nom"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toEndOf="@+id/textView_voirReservation_label_quantite" />
 
             <TextView
                 android:id="@+id/textView_voirReservation_label_etat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:text="@string/row_reservations_label_etat"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView_voirReservation_label_categorie"
-                app:layout_constraintTop_toBottomOf="@+id/textView_voirReservation_categorie" />
+                app:layout_constraintBottom_toBottomOf="@+id/textView_voirReservation_label_quantite"
+                app:layout_constraintStart_toEndOf="@+id/textView_voirReservation_qte" />
 
             <TextView
                 android:id="@+id/textView_voirReservation_etat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginLeft="11dp"
                 android:text="@string/row_reservations_etat"
-                app:layout_constraintStart_toEndOf="@+id/textView_voirReservation_label_etat"
-                app:layout_constraintTop_toTopOf="@+id/textView_voirReservation_label_etat" />
+                app:layout_constraintBottom_toBottomOf="@+id/textView_voirReservation_label_quantite"
+                app:layout_constraintStart_toEndOf="@+id/textView_voirReservation_label_etat" />
 
             <Button
                 android:id="@+id/btn_VoirReservation_modifier"
                 android:layout_width="114dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="12dp"
                 android:text="@string/btn_modifier"
-                app:layout_constraintTop_toBottomOf="@+id/textView_voirReservation_label_quantite"
-                tools:layout_editor_absoluteX="118dp" />
+                app:layout_constraintStart_toStartOf="@+id/TextView_voirReservation_nom"
+                app:layout_constraintTop_toBottomOf="@+id/textView_voirReservation_label_quantite" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
