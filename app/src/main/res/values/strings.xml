@@ -71,6 +71,13 @@
     <string name="mot_de_passe_oubl">Mot de passe oublé</string>
     <string name="pas_enregistr_cr_er_un_compte">Pas enregistré?  Créer un compte</string>
 
+    <!-- String utilisé pour Rapport Activity -->
+    <string name="Rapport_nom_produit">Nom du produit:</string>
+    <string name="Rapport_quantite">Quantite</string>
+    <string name="Rapport_description">Description</string>
+    <string name="Rapport_etat">Type de Rapport</string>
+
+
     <item name="btn_connexion" type="id" />
     <item name="btn_inscription" type="id" />
 </resources>
