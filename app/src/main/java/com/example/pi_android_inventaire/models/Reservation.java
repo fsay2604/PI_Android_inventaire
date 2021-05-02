@@ -82,7 +82,6 @@ public class Reservation implements Serializable, SyncableModel { // l<implement
 
         // Construire le produit p correspondant a la reservation
         setProduit(); //(contiendra la requete a la bd en fonction de this.produit_id)
-
     }
 
     /**
@@ -131,6 +130,7 @@ public class Reservation implements Serializable, SyncableModel { // l<implement
         this.produit_id = produit_id;
         /**
          * TODO: Decommenter la fonction setProduit quand il y aura de l'info dans la BD.
+         * Cette methode lance une requete pour aller chercher le produit correspondant a this.id_produit dans la table.
          */
         //this.setProduit(); // Met a jour l'objet produit
     }
@@ -226,13 +226,13 @@ public class Reservation implements Serializable, SyncableModel { // l<implement
                 Product p = new Product();
 
                 // Construction de du produit
-                p.setId(c.getInt(1));
-                p.setCategorie(c.getInt(2));
-                p.setNom(c.getString(3));
-                p.setDescription(c.getString(4));
-                p.setCommentaire(c.getString(5));
-                p.setQteDisponible(c.getInt(6));
-                p.setImage(c.getString(9));
+                p.setId(c.getInt(0));
+                p.setCategorie(c.getInt(1));
+                p.setNom(c.getString(2));
+                p.setDescription(c.getString(3));
+                p.setCommentaire(c.getString(4));
+                p.setQteDisponible(c.getInt(5));
+                p.setImage(c.getString(6));
 
                 // Set le produit construit a la variable this.produit
                 this.p = p;
@@ -258,6 +258,29 @@ public class Reservation implements Serializable, SyncableModel { // l<implement
     }
 
 
+    /**
+     * Retourne le nom de l'etat de la reservation en fonction de this.etatId
+     */
+    public String getEtat_name()
+    {
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+        // Ajout dans la BD
+        String query = "SELECT libelle FROM etat_reservation WHERE id = ?";
+        Cursor c = DB.rawQuery(query, new String[]{ Integer.toString(this.etat_id) });
+
+        String cat_name = "";
+
+        // Parcours l'ensemble de la reponse du Select contenu dans le cursor c
+        if(c.moveToFirst())
+        {
+            do {
+                cat_name = c.getString(0);
+            }while(c.moveToNext());  // Avance d'une row
+        }
+
+        return cat_name;
+    }
 
     /**
      * Envoit l'objet dans la bd locale si il n'existe pas (modifierReservation et FaireReservation)

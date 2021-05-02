@@ -38,7 +38,7 @@
 
         <activity android:name=".activities.ModifierReservation"></activity>
         <activity android:name=".activities.Reservation_index" />
-        <activity android:name=".activities.Connexion" />
+        <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.Enregistrement" />
         <activity android:name=".activities.FaireReservation" />
         <activity android:name=".activities.VoirReservations" />
@@ -46,7 +46,7 @@
         <activity android:name=".activities.Liste_produits" />
 
         <activity android:name=".activities.Liste_Rappots"></activity>
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.Connexion">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

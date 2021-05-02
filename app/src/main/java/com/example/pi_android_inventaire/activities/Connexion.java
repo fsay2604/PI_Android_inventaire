@@ -16,7 +16,7 @@ qui sera envoyé à une adressse entrée par l'utilisateur.
  Historique de modifications :
  Date           Nom             Description
  =========================================================
-2021-04-29      Philippe Boulanger
+ 2021-04-29      Philippe Boulanger
  ****************************************/
 package com.example.pi_android_inventaire.activities;
 
@@ -67,27 +67,29 @@ import java.security.GeneralSecurityException;
  */
 public class Connexion extends AppCompatActivity {
 
-     EditText mCourriel;
-     EditText mMotDePasse;
-     Button mConnexionBtn;
-     TextView forgotTextLink;
-     ProgressBar progessBar;
-/**
- * Initialistaion de éléments de la page
- *
- *Attribution des écouteurs d'évènements sur le champs courriel et mot de passe
- * <p>Mise en place d'un message d'erreur de courriel requis</p>
- * <p>Mise en place d'un message d'erreur de mot de passe requis</p>
- * <p>Mise en place d'un format de mot de passe requis</p>
- * <p>Écouteur d'évènement sur le lien de récupération de mot de passe</p>
- * <p>Une boite de dialogue est créée avec :
- * <ul>
- * <li>Un titre</li>
- * <li>Un message</li>
- * <li>Un champ d'entrée</li>
- * <li>Des boutons 'oui' ou 'non' </li>
- * </ul></p>
- * */
+    EditText mCourriel;
+    EditText mMotDePasse;
+    Button mConnexionBtn, mProduit, mReservation, mCompte;
+    TextView forgotTextLink, singUpBtn;
+    ProgressBar progessBar;
+
+
+    /**
+     * Initialistaion de éléments de la page
+     * <p>
+     * Attribution des écouteurs d'évènements sur le champs courriel et mot de passe
+     * <p>Mise en place d'un message d'erreur de courriel requis</p>
+     * <p>Mise en place d'un message d'erreur de mot de passe requis</p>
+     * <p>Mise en place d'un format de mot de passe requis</p>
+     * <p>Écouteur d'évènement sur le lien de récupération de mot de passe</p>
+     * <p>Une boite de dialogue est créée avec :
+     * <ul>
+     * <li>Un titre</li>
+     * <li>Un message</li>
+     * <li>Un champ d'entrée</li>
+     * <li>Des boutons 'oui' ou 'non' </li>
+     * </ul></p>
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +131,11 @@ public class Connexion extends AppCompatActivity {
                     mCourriel.setError("Entrer votre courriel");
                     return;
                 }
-                if (TextUtils.isEmpty(motDePasse)) {
+                if (TextUtils.isEmpty(mMotDePasse.getText().toString())) {
                     mMotDePasse.setError("Mot de passe requis");
                     return;
                 }
-                if (courriel.length()< 6) {
+                if (mMotDePasse.getText().toString().length() < 6) {
                     mMotDePasse.setError("Doit contenir au moins 6 charactères");
                     return;
                 }
@@ -165,6 +167,7 @@ public class Connexion extends AppCompatActivity {
                     }
                 }
             }
+
         });
 
         forgotTextLink.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +191,7 @@ public class Connexion extends AppCompatActivity {
                         //Extrait le courriel et envoie le lien
 
                         String mail = resetMail.getText().toString();
-                        Toast.makeText(Connexion.this, "Courriel: "+resetMail,Toast.LENGTH_LONG).show();
+                        Toast.makeText(Connexion.this, "Courriel: " + resetMail, Toast.LENGTH_LONG).show();
                         //fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>(){...}
                     }
                 });

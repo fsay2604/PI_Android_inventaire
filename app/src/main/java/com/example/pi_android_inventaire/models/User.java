@@ -1,19 +1,22 @@
 /****************************************
- Fichier : ApiCaller.java
- Auteur : Marc Antoine Griffiths Lorange
- Fonctionnalité : Classe de modelisation des données d'un utilisateur.
- Date : 2021-04-28
+ Fichier : User.java
+ Auteur : Philippe Boulanger
+ Fonctionnalité : Classe de l'utilisateur avec ses getteurs/setteurs
+
+ Date : 2021-04-29
+
  Vérification :
- Date               Nom                   Approuvé
+ Date           Nom             Approuvé
  =========================================================
 
+
  Historique de modifications :
- Date               Nom                   Description
+ Date           Nom             Description
  =========================================================
+ 2021-04-29      Philippe Boulanger
  ****************************************/
 package com.example.pi_android_inventaire.models;
 
-import com.example.pi_android_inventaire.activities.MainActivity;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
@@ -23,34 +26,34 @@ public class User {
     @SerializedName("id")
     private int id;
     /**
+     * nom
+     */
+    @SerializedName("nom")
+    private String nom;
+    /**
+     * prenom
+     */
+    @SerializedName("prenom")
+    private String prenom;
+
+    /**
      * email
      */
     @SerializedName("email")
-    private String email;
+    private  String email;
     /**
-     * firebaseToken
+     * password
      */
-    @SerializedName("firebaseToken")
-    private String firebaseToken;
-    /**
-     * firstName
-     */
-    @SerializedName("firstName")
-    private String firstName;
-    /**
-     * lastName
-     */
-    @SerializedName("lastName")
-    private String lastName;
+    @SerializedName("password")
+    private String password;
 
-    public User(int id, String email, String fireBaseToken) {
+
+    public User(int id, String nom, String prenom, String email, String password) {
         this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
         this.email = email;
-        this.firebaseToken = fireBaseToken;
-    }
-    public User() {
-        this.id = 0;
-        this.email = "";
+        this.password = password;
     }
 
     public int getId() {
@@ -61,6 +64,22 @@ public class User {
         this.id = id;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -69,30 +88,11 @@ public class User {
         this.email = email;
     }
 
-    public String getFirebaseToken() {
-        if(firebaseToken== null){
-            return new String("");
-        }
-        return firebaseToken;
+    public String getPassword() {
+        return password;
     }
 
-    public void setFirebaseToken(String firebaseToken) {
-        this.firebaseToken = firebaseToken;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

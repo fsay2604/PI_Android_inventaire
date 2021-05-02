@@ -5,6 +5,7 @@
     <string name="btn_produit">Produit</string>
     <string name="btn_reservation">Réservation</string>
     <string name="btn_compte">Compte</string>
+    <string name="btn_register">S\'enregistrer</string>
 
     <!-- String utilisé pour les Reservation Activity -->
     <string name="btn_faireReservation">Faire une nouvelle réservation</string>
@@ -66,10 +67,22 @@
 
     <!-- String utilisé pour connexion à un compte -->
     <string name="adresse_courriel">Adresse courriel</string>
-    <string name="mot_de_passe">Mot de passe</string>
     <string name="connexion">Connexion</string>
     <string name="mot_de_passe_oubl">Mot de passe oublé</string>
     <string name="pas_enregistr_cr_er_un_compte">Pas enregistré?  Créer un compte</string>
+    <string name="s_inscrire">S\'inscerire</string>
+    <string name="insccription">Insccription</string>
+    <string name="courriel">Courriel</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="nom">Nom</string>
+    <string name="prenom">prenom</string>
+
+    <!-- String utilisé pour Rapport Activity -->
+    <string name="Rapport_nom_produit">Nom du produit:</string>
+    <string name="Rapport_quantite">Quantite</string>
+    <string name="Rapport_description">Description</string>
+    <string name="Rapport_etat">Type de Rapport</string>
+
 
     <item name="btn_connexion" type="id" />
     <item name="btn_inscription" type="id" />
