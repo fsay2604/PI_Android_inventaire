@@ -58,7 +58,7 @@ public class produit_adapter extends RecyclerView.Adapter<produit_adapter.MyView
         holder.nom.setText(all_products.get(position).getNom());
         holder.categorie.setText(Integer.toString(all_products.get(position).getCategorie()));
         holder.qte.setText(Integer.toString(all_products.get(position).getQteDisponible()));
-        holder.id.setText(Integer.toString(all_products.get(position).getQteDisponible()));
+        holder.id.setText(Integer.toString(all_products.get(position).getId()));
         //holder.image.setImageResource(all_products.get(position).getImage());
 
     }
@@ -86,13 +86,11 @@ public class produit_adapter extends RecyclerView.Adapter<produit_adapter.MyView
 
         @Override
         public void onClick(View v) {
+            Product produit = new Product();
+            produit = produit.get_produit_by_id(Integer.valueOf(id.getText().toString()));
+
             Intent intent = new Intent(context, infos_produit.class);
-            intent.putExtra("nom",nom.getText().toString());
-            intent.putExtra("description",all_products.get(Integer.valueOf(id.getText().toString())).getDescription());
-            intent.putExtra("categorie",categorie.getText().toString());
-            intent.putExtra("qte",qte.getText().toString());
-            intent.putExtra("id",id.getText().toString());
-            //intent.putExtra("image","noimage.jpg");
+            intent.putExtra("produit",produit);
             context.startActivity(intent);
         }
     }

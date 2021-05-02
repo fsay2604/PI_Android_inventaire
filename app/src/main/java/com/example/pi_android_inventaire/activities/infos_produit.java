@@ -25,8 +25,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.models.Product;
 
 public class infos_produit extends AppCompatActivity {
+    private Product produit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +41,14 @@ public class infos_produit extends AppCompatActivity {
         TextView descriptionView = (TextView)findViewById(R.id.description);
         TextView categorieView = (TextView)findViewById(R.id.categorie);
         TextView quantiteView = (TextView) findViewById(R.id.quantite);
-        //ImageView image = (ImageView) findViewById(R.id.imageView);
 
-        String nom = data.getStringExtra("nom");
-        String description = data.getStringExtra("description");
-        String categorie = data.getStringExtra("categorie");
-        String qte = data.getStringExtra("qte");
-        String id = data.getStringExtra("id");
-        //int sourceImage = data.getIntExtra("image",0);
 
-        nomView.setText(nom);
-        descriptionView.setText(description);
-        categorieView.setText(categorie);
-        quantiteView.setText(qte);
+        produit = (Product) getIntent().getSerializableExtra("produit");
+
+        nomView.setText(produit.getNom());
+        descriptionView.setText(produit.getDescription());
+        categorieView.setText(produit.getCategorie().toString());
+        quantiteView.setText(produit.getQteDisponible().toString());
         //image.setImageResource(sourceImage);
 
         Button btn_reserver = (Button) findViewById(R.id.reserver);
@@ -60,7 +57,7 @@ public class infos_produit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(infos_produit.this, FaireReservation.class);
-                intent.putExtra("id","666");
+                intent.putExtra("product",produit);
                 startActivity(intent);
             }
         });
