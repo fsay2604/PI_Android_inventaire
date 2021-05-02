@@ -2,7 +2,7 @@
  Fichier : MainActivity.java
  Auteur : Francois Charles Hebert
  Fonctionnalité :
- - Page d'accueil avec un menu.
+    - Page d'accueil avec un menu.
 
  Date : 2021-04-26
 
@@ -45,6 +45,7 @@ import com.example.pi_android_inventaire.utils.Result;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONObject;
 
@@ -53,12 +54,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Boutons du menu
-    private  Button btn_produit;
-    private  Button btn_reservation;
-    private  Button btn_compte;
-    private  Button btn_connexion;
-    private  Button btn_inscription;
-    private Button  rapportButton;
+    private Button btn_produit;
+    private Button btn_reservation;
+    private Button btn_compte;
+    private Button btn_connexion;
+    private Button btn_inscription;
+    private Button rapportButton;
 
 
 
@@ -84,17 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // FIN TEST DU API CALLER
 
         // TEST DE FirebaseMessaging
-        Bundle b = getIntent().getExtras();
-        if(b != null){
-            // Extracting the user info from the bundled data
-            String email = b.getString("email");
-            String password = b.getString("password");
-
-            /* Authenticating the User via the API and setting the current application's user
-             * to the retreived user from the database
-             */
-            currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
-
+        if( MainActivity.currentUser != null){
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override
@@ -122,7 +113,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     });
+
         }
+        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        final String SENDER_ID = "236215817107";
+        final int messageId = 0; // Increment for each
+        fm.send(new RemoteMessage.Builder(SENDER_ID + "@fcm.googleapis.com")
+                .setMessageId(Integer.toString(messageId))
+                .addData("my_message", "Hello World")
+                .addData("my_action","SAY_HELLO")
+                .build());
 
 
 
@@ -139,27 +139,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         // Recuperation des btn
         btn_produit = (Button) findViewById(R.id.btn_produit);
-        // btn_produit.setText(R.string.btn_produit);
+       // btn_produit.setText(R.string.btn_produit);
         btn_produit.setOnClickListener(this);
 
         btn_reservation = (Button) findViewById(R.id.btn_reservation);
-        // btn_reservation.setText(R.string.btn_reservation);
+       // btn_reservation.setText(R.string.btn_reservation);
         btn_reservation.setOnClickListener(this);
 
         btn_compte = (Button) findViewById(R.id.btn_compte);
-        // btn_compte.setText(R.string.btn_compte);
+       // btn_compte.setText(R.string.btn_compte);
         btn_compte.setOnClickListener(this);
 
-        btn_connexion=(Button) findViewById(R.id.login_btn);
+       btn_connexion=(Button) findViewById(R.id.login_btn);
         btn_connexion.setOnClickListener(this);
 
         btn_inscription=(Button) findViewById(R.id.Suscribe_btn);
         btn_inscription.setOnClickListener(this);
 
-        rapportButton=(Button) findViewById(R.id.rapportButton);
+        rapportButton = (Button) findViewById(R.id.rapportButton);
         rapportButton.setOnClickListener(this);
-
-
     }
 
     /**

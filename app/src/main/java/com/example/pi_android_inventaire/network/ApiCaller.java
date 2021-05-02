@@ -13,9 +13,16 @@
 
 package com.example.pi_android_inventaire.network;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.pi_android_inventaire.PIAndroidInventaire;
+import com.example.pi_android_inventaire.activities.Connexion;
+import com.example.pi_android_inventaire.activities.MainActivity;
 import com.example.pi_android_inventaire.models.User;
 import com.example.pi_android_inventaire.utils.Result;
 import com.google.gson.Gson;
@@ -29,6 +36,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -36,6 +44,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+
+import static android.os.Looper.getMainLooper;
 
 class Factory<T> {
     public List<T> deserialize(String json, Class<T> klass) {
@@ -186,20 +196,38 @@ public class ApiCaller {
         return value;
     }
 
-    public User loginUser(String email, String password, String urlString){
+    public User loginUser(String email, String password, String urlString,Context currentContext){
         // Starting the API Request on another thread.
         Future<Result<User>> future = executor.submit(() -> {
             Result<User> response;
             try {
                 // The fetched response
                 response = login(email, password, urlString);
-                return response;
+
+                if (response instanceof Result.Error){
+                    Exception exception = ((Result.Error<User>) response).exception;
+                    // Showing the error to the user
+                    Handler mainHandler = new Handler(getMainLooper());
+
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(currentContext, exception.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return null;
+                }
+                else {
+                    return response;
+                }
             } catch (Exception e) {
                 // Retrieve the error message
                 Result<Exception> errorResult = new Result.Error<>(e);
                 // Printing it to the console
                 System.out.println("La requête à l'API à échouée pour la raison suivante : "
                         + errorResult.toString());
+                // Showing the error to the user
+                Toast.makeText(currentContext, errorResult.toString(),Toast.LENGTH_LONG).show();
             }
             return null;
         });
@@ -351,7 +379,23 @@ public class ApiCaller {
             sendRequestString(jsonObject, urlConnection);
 
             // Opening the stream in order to be able to read the response.
-            BufferedInputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedInputStream in;
+            try {
+                in = new BufferedInputStream(urlConnection.getInputStream());
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                in = new BufferedInputStream(urlConnection.getErrorStream());
+
+                // Reading the response into a String
+                response = readResponse(in);
+
+                JsonObject errorResponseObj = gson.fromJson(response, JsonObject.class);
+                String errorResponse = errorResponseObj.get("error").getAsString();
+                Log.d("User Login : ", errorResponse);
+                System.out.println(e.getMessage());
+                return new Result.Error<>(new Exception(errorResponse));
+            }
 
             // Reading the response into a String
             response = readResponse(in);
@@ -362,8 +406,8 @@ public class ApiCaller {
                  retreivedUser = gson.fromJson(response, User.class);
             }
             catch (JsonSyntaxException e){
-                Log.d("User Login :", response);
-                return new Result.Error<>(e);
+                Log.d("User Login : ", e.getMessage());
+                System.out.println(e.getMessage());
             }
 
             // Closing the connection
@@ -371,13 +415,15 @@ public class ApiCaller {
 
             /* Returning a User object from the received response string
              */
+
             return new Result.Success<>(retreivedUser);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
+        } catch (ProtocolException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
         }
         return null;
     }

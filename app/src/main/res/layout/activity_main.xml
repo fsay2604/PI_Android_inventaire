@@ -21,7 +21,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,6 +62,7 @@
                     android:text="S'enregistrer"
                     app:backgroundTint="#2196F3" />
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -95,11 +97,7 @@
                 android:text="Compte"
                 android:textColor="#FFFFFF"
                 app:backgroundTint="#4A4A4A" />
-
-
         </LinearLayout>
-
-
-    </LinearLayout>
+    </LinearLayout> <!-- End first layout -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

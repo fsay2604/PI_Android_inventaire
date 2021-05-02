@@ -2,9 +2,9 @@
  Fichier : Connexion.java
  Auteur : Philippe Boulanger
  Fonctionnalité : a-01 - Gestion de connexion
- Une page de connexion permet de se connnecter à l'aide d'un courriel et d'un mot de passe
- La récupération de mot de psse est possible en demandant un lien de récupération
- qui sera envoyé à une adresse entrée par l'utilisateur.
+Une page de connexion permet de se connnecter à l'aide d'un courriel et d'un mot de passe
+La récupération de mot de psse est possible en demandant un lien de récupération
+qui sera envoyé à une adressse entrée par l'utilisateur.
 
  Date : 2021-04-28
 
@@ -20,12 +20,18 @@
  ****************************************/
 package com.example.pi_android_inventaire.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -35,27 +41,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * <b>La classe connexion permet à l'uilisateur de se connecter</b>
@@ -107,61 +101,33 @@ public class Connexion extends AppCompatActivity {
         mMotDePasse = findViewById(R.id.passwordText);
         mConnexionBtn = findViewById(R.id.connexionBtn);
         forgotTextLink = findViewById(R.id.forgotPassword);
-        singUpBtn = findViewById(R.id.register_btn);
 
-        String courriel = mCourriel.getText().toString();
-        String motDePasse = mMotDePasse.getText().toString();
-        Log.i("courriel", courriel);
 
-        // Recuperation des btn
-        mProduit = (Button) findViewById(R.id.btn_produit);
-
-        mProduit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentListeProduit = new Intent(Connexion.this, Liste_produits.class);
-                startActivity(intentListeProduit);
+        // Checking if we have an user stored in shared pref for the autologin feature
+        if (isAutologinReady()){
+            User loggedUser = autoLoginUser();
+            // If the login was successful we start the MainActivity and set the current user to the returned User
+            if (loggedUser != null){
+                MainActivity.currentUser = loggedUser;
+                Intent intentmain = new Intent(Connexion.this,MainActivity.class);
+                startActivity(intentmain);
             }
-        });
-        mReservation = (Button) findViewById(R.id.btn_reservation);
-        // btn_reservation.setText(R.string.btn_reservation);
-        mReservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentListeProduit = new Intent(Connexion.this, VoirReservations.class);
-                startActivity(intentListeProduit);
-            }
-        });
+        }
 
-        mCompte = (Button) findViewById(R.id.btn_compte);
-        // btn_compte.setText(R.string.btn_compte);
-        mCompte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Connexion.this, "You click compte button", Toast.LENGTH_LONG).show();
-            }
-        });
 
-        singUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // redirection vers la page de connexion
-                Intent intentConnexion = new Intent(Connexion.this, RegisterUser.class);
-                startActivity(intentConnexion);
-            }
-        });
+
         mConnexionBtn.setOnClickListener(new View.OnClickListener() {
+            /*
+             * Attribution des écouteurs d'évènements sur le champs courriel et mot de passe
+             * Mise en place d'un message de courriel requis
+             * Mise en place d'un message de mot de passe requis
+             * Mise en place d'un format de mot de passe requis
+             */
             @Override
             public void onClick(View v) {
-                checkFormField();
-                MainActivity.currentUser = PIAndroidInventaire.apiCaller.loginUser(mCourriel.getText().toString(), mMotDePasse.getText().toString(), PIAndroidInventaire.apiUrlDomain + "login");
-                Intent intentConnexion = new Intent(Connexion.this, MainActivity.class);
-                startActivity(intentConnexion);
-                // POSTStringAndJSONRequest();
-            }
-
-            private void checkFormField() {
-                if (TextUtils.isEmpty(mCourriel.getText().toString())) {
+                String courriel = mCourriel.getText().toString();
+                String motDePasse = mMotDePasse.getText().toString();
+                if (TextUtils.isEmpty(courriel)) {
                     mCourriel.setError("Entrer votre courriel");
                     return;
                 }
@@ -172,6 +138,33 @@ public class Connexion extends AppCompatActivity {
                 if (mMotDePasse.getText().toString().length() < 6) {
                     mMotDePasse.setError("Doit contenir au moins 6 charactères");
                     return;
+                }
+
+                //progessBar.setVisibility(View.VISIBLE);
+                MainActivity.currentUser = PIAndroidInventaire.apiCaller.loginUser(
+                        courriel,
+                        motDePasse,
+                        PIAndroidInventaire.apiUrlDomain + "login",
+                        Connexion.this);
+
+                // Checking if the user is logged in or not
+                if (MainActivity.currentUser != null)
+                {
+                    // Adding our credentials to the newly created shared preferences for the autologin feature
+                    SharedPreferences sharedPreferences = getSharedPreferences();
+                    if (sharedPreferences != null)
+                    {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.putInt("userId", MainActivity.currentUser.getId());
+                        editor.putString("autoLoginEmail", MainActivity.currentUser.getEmail());
+                        editor.putString("autoLoginPassword", motDePasse);
+
+                        editor.apply();
+
+                        Intent intentmain = new Intent(Connexion.this,MainActivity.class);
+                        startActivity(intentmain);
+                    }
                 }
             }
 
@@ -213,5 +206,64 @@ public class Connexion extends AppCompatActivity {
         });
     }
 
-}
+    public SharedPreferences getSharedPreferences(){
+        SharedPreferences sharedPreferences = null;
 
+        // Using the encrypted shared preferences if available on the device
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String masterKeyAlias = null;
+            try {
+                masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                sharedPreferences = EncryptedSharedPreferences.create(
+                        "PIAndroidInventaire_SharedPref",
+                        masterKeyAlias,
+                        Connexion.this,
+                        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                );
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        }
+        return sharedPreferences;
+    }
+
+    private boolean isAutologinReady(){
+        // If the login is successful we store the userId and informations in the sharedPref
+        SharedPreferences sharedPreferences = getSharedPreferences();
+
+        int defaultValue = -1;
+        int userId = sharedPreferences.getInt("userId", defaultValue);
+        if (userId != -1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private User autoLoginUser(){
+        // Getting our shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences();
+
+        // Getting the user credentials from the shared preferences
+
+        String email = sharedPreferences.getString("autoLoginEmail", "");
+        String password = sharedPreferences.getString("autoLoginPassword", "");
+        User loggedUser = null;
+        // Checking if we actually retreived values
+        if (!(email.isEmpty() && password.isEmpty())) {
+             loggedUser = PIAndroidInventaire.apiCaller.loginUser(
+                    email,
+                    password,
+                    PIAndroidInventaire.apiUrlDomain + "login",
+                    Connexion.this);
+        }
+        return loggedUser;
+    }
+}

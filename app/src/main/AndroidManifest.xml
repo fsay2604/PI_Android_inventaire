@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pi_android_inventaire">
+    package="com.example.pi_android_inventaire"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-sdk tools:overrideLibrary="androidx.security"/>
     <application
         android:name=".PIAndroidInventaire"
         android:allowBackup="true"
@@ -37,15 +38,15 @@
 
         <activity android:name=".activities.ModifierReservation"></activity>
         <activity android:name=".activities.Reservation_index" />
-        <activity android:name=".activities.Connexion" />
-        <activity android:name=".activities.RegisterUser" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.Enregistrement" />
         <activity android:name=".activities.FaireReservation" />
         <activity android:name=".activities.VoirReservations" />
         <activity android:name=".activities.infos_produit" />
         <activity android:name=".activities.Liste_produits" />
 
         <activity android:name=".activities.Liste_Rappots"></activity>
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.Connexion">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

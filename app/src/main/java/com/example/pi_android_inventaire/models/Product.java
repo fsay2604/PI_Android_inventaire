@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+// Serializable permet de passer l'objet en intent.putExtra(), chose que l'on pourra faire lors du transfert de VoirDetailProduit vers FaireReservation
 public class Product implements Serializable, SyncableModel {
     public Product(int id, int categorie, String nom, String description, String commentaire, int qteDisponible, String image) {
         this.id = id;
@@ -235,7 +236,4 @@ public class Product implements Serializable, SyncableModel {
             return false;
         return image.equals(other.image);
     }
-
-
-
 }
