@@ -66,10 +66,15 @@
 
     <!-- String utilisé pour connexion à un compte -->
     <string name="adresse_courriel">Adresse courriel</string>
-    <string name="mot_de_passe">Mot de passe</string>
     <string name="connexion">Connexion</string>
     <string name="mot_de_passe_oubl">Mot de passe oublé</string>
     <string name="pas_enregistr_cr_er_un_compte">Pas enregistré?  Créer un compte</string>
+    <string name="s_inscrire">S\'inscerire</string>
+    <string name="insccription">Insccription</string>
+    <string name="courriel">Courriel</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="nom">Nom</string>
+    <string name="prenom">prenom</string>
 
     <item name="btn_connexion" type="id" />
     <item name="btn_inscription" type="id" />
