@@ -1,5 +1,5 @@
 /****************************************
- Fichier : Adapter.java
+ Fichier : produit_adapter.java
  Auteur : Julien Fortier
  Fonctionnalité : L'objet adapter hérite de la classe RecyclerView ce qui lui permet d'ajouter
  un prodduit dans le recyclerView.
@@ -11,6 +11,8 @@
  Historique de modifications :
  Date                       Nom                 Description
  =========================================================
+ 2021-05-02         Philippe Boulanger              Oui
+ 2021-05-02         David Marcoux                   Oui
 
  ****************************************/
 package com.example.pi_android_inventaire.adapters;
@@ -56,7 +58,7 @@ public class produit_adapter extends RecyclerView.Adapter<produit_adapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.nom.setText(all_products.get(position).getNom());
-        holder.categorie.setText(Integer.toString(all_products.get(position).getCategorie()));
+        holder.categorie.setText(all_products.get(position).getCategorieName(all_products.get(position).getCategorie()));
         holder.qte.setText(Integer.toString(all_products.get(position).getQteDisponible()));
         holder.id.setText(Integer.toString(all_products.get(position).getId()));
         //holder.image.setImageResource(all_products.get(position).getImage());

@@ -10,7 +10,8 @@
  Historique de modifications :
  Date                       Nom                 Description
  =========================================================
-
+ 2021-05-02         Philippe Boulanger              Oui
+ 2021-05-02         David Marcoux                   Oui
  ****************************************/
 package com.example.pi_android_inventaire.activities;
 
@@ -47,7 +48,7 @@ public class infos_produit extends AppCompatActivity {
 
         nomView.setText(produit.getNom());
         descriptionView.setText(produit.getDescription());
-        categorieView.setText(produit.getCategorie().toString());
+        categorieView.setText(produit.getCategorieName(produit.getCategorie()));
         quantiteView.setText(produit.getQteDisponible().toString());
         //image.setImageResource(sourceImage);
 

@@ -1,3 +1,19 @@
+/****************************************
+ Fichier : Product.java
+ Auteur : Julien Fortier
+ Fonctionnalité : Objet product
+ Date : 2021-04-26
+ Vérification :
+ Date                       Nom                   Approuvé
+ =========================================================
+
+ Historique de modifications :
+ Date                       Nom                 Description
+ =========================================================
+ 2021-05-02         Philippe Boulanger              Oui
+ 2021-05-02         David Marcoux                   Oui
+
+ ****************************************/
 package com.example.pi_android_inventaire.models;
 
 import android.database.Cursor;
@@ -221,6 +237,26 @@ public class Product implements Serializable, SyncableModel {
 
         // Suppression de l'enregistrement
         DB.execSQL("Delete from produit WHERE id = ?", new String[]{Integer.toString(this.id)});
+    }
+    public String getCategorieName(int id_categorie)
+    {
+        String nom ="";
+        // Aller chercher la DB
+        SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+        Cursor c = DB.rawQuery("SELECT * FROM categorie WHERE id = ?", new String[]{Integer.toString(id_categorie)}, null);
+
+        if (c.moveToFirst()) {
+            do {
+
+                //assing values
+                nom = c.getString(1);
+
+
+            } while (c.moveToNext());
+        }
+        return nom;
+
     }
 
     public Product get_produit_by_id(int id) {
