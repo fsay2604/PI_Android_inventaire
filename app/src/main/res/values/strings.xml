@@ -76,6 +76,13 @@
     <string name="nom">Nom</string>
     <string name="prenom">prenom</string>
 
+    <!-- String utilisé pour Rapport Activity -->
+    <string name="Rapport_nom_produit">Nom du produit:</string>
+    <string name="Rapport_quantite">Quantite</string>
+    <string name="Rapport_description">Description</string>
+    <string name="Rapport_etat">Type de Rapport</string>
+
+
     <item name="btn_connexion" type="id" />
     <item name="btn_inscription" type="id" />
 </resources>
