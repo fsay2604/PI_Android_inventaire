@@ -1,3 +1,21 @@
+/****************************************
+ Fichier : Liste_Rapports.java
+ Auteur : David Marcoux
+ Fonctionnalité : Affichage des rapports a partir de la bd local
+
+ Date : 2021-04-27
+
+ Vérification :
+ Date           Nom             Approuvé
+ =========================================================
+
+
+ Historique de modifications :
+ Date           Nom             Description
+ =========================================================
+
+ ****************************************/
+
 package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +59,8 @@ public class Liste_Rappots extends AppCompatActivity {
             r.setDescription("Rapport "+i);
             rapports.add(r);
         }*/
-        rapports = Rapport.get_all_rapport(13);
+
+        rapports = Rapport.get_all_rapport(MainActivity.currentUser.getId());
 
         recyclerView_Rapport = (RecyclerView)findViewById(R.id.recyclerViewRapport);
         Rapport_adapter myAdapter = new Rapport_adapter(this, rapports);

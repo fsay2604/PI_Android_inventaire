@@ -1,8 +1,28 @@
+/****************************************
+ Fichier : Rapport_adapter.java
+ Auteur : David Marcoux
+ Fonctionnalité : adapter des rapports
+
+ Date : 2021-04-27
+
+ Vérification :
+ Date           Nom             Approuvé
+ =========================================================
+
+
+ Historique de modifications :
+ Date           Nom             Description
+ =========================================================
+
+ ****************************************/
+
 package com.example.pi_android_inventaire.adapters;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +35,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.activities.Liste_Rappots;
 import com.example.pi_android_inventaire.activities.infos_Rapport;
@@ -28,7 +49,7 @@ public class Rapport_adapter extends RecyclerView.Adapter<Rapport_adapter.MyView
     //String data1[], data2[], data3[];
     Context context;
     private ArrayList<Rapport> rapports;
-    private AdapterView.OnItemClickListener mListener;
+    //private AdapterView.OnItemClickListener mListener;
 
 
     /*public Rapport_adapter(Context ct, String s1[], String s2[],String s3[]){
@@ -62,12 +83,14 @@ public class Rapport_adapter extends RecyclerView.Adapter<Rapport_adapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.produit_id.setText(Integer.toString(rapports.get(position).getProduit_id()));
+        holder.produit_id.setText(getProductName(rapports.get(position).getProduit_id()));
 //        holder.user_id.setText(Integer.toString(rapports.get(position).getUser_id()));
-        holder.type_rapport_id.setText(Integer.toString(rapports.get(position).getType_rapport_id()));
+        if(rapports.get(position).getType_rapport_id() == 1)
+            holder.type_rapport_id.setText("Perdu");
+        else
+            holder.type_rapport_id.setText("Brisé");
           holder.description.setText(rapports.get(position).getDescription());
       //  holder.id.setText(Integer.toString(rapports.get(position).getProduit_id()));
-
     }
 
     @Override
@@ -80,7 +103,8 @@ public class Rapport_adapter extends RecyclerView.Adapter<Rapport_adapter.MyView
         return images.length;
     }*/
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+    public class MyViewHolder extends RecyclerView.ViewHolder/* implements View.OnClickListener*/{
 
         TextView id, produit_id,user_id,type_rapport_id,description;
 
@@ -93,10 +117,12 @@ public class Rapport_adapter extends RecyclerView.Adapter<Rapport_adapter.MyView
                 //type_rapport_id;
             type_rapport_id = itemView.findViewById(R.id.textViewEtatRapport);
             description = itemView.findViewById(R.id.textViewCommentaireRapport);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
-        @Override
+
+
+        /*@Override
         public void onClick(View view) {
 
             Intent intentRapport = new Intent(context, infos_Rapport.class);
@@ -106,7 +132,33 @@ public class Rapport_adapter extends RecyclerView.Adapter<Rapport_adapter.MyView
             intentRapport.putExtra("type_rapport_id",type_rapport_id.getText().toString());
             intentRapport.putExtra("id",id.getText().toString());
             context.startActivity(intentRapport);
+        }*/
+    }
+
+    /**
+     * Permet d'associé le bon objet de produit en fonction de l'id_produit
+     *
+     * @return
+     */
+    private String getProductName(int id) {
+
+        if(id != 0) {
+            // Aller chercher la DB
+            SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
+
+            // Query
+            Cursor c = DB.rawQuery("SELECT nom FROM produit WHERE id = ?", new String[]{Integer.toString(id)});
+
+            // Parcours l'ensemble de la reponse du Select contenu dans le cursor c
+            if (c.moveToFirst()) {
+                Rapport r = new Rapport();
+
+
+                // Ajout du produit dans l'array
+                return c.getString(0);
+            }
         }
+        return null;
     }
 
 

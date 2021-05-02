@@ -53,12 +53,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Boutons du menu
-    private  Button btn_produit;
-    private  Button btn_reservation;
-    private  Button btn_compte;
-    private  Button btn_connexion;
-    private  Button btn_inscription;
-    private Button  rapportButton;
+    private Button btn_produit;
+    private Button btn_reservation;
+    private Button btn_compte;
+    private Button btn_connexion;
+    private Button btn_inscription;
+    private Button rapportButton;
 
 
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             /* Authenticating the User via the API and setting the current application's user
              * to the retreived user from the database
              */
-            currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
+            //currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
 
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -150,16 +150,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        // btn_compte.setText(R.string.btn_compte);
         btn_compte.setOnClickListener(this);
 
-       /*btn_connexion=(Button) findViewById(R.id.login_btn);
+       btn_connexion=(Button) findViewById(R.id.login_btn);
         btn_connexion.setOnClickListener(this);
 
         btn_inscription=(Button) findViewById(R.id.Suscribe_btn);
-        btn_inscription.setOnClickListener(this);*/
+        btn_inscription.setOnClickListener(this);
 
-        rapportButton=(Button) findViewById(R.id.rapportButton);
+        rapportButton = (Button) findViewById(R.id.rapportButton);
         rapportButton.setOnClickListener(this);
-
-
     }
 
     /**
