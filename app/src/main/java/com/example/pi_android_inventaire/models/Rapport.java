@@ -1,3 +1,21 @@
+/****************************************
+ Fichier : Rapport.java
+ Auteur : David Marcoux
+ Fonctionnalité : Gestion des rapports
+
+ Date : 2021-04-27
+
+ Vérification :
+ Date           Nom             Approuvé
+ =========================================================
+
+
+ Historique de modifications :
+ Date           Nom             Description
+ =========================================================
+
+ ****************************************/
+
 package com.example.pi_android_inventaire.models;
 
 import android.content.ContentValues;
@@ -46,6 +64,8 @@ public class Rapport implements Serializable, SyncableModel {
         this.user_id = user_id;
         this.type_rapport_id = type_rapport_id;
         this.description = description;
+
+
     }
 
     public Rapport(){
@@ -206,8 +226,11 @@ public class Rapport implements Serializable, SyncableModel {
         int count = cursor.getCount();
         if(count > 0)
         {
+            String nom = "Active Buzzer Module";
             // Update dans la BD
             this.update_db();
+            /*DB.execSQL("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible,qte_reserve,qte_defectueux) " +
+                    "VALUES (3,3,'un deuiemenom','desc goes brrrrrrrrr','no comment',69,5,3)");*/
         }
         else
         {

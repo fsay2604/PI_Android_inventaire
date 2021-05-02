@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.interfaces.SyncableModel;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Product implements SyncableModel {
+public class Product implements Serializable, SyncableModel {
     public Product(int id, int categorie, String nom, String description, String commentaire, int qteDisponible, String image) {
         this.id = id;
         this.nom = nom;
@@ -233,4 +235,7 @@ public class Product implements SyncableModel {
             return false;
         return image.equals(other.image);
     }
+
+
+
 }

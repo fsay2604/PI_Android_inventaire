@@ -1,0 +1,8 @@
+com.example.pi_android_inventaire
+com.example.pi_android_inventaire.activities
+com.example.pi_android_inventaire.adapters
+com.example.pi_android_inventaire.fragments
+com.example.pi_android_inventaire.interfaces
+com.example.pi_android_inventaire.models
+com.example.pi_android_inventaire.network
+com.example.pi_android_inventaire.utils
