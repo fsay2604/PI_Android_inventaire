@@ -41,9 +41,9 @@ import com.example.pi_android_inventaire.network.ApiCaller;
 import com.example.pi_android_inventaire.network.ApiCallerCallback;
 import com.example.pi_android_inventaire.network.FireBaseMessagingService;
 import com.example.pi_android_inventaire.utils.Result;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
+//import com.google.android.gms.tasks.OnCompleteListener;
+//import com.google.android.gms.tasks.Task;
+//import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -90,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             /* Authenticating the User via the API and setting the current application's user
              * to the retreived user from the database
              */
-            currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
+    //        currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
 
-            FirebaseMessaging.getInstance().getToken()
+       /*     FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override
                         public void onComplete(@NonNull Task<String> task) {
@@ -111,14 +111,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                              * currently stored in the remote database
                              */
 
-                            if ( !MainActivity.currentUser.getFirebaseToken().equals(token) )
+                          /*if ( !MainActivity.currentUser.getFirebaseToken().equals(token) )
                             {
                                 MainActivity.currentUser.setFirebaseToken(token);
                                 FireBaseMessagingService.sendRegistrationToServer(token);
                             }
                             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    });*/
         }
 
 
@@ -168,41 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_connexion=(Button) findViewById(R.id.login_btn);
         btn_connexion.setOnClickListener(this);
 
-        btn_inscription=(Button) findViewById(R.id.Suscribe_btn);
-        btn_inscription.setOnClickListener(this);
-
-        rapportButton=(Button) findViewById(R.id.rapportButton);
-        rapportButton.setOnClickListener(this);
-
-
-    }
-
-    /**
-     * Fonction qui gere le listener des boutons.
-     * @param v     represente la vue
-     */
-    @Override
-    public void onClick(View v) {
-
-        // Switch case en fonction du bouton appuyer
-        switch (v.getId()) {
-            case R.id.btn_produit:
-                Intent intentListeProduit = new Intent(this, Liste_produits.class);
-                startActivity(intentListeProduit);
-                break;
-            case R.id.btn_reservation:
-                // redirection vers la page pour faire une reservation
-                Intent intentReservationIndex = new Intent(this, Reservation_index.class);
-                startActivity(intentReservationIndex);
-                break;
-            case R.id.login_btn:
-                // redirection vers la page de connexion
-                Intent intentConnexion = new Intent(MainActivity.this,Connexion.class);
-                startActivity(intentConnexion);
-                break;
-            case R.id.btn_inscription:
-                // redirection vers la page d'enregistrement
-                break;
             case R.id.rapportButton:
                 Intent intentRapport = new Intent(MainActivity.this,Liste_Rappots.class);
                 startActivity(intentRapport);
