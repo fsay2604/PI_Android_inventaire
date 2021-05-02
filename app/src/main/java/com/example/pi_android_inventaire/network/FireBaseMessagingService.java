@@ -25,10 +25,12 @@ import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.activities.MainActivity;
 import com.example.pi_android_inventaire.models.User;
 import com.example.pi_android_inventaire.utils.DbSyncService;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class FireBaseMessagingService extends FirebaseMessagingService {
 
@@ -76,6 +78,16 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
 
     public static void sendRegistrationToServer(String token) {
         String response = PIAndroidInventaire.apiCaller.putSingleOrDefault(MainActivity.currentUser, apiUpdateTokenBaseUrl +  MainActivity.currentUser.getId());
-        int allo = 123;
+    }
+
+    public static void sendMessageToAllUsers(String key, String value){
+        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        final String SENDER_ID = "236215817107";
+        final String messageId = UUID.randomUUID().toString(); // Increment for each
+        fm.send(new RemoteMessage.Builder(SENDER_ID + "@fcm.googleapis.com")
+                .setMessageId(messageId)
+                .addData(key, value)
+                .build());
+
     }
 }

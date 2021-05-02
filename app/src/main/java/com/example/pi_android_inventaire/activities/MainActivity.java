@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             /* Send the token to the server if it is different from the one
                              * currently stored in the remote database
                              */
-
                             if ( !MainActivity.currentUser.getFirebaseToken().equals(token) )
                             {
                                 MainActivity.currentUser.setFirebaseToken(token);
@@ -113,16 +112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     });
-
+            FireBaseMessagingService.sendMessageToAllUsers("updatedTable", "reservation");
         }
-        FirebaseMessaging fm = FirebaseMessaging.getInstance();
-        final String SENDER_ID = "236215817107";
-        final int messageId = 0; // Increment for each
-        fm.send(new RemoteMessage.Builder(SENDER_ID + "@fcm.googleapis.com")
-                .setMessageId(Integer.toString(messageId))
-                .addData("my_message", "Hello World")
-                .addData("my_action","SAY_HELLO")
-                .build());
 
 
 
