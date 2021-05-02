@@ -82,6 +82,7 @@
     <string name="Rapport_quantite">Quantite</string>
     <string name="Rapport_description">Description</string>
     <string name="Rapport_etat">Type de Rapport</string>
+    <string name="Rapport">Rapport</string>
 
 
     <item name="btn_connexion" type="id" />
