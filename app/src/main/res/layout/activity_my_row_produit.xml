@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="150dp"
         android:layout_margin="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
@@ -46,33 +46,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/nameView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
                     android:text="@string/liste_Produits_nom"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="140dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="57dp"
+                    android:layout_weight="1"
                     android:text="LED RGB"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -88,7 +89,7 @@
                     android:layout_weight="1"
                     android:text="@string/liste_Produits_categorie"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -97,22 +98,22 @@
                     android:layout_height="wrap_content"
                     android:text="Lumière"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/telephoneView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="39dp"
                     android:text="@string/liste_Produits_qteRestante"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -122,7 +123,7 @@
                     android:layout_marginLeft="5dp"
                     android:text="0"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/id"
