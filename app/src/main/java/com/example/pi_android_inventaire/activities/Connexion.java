@@ -2,9 +2,9 @@
  Fichier : Connexion.java
  Auteur : Philippe Boulanger
  Fonctionnalité : a-01 - Gestion de connexion
-Une page de connexion permet de se connnecter à l'aide d'un courriel et d'un mot de passe
-La récupération de mot de psse est possible en demandant un lien de récupération
-qui sera envoyé à une adressse entrée par l'utilisateur.
+ Une page de connexion permet de se connnecter à l'aide d'un courriel et d'un mot de passe
+ La récupération de mot de psse est possible en demandant un lien de récupération
+ qui sera envoyé à une adresse entrée par l'utilisateur.
 
  Date : 2021-04-28
 

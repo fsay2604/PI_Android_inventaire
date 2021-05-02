@@ -39,22 +39,15 @@ public class Liste_produits extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_produits);
 
-        products = new ArrayList<Product>();
+
+
+
 
         /**
          * TODO: Query qui va chercher all_products() plutot qu'un array de produit fictifs.
          */
-        // Remplit le array avec des donnees fictives, A changer pour avoir les donnes la BD.
-        for(int i =0; i<8; i++) {
-            Product p = new Product();
-            p.setId(i);
-            p.setNom("Un produit");
-            p.setCategorie(1);
-            p.setImage("allo.png");
-            p.setQteDisponible(i);
-            p.setDescription("Salut je suis le produit"+i);
-            products.add(p);
-        }
+        products = Product.selectProducts();
+
 
         recyclerView_products = (RecyclerView)findViewById(R.id.RecyclerView);
         produit_adapter adapter = new produit_adapter(this, products);
