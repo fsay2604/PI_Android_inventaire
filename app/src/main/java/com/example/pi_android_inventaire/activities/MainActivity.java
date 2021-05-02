@@ -156,8 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_inscription=(Button) findViewById(R.id.Suscribe_btn);
         btn_inscription.setOnClickListener(this);
 
-        rapportButton = (Button) findViewById(R.id.rapportButton);
-        rapportButton.setOnClickListener(this);
+
     }
 
     /**
@@ -186,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_inscription:
                 // redirection vers la page d'enregistrement
                 break;
-            case R.id.rapportButton:
+            case R.id.btn_compte:
                 Intent intentRapport = new Intent(MainActivity.this,Liste_Rappots.class);
                 startActivity(intentRapport);
                 break;
