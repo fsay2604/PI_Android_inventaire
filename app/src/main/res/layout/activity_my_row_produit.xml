@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     tools:visibility="invisible" />
 
             </LinearLayout>

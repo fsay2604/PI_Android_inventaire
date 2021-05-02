@@ -233,7 +233,7 @@ public class Product implements Serializable, SyncableModel {
         String image = "";
 
         SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
-        Cursor c = DB.rawQuery("SELECT  * FROM produit WHERE id = ?", new String[]{Integer.toString(id)}, null);
+        Cursor c = DB.rawQuery("SELECT * FROM produit WHERE id = ?", new String[]{Integer.toString(id)}, null);
 
         if (c.moveToFirst()) {
             do {
