@@ -1,19 +1,15 @@
 /****************************************
- Fichier : User.java
- Auteur : Philippe Boulanger
- Fonctionnalité : Classe de l'utilisateur avec ses getteurs/setteurs
-
- Date : 2021-04-29
-
+ Fichier : ApiCaller.java
+ Auteur : Marc Antoine Griffiths Lorange
+ Fonctionnalité : Classe de modelisation des données d'un utilisateur.
+ Date : 2021-04-28
  Vérification :
- Date           Nom             Approuvé
+ Date               Nom                   Approuvé
  =========================================================
-
 
  Historique de modifications :
- Date           Nom             Description
+ Date               Nom                   Description
  =========================================================
- 2021-04-29      Philippe Boulanger
  ****************************************/
 package com.example.pi_android_inventaire.models;
 
@@ -52,7 +48,6 @@ public class User {
         this.email = email;
         this.firebaseToken = fireBaseToken;
     }
-
     public User() {
         this.id = 0;
         this.email = "";
@@ -75,7 +70,7 @@ public class User {
     }
 
     public String getFirebaseToken() {
-        if (firebaseToken == null) {
+        if(firebaseToken== null){
             return new String("");
         }
         return firebaseToken;
