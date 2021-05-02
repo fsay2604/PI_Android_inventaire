@@ -95,7 +95,7 @@ public class Rapport implements Serializable, SyncableModel {
         SQLiteDatabase DB = PIAndroidInventaire.getDatabaseInstance();
 
         // Query
-        Cursor c = DB.rawQuery("SELECT * FROM rapport INNER JOIN produit as p WHERE p.id = produit_id and numero_utilisateur_id = ?", new String[] {Integer.toString(numero_utilisateur)} );
+        Cursor c = DB.rawQuery("SELECT * FROM rapport LEFT JOIN produit as p ON p.id = produit_id WHERE user_id = ?", new String[] {Integer.toString(numero_utilisateur)} );
 
         // Parcours l'ensemble de la reponse du Select contenu dans le cursor c
         if(c.moveToFirst())
@@ -216,8 +216,6 @@ public class Rapport implements Serializable, SyncableModel {
             DB.execSQL(query, new String[]{ Integer.toString(this.id) , Integer.toString(this.produit_id), Integer.toString(this.user_id), Integer.toString(this.type_rapport_id), this.description});
         }
         cursor.close();
-
-
     }
 
     @Override

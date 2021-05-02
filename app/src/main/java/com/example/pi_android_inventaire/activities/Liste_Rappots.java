@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.adapters.Rapport_adapter;
 import com.example.pi_android_inventaire.models.Rapport;
+import com.example.pi_android_inventaire.models.Reservation;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class Liste_Rappots extends AppCompatActivity {
         s3 = getResources().getStringArray(R.array.commentaire);*/
 
         // Remplit le array avec des donnees fictives, A changer pour avoir les donnes la BD.
-        for(int i =0; i<3; i++) {
+       /* for(int i =0; i<3; i++) {
             Rapport r = new Rapport();
             r.setId(i);
             r.setProduit_id(1);
@@ -39,7 +40,8 @@ public class Liste_Rappots extends AppCompatActivity {
             r.setType_rapport_id(1);
             r.setDescription("Rapport "+i);
             rapports.add(r);
-        }
+        }*/
+        rapports = Rapport.get_all_rapport(13);
 
         recyclerView_Rapport = (RecyclerView)findViewById(R.id.recyclerViewRapport);
         Rapport_adapter myAdapter = new Rapport_adapter(this, rapports);
