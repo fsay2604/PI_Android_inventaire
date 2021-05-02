@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.models.Product;
 
 public class infos_produit extends AppCompatActivity {
 
@@ -48,6 +49,7 @@ public class infos_produit extends AppCompatActivity {
         String id = data.getStringExtra("id");
         //int sourceImage = data.getIntExtra("image",0);
 
+        Product product = new Product(Integer.parseInt(id),Integer.parseInt(categorie),nom,description,"",Integer.parseInt(qte),"test.png");
         nomView.setText(nom);
         descriptionView.setText(description);
         categorieView.setText(categorie);
@@ -60,7 +62,7 @@ public class infos_produit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(infos_produit.this, FaireReservation.class);
-                intent.putExtra("id","666");
+                intent.putExtra("product",product);
                 startActivity(intent);
             }
         });
