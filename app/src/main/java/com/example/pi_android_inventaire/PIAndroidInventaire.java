@@ -8,6 +8,7 @@ import android.sax.StartElementListener;
 
 import com.example.pi_android_inventaire.activities.MainActivity;
 import com.example.pi_android_inventaire.models.Product;
+import com.example.pi_android_inventaire.models.Reservation;
 import com.example.pi_android_inventaire.network.ApiCaller;
 
 import java.util.ArrayList;
@@ -22,14 +23,14 @@ public class PIAndroidInventaire extends Application {
 
     // ApiCaller to make calls to the api using the background threads
     public static ApiCaller apiCaller;
-
-    public static final String apiUrlDomain = "https://d9dad5efccc2.ngrok.io/api/";
+    public static final String apiUrlDomain = "https://8d13dfefab02.ngrok.io/api/";
 
     @Override
     public void onCreate() {
         super.onCreate();
         // Creating the apiCaller
         PIAndroidInventaire.apiCaller = new ApiCaller(PIAndroidInventaire.executorService);
+
 
         // Initializing/Creating the database
         mydb = openOrCreateDatabase("pi_inventaire_android",MODE_PRIVATE,null);
