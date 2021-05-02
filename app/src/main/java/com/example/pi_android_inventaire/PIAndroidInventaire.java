@@ -23,7 +23,7 @@ public class PIAndroidInventaire extends Application {
 
     // ApiCaller to make calls to the api using the background threads
     public static ApiCaller apiCaller;
-    public static final String apiUrlDomain = "https://8d13dfefab02.ngrok.io/api/";
+    public static final String apiUrlDomain = "https://d9dad5efccc2.ngrok.io/api/";
 
     @Override
     public void onCreate() {
@@ -43,11 +43,9 @@ public class PIAndroidInventaire extends Application {
         //mydb.execSQL("DROP TABLE rapport");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS rapport(id INTEGER PRIMARY KEY ,produit_id INTEGER NOT NULL,user_id INTEGER NOT NULL,type_rapport_id INTEGER NOT NULL,description VARCHAR NOT NULL,FOREIGN KEY(produit_id) REFERENCES produit(id),FOREIGN KEY(type_rapport_id) REFERENCES type_rapport(id))");
         mydb.execSQL("CREATE TABLE IF NOT EXISTS type_rapport(id INTEGER PRIMARY KEY ,type VARCHAR NOT NULL)");
-
         //test
         // mydb.execSQL("INSERT INTO categorie (id,nom) VALUES (1,'Diode')");
         //mydb.execSQL("INSERT INTO produit (id,categorie_id,nom,description,commentaire,qte_disponible,image) VALUES (1,1,'LED','Une description','un commentaire',10,'led.jpg')");
-
     }
 
     /**

@@ -22,10 +22,16 @@ package com.example.pi_android_inventaire.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -35,11 +41,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * <b>La classe connexion permet à l'uilisateur de se connecter</b>
@@ -90,6 +100,20 @@ public class Connexion extends AppCompatActivity {
         mConnexionBtn = findViewById(R.id.connexionBtn);
         forgotTextLink = findViewById(R.id.forgotPassword);
 
+
+        // Checking if we have an user stored in shared pref for the autologin feature
+        if (isAutologinReady()){
+            User loggedUser = autoLoginUser();
+            // If the login was successful we start the MainActivity and set the current user to the returned User
+            if (loggedUser != null){
+                MainActivity.currentUser = loggedUser;
+                Intent intentmain = new Intent(Connexion.this,MainActivity.class);
+                startActivity(intentmain);
+            }
+        }
+
+
+
         mConnexionBtn.setOnClickListener(new View.OnClickListener() {
             /*
              * Attribution des écouteurs d'évènements sur le champs courriel et mot de passe
@@ -115,14 +139,32 @@ public class Connexion extends AppCompatActivity {
                 }
 
                 //progessBar.setVisibility(View.VISIBLE);
+                MainActivity.currentUser = PIAndroidInventaire.apiCaller.loginUser(
+                        courriel,
+                        motDePasse,
+                        PIAndroidInventaire.apiUrlDomain + "login",
+                        Connexion.this);
 
-                Intent intentmain = new Intent(Connexion.this,MainActivity.class);
-                intentmain.putExtra("email", courriel);
-                intentmain.putExtra("password", motDePasse);
-                startActivity(intentmain);
-                // Toast.makeText(Connexion.this, "Courriel: "+courriel+" Mot de passe: "+motDePasse,Toast.LENGTH_LONG).show();
+                // Checking if the user is logged in or not
+                if (MainActivity.currentUser != null)
+                {
+                    // Adding our credentials to the newly created shared preferences for the autologin feature
+                    SharedPreferences sharedPreferences = getSharedPreferences();
+                    if (sharedPreferences != null)
+                    {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.putInt("userId", MainActivity.currentUser.getId());
+                        editor.putString("autoLoginEmail", MainActivity.currentUser.getEmail());
+                        editor.putString("autoLoginPassword", motDePasse);
+
+                        editor.apply();
+
+                        Intent intentmain = new Intent(Connexion.this,MainActivity.class);
+                        startActivity(intentmain);
+                    }
+                }
             }
-
         });
 
         forgotTextLink.setOnClickListener(new View.OnClickListener() {
@@ -159,5 +201,66 @@ public class Connexion extends AppCompatActivity {
                 passwordResetDialog.create().show();
             }
         });
+    }
+
+    public SharedPreferences getSharedPreferences(){
+        SharedPreferences sharedPreferences = null;
+
+        // Using the encrypted shared preferences if available on the device
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String masterKeyAlias = null;
+            try {
+                masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                sharedPreferences = EncryptedSharedPreferences.create(
+                        "PIAndroidInventaire_SharedPref",
+                        masterKeyAlias,
+                        Connexion.this,
+                        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                );
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        }
+        return sharedPreferences;
+    }
+
+    private boolean isAutologinReady(){
+        // If the login is successful we store the userId and informations in the sharedPref
+        SharedPreferences sharedPreferences = getSharedPreferences();
+
+        int defaultValue = -1;
+        int userId = sharedPreferences.getInt("userId", defaultValue);
+        if (userId != -1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private User autoLoginUser(){
+        // Getting our shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences();
+
+        // Getting the user credentials from the shared preferences
+
+        String email = sharedPreferences.getString("autoLoginEmail", "");
+        String password = sharedPreferences.getString("autoLoginPassword", "");
+        User loggedUser = null;
+        // Checking if we actually retreived values
+        if (!(email.isEmpty() && password.isEmpty())) {
+             loggedUser = PIAndroidInventaire.apiCaller.loginUser(
+                    email,
+                    password,
+                    PIAndroidInventaire.apiUrlDomain + "login",
+                    Connexion.this);
+        }
+        return loggedUser;
     }
 }

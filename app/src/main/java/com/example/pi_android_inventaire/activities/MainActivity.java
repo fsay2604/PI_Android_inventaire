@@ -45,6 +45,7 @@ import com.example.pi_android_inventaire.utils.Result;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONObject;
 
@@ -87,13 +88,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle b = getIntent().getExtras();
         if(b != null){
             // Extracting the user info from the bundled data
-            String email = b.getString("email");
-            String password = b.getString("password");
+            //String email = b.getString("email");
+            //String password = b.getString("password");
 
             /* Authenticating the User via the API and setting the current application's user
              * to the retreived user from the database
              */
-            currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
+            //currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
 
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -122,7 +123,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     });
+
         }
+        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        final String SENDER_ID = "236215817107";
+        final int messageId = 0; // Increment for each
+        fm.send(new RemoteMessage.Builder(SENDER_ID + "@fcm.googleapis.com")
+                .setMessageId(Integer.toString(messageId))
+                .addData("my_message", "Hello World")
+                .addData("my_action","SAY_HELLO")
+                .build());
 
 
 
