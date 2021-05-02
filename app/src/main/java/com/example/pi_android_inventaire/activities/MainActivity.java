@@ -85,17 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // FIN TEST DU API CALLER
 
         // TEST DE FirebaseMessaging
-        Bundle b = getIntent().getExtras();
-        if(b != null){
-            // Extracting the user info from the bundled data
-            //String email = b.getString("email");
-            //String password = b.getString("password");
-
-            /* Authenticating the User via the API and setting the current application's user
-             * to the retreived user from the database
-             */
-            //currentUser = PIAndroidInventaire.apiCaller.loginUser(email, password, PIAndroidInventaire.apiUrlDomain + "login");
-
+        if( MainActivity.currentUser != null){
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override
