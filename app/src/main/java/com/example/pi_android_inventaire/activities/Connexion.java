@@ -2,9 +2,9 @@
  Fichier : Connexion.java
  Auteur : Philippe Boulanger
  Fonctionnalité : a-01 - Gestion de connexion
-Une page de connexion permet de se connnecter à l'aide d'un courriel et d'un mot de passe
-La récupération de mot de psse est possible en demandant un lien de récupération
-qui sera envoyé à une adresse entrée par l'utilisateur.
+ Une page de connexion permet de se connnecter à l'aide d'un courriel et d'un mot de passe
+ La récupération de mot de psse est possible en demandant un lien de récupération
+ qui sera envoyé à une adresse entrée par l'utilisateur.
 
  Date : 2021-04-28
 
@@ -16,7 +16,7 @@ qui sera envoyé à une adresse entrée par l'utilisateur.
  Historique de modifications :
  Date           Nom             Description
  =========================================================
-2021-04-29      Philippe Boulanger
+ 2021-04-29      Philippe Boulanger
  ****************************************/
 package com.example.pi_android_inventaire.activities;
 
@@ -80,8 +80,6 @@ public class Connexion extends AppCompatActivity {
     ProgressBar progessBar;
 
 
-
-
     /**
      * Initialistaion de éléments de la page
      * <p>
@@ -113,7 +111,7 @@ public class Connexion extends AppCompatActivity {
 
         String courriel = mCourriel.getText().toString();
         String motDePasse = mMotDePasse.getText().toString();
-        Log.i("courriel",courriel);
+        Log.i("courriel", courriel);
 
         // Recuperation des btn
         mProduit = (Button) findViewById(R.id.btn_produit);
@@ -156,177 +154,26 @@ public class Connexion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkFormField();
-                MainActivity.currentUser = PIAndroidInventaire.apiCaller.loginUser( mCourriel.getText().toString(),  mMotDePasse.getText().toString(), PIAndroidInventaire.apiUrlDomain + "login");
+                MainActivity.currentUser = PIAndroidInventaire.apiCaller.loginUser(mCourriel.getText().toString(), mMotDePasse.getText().toString(), PIAndroidInventaire.apiUrlDomain + "login");
                 Intent intentConnexion = new Intent(Connexion.this, MainActivity.class);
                 startActivity(intentConnexion);
-               // POSTStringAndJSONRequest();
+                // POSTStringAndJSONRequest();
             }
 
             private void checkFormField() {
-                if (TextUtils.isEmpty(courriel)) {
+                if (TextUtils.isEmpty(mCourriel.getText().toString())) {
                     mCourriel.setError("Entrer votre courriel");
                     return;
                 }
-                if (TextUtils.isEmpty(motDePasse)) {
+                if (TextUtils.isEmpty(mMotDePasse.getText().toString())) {
                     mMotDePasse.setError("Mot de passe requis");
                     return;
                 }
-                if (motDePasse.length() < 6) {
+                if (mMotDePasse.getText().toString().length() < 6) {
                     mMotDePasse.setError("Doit contenir au moins 6 charactères");
                     return;
                 }
             }
-
-            private void POSTStringAndJSONRequest() {
-
-                RequestQueue queue = Volley.newRequestQueue(Connexion.this);
-
-                VolleyLog.DEBUG = true;
-                String uri = "https://0d6ecac9266f.ngrok.io/Jsonlogin";
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, uri, new Response.Listener() {
-                    /**
-                     * Called when a response is received.
-                     *
-                     * @param response
-                     */
-                    @Override
-                    public void onResponse(Object response) {
-
-                    }
-
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-                    @Override
-                    public Priority getPriority() {
-                        return Priority.LOW;
-                    }
-
-                    @Override
-                    public Map getParams() {
-                        Map params = new HashMap();
-
-                        params.put("email", courriel);
-                        params.put("password",motDePasse);
-
-
-                        return params;
-                    }
-
-                    @Override
-                    public Map getHeaders() throws AuthFailureError {
-                        HashMap headers = new HashMap();
-                        headers.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-                        return headers;
-                    }
-
-                };
-
-
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("email", courriel);
-                    jsonObject.put("password",motDePasse);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(uri, jsonObject, new Response.Listener() {
-                    /**
-                     * Called when a response is received.
-                     *
-                     * @param response
-                     */
-                    @Override
-                    public void onResponse(Object response) {
-
-                    }
-
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-
-                    @Override
-                    public int getMethod() {
-                        return Method.POST;
-                    }
-
-                    @Override
-                    public Priority getPriority() {
-                        return Priority.NORMAL;
-                    }
-                };
-
-
-                StringRequest stringRequestPOSTJSON = new StringRequest(Request.Method.POST, uri, new Response.Listener() {
-                    /**
-                     * Called when a response is received.
-                     *
-                     * @param response
-                     */
-                    @Override
-                    public void onResponse(Object response) {
-
-                    }
-
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-                    @Override
-                    public Priority getPriority() {
-                        return Priority.HIGH;
-                    }
-
-                    @Override
-                    public Map getHeaders() throws AuthFailureError {
-                        HashMap headers = new HashMap();
-                        headers.put("Content-Type", "application/json; charset=utf-8");
-                        return headers;
-                    }
-
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-
-                        JSONObject jsonObject = new JSONObject();
-                        try {
-                            jsonObject.put("password",courriel);
-                            jsonObject.put("password",motDePasse);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        String requestBody = jsonObject.toString();
-
-
-                        try {
-                            return requestBody == null ? null : requestBody.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                            return null;
-                        }
-                    }
-
-
-                };
-
-               //queue.add(stringRequest);
-                //queue.add(jsonObjectRequest);
-                queue.add(stringRequestPOSTJSON);
-            }
-
-/*                Intent intentmain = new Intent(Connexion.this, MainActivity.class);
-                startActivity(intentmain);*/
 
         });
 
@@ -351,7 +198,7 @@ public class Connexion extends AppCompatActivity {
                         //Extrait le courriel et envoie le lien
 
                         String mail = resetMail.getText().toString();
-                        Toast.makeText(Connexion.this, "Courriel: "+resetMail,Toast.LENGTH_LONG).show();
+                        Toast.makeText(Connexion.this, "Courriel: " + resetMail, Toast.LENGTH_LONG).show();
                         //fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>(){...}
                     }
                 });
