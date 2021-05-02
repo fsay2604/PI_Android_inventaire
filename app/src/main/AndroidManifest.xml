@@ -38,7 +38,7 @@
         <activity android:name=".activities.ModifierReservation"></activity>
         <activity android:name=".activities.Reservation_index" />
         <activity android:name=".activities.Connexion" />
-        <activity android:name=".activities.Enregistrement" />
+        <activity android:name=".activities.RegisterUser" />
         <activity android:name=".activities.FaireReservation" />
         <activity android:name=".activities.VoirReservations" />
         <activity android:name=".activities.infos_produit" />
