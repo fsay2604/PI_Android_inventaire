@@ -17,6 +17,7 @@
  Date           Nom             Description
  =========================================================
  2021-04-29      Philippe Boulanger
+ 2021-05-02     Marc Antoine Griffiths Lorange
  ****************************************/
 package com.example.pi_android_inventaire.activities;
 

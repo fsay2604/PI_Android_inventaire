@@ -73,16 +73,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         setTitle("Accueil");
 
-        // TEST DU API CALLER
+        String[] tables = {"categorie","produit","reservation","rapport"};
 
-        ArrayList<Product> products = PIAndroidInventaire.apiCaller.getList(Product.class,PIAndroidInventaire.apiUrlDomain + "produits?page=1");
-        ArrayList<Reservation> Reservation = PIAndroidInventaire.apiCaller.getList(Reservation.class,PIAndroidInventaire.apiUrlDomain + "reservations?page=1");
+        // Creating our dbSyncerService to sync the database
+        DbSyncService dbSyncer = new DbSyncService();
 
-        Product product = PIAndroidInventaire.apiCaller.getSingleOrDefault(Product.class, PIAndroidInventaire.apiUrlDomain + "produits/2");
+        // Syncing all the received tables
+        for (String tableName :
+                tables) {
+            // Requesting a table update for the specified table to the DbSyncService
+            dbSyncer.syncTable(tableName);
+        }
 
-
-        int alllo = 0;
-        // FIN TEST DU API CALLER
 
         // TEST DE FirebaseMessaging
         if( MainActivity.currentUser != null){

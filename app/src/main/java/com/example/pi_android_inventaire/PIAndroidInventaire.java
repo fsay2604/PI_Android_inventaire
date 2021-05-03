@@ -1,3 +1,17 @@
+/****************************************
+ Fichier : PIAndroidInventaire.java
+ Auteur : Marc Antoine Griffiths Lorange
+ Fonctionnalité : Classe de base de l'application contient une référence a la base de données
+ ainsi que le pool de thread utilisé lors de l'exécution de l'application.
+ Date : 2021-04-28
+ Vérification :
+ Date               Nom                   Approuvé
+ =========================================================
+
+ Historique de modifications :
+ Date               Nom                   Description
+ =========================================================
+ ****************************************/
 package com.example.pi_android_inventaire;
 
 import android.app.Application;
@@ -23,7 +37,7 @@ public class PIAndroidInventaire extends Application {
 
     // ApiCaller to make calls to the api using the background threads
     public static ApiCaller apiCaller;
-    public static final String apiUrlDomain = "https://8aa64083fc2c.ngrok.io/api/";
+    public static final String apiUrlDomain = "https://d9dad5efccc2.ngrok.io/api/";
 
     @Override
     public void onCreate() {

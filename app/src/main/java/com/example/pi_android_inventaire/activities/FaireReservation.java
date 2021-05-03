@@ -36,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+
+import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.R;
 import com.example.pi_android_inventaire.models.Product;
 import com.example.pi_android_inventaire.models.Reservation;
@@ -69,7 +71,7 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         // La variable Product p de l'objet Reservation s'initialise automatiquement lors de l'appel de r.setProduit_id().
         r = new Reservation();
         Product p = (Product) getIntent().getSerializableExtra("product");
-        //r.setProduit_id(p.getId());
+        r.setProduit_id(p.getId());
 
         nom_produit = (TextView) findViewById(R.id.textView_faireReservation_nomProduit);
         nom_produit.setText(p.getNom());
@@ -138,11 +140,12 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
                 r.setQuantite(Integer.parseInt(String.valueOf(qty.getText())));
                 r.setEtat_id(1);
                 r.setDate_retour_prevue(String.valueOf(mDisplayDate.getText()));
-
                 r.setNumero_utilisateur(MainActivity.currentUser.getId());
                 r.setDate_retour_reel("");
 
                 r.put_in_db();  // Enregistre dans la BD la réservation
+
+                //PIAndroidInventaire.apiCaller.putSingleOrDefault(r, PIAndroidInventaire.apiUrlDomain + "");
                 Toast.makeText(this, "Reservation ajouter avec succès.", Toast.LENGTH_SHORT).show();
                 finish();
                 break;

@@ -71,7 +71,8 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
         /**
          * TODO: Changer le param pour Integer.toString(mAll_reservations.get(position).getProduit().getCategorieName(); un fois la classe produit termine
          */
-        holder.nomCategorie.setText(Integer.toString(mAll_reservations.get(position).getId()));
+        //holder.nomCategorie.setText(Integer.toString(mAll_reservations.get(position).getId()));
+        holder.nomCategorie.setText(mAll_reservations.get(position).getProduit().getCategorieName(mAll_reservations.get(position).getProduit().getId()));
 
         // Vue que l'on affiche seulement les reservation en attente, pas besoin de faire de requete a la bd.
         holder.etat.setText("En attente");

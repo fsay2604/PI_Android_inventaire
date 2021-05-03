@@ -1,3 +1,16 @@
+/****************************************
+ Fichier : ApiCaller.java
+ Auteur : Marc Antoine Griffiths Lorange
+ Fonctionnalité : Classe d'encapsulation pour éviter le type erasure dans la classe ApiCaller.
+ Date : 2021-04-28
+ Vérification :
+ Date               Nom                   Approuvé
+ =========================================================
+
+ Historique de modifications :
+ Date               Nom                   Description
+ =========================================================
+ ****************************************/
 package com.example.pi_android_inventaire.network;
 
 import java.lang.reflect.ParameterizedType;

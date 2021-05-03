@@ -56,9 +56,8 @@ class Factory<T> {
 
 
 /**
- * TODO: Verify if it is possible to avoid on type conversion by directly returning a JsonElement directly from the callApi() method using this function -> gson.toJsonTree()
+ * Permet de faire des appels à l'API de facon asynchrone.
  */
-
 public class ApiCaller {
 
     public static final int DEFAULT_BUFFER_SIZE = 8192;
@@ -76,6 +75,13 @@ public class ApiCaller {
     }
 
 
+    /**
+     * Fait un appel à l'api de facon synchrone et retourne une liste d'objet du type demandée.
+     * @param requestedObject Le type d'objet demandé.
+     * @param urlString L'url à appelé qui retourne un liste d'objet en JSON
+     * @param <T> Le type d'objet retourné
+     * @return Une ArrayList du type de l'objet demandé en paramètre et en retour.
+     */
     public <T> ArrayList<T> getListSync(Class<T> requestedObject, String urlString){
         // Starting the API Request on the same thread.
         Result<List<T>> response;
@@ -97,6 +103,13 @@ public class ApiCaller {
         return null;
     }
 
+    /**
+     * Fait un appel à l'api de facon asynchrone et retourne un objet du type demandée.
+     * @param requestedObject Le type d'objet demandé.
+     * @param urlString L'url à appelé qui retourne un objet en JSON
+     * @param <T> Le type d'objet retourné
+     * @return Un objet du type demandé en paramètre et en retour.
+     */
     public <T> ArrayList<T> getList(Class<T> requestedObject, String urlString) {
         // Starting the API Request on another thread.
         Future<Result<List<T>>> future = executor.submit(() -> {
@@ -130,6 +143,13 @@ public class ApiCaller {
         return (ArrayList<T>) value;
     }
 
+    /**
+     * Fait un appel à l'api de facon asynchrone et retourne un objet du type demandée.
+     * @param requestedObject Le type d'objet demandé.
+     * @param urlString L'url à appelé qui retourne un objet en JSON
+     * @param <T> Le type d'objet retourné
+     * @return Une ArrayList du type de l'objet demandé en paramètre et en retour.
+     */
     public <T> T getSingleOrDefault(Class<T> requestedObject, String urlString){
         // Starting the API Request on another thread.
         Future<Result<T>> future = executor.submit(() -> {
@@ -163,6 +183,14 @@ public class ApiCaller {
         return (value);
     }
 
+    /**
+     * Fait un appel à l'api de facon asynchrone et insert un objet du type demandée dans
+     * la base de données distante.
+     * @param toSend l'objet à envoyer à l'api.
+     * @param urlString L'url à appelé qui retourne un objet en JSON
+     * @param <T> Le type d'objet retourné
+     * @return Une ArrayList du type de l'objet demandé en paramètre et en retour.
+     */
     public <T> String putSingleOrDefault(T toSend, String urlString){
         // Starting the API Request on another thread.
         Future<Result<String>> future = executor.submit(() -> {
@@ -196,6 +224,14 @@ public class ApiCaller {
         return value;
     }
 
+    /**
+     * Fait un appel à l'api de facon asynchrone pour login un utilisateur.
+     * @param email courriel de l'utilisateur
+     * @param password mot de passe de l'utilisateur
+     * @param urlString url du endpoint pour le login
+     * @param currentContext context pour faire un toast si quelquechose tourne mal
+     * @return L'utilisateur si les identifiants sont valide sinon retourne null
+     */
     public User loginUser(String email, String password, String urlString,Context currentContext){
         // Starting the API Request on another thread.
         Future<Result<User>> future = executor.submit(() -> {
@@ -247,6 +283,13 @@ public class ApiCaller {
         return value;
     }
 
+    /**
+     * Envoie un requête Json pour updaté les valeur d'un objet
+     * @param toSend L'objet à jour
+     * @param urlString L'url du endpoint
+     * @param <T> le Type d'objet.
+     * @return le résultat de la requête
+     */
     private <T> Result<String> updateJsonObject(T toSend, String urlString) {
         try {
             // The fetched response
@@ -296,6 +339,13 @@ public class ApiCaller {
         return null;
     }
 
+    /**
+     * Envoie un requête Json pour insérer les valeur d'un objet
+     * @param toSend L'objet à envoyer
+     * @param urlString L'url du endpoint
+     * @param <T> le Type d'objet.
+     * @return le résultat de la requête
+     */
     private <T> Result<String> sendJsonObject(T toSend, String urlString) {
         try {
             // The fetched response
@@ -345,6 +395,13 @@ public class ApiCaller {
         return null;
     }
 
+    /**
+     * Login un user via l'api
+     * @param email le courriel de l'utilisateur.
+     * @param password le mot de passe de l'utilisateur.
+     * @param urlString le url de l'api pour login le user
+     * @return Le résultat de l'opération
+     */
     private Result<User> login(String email, String password, String urlString) {
         try {
             // The fetched response
@@ -428,6 +485,13 @@ public class ApiCaller {
         return null;
     }
 
+    /**
+     * Effectue un appel à l'api et retourne la réponse sous forme de JSON
+     * @param requestedObject le type d'objet voulu
+     * @param urlString le url à appeller
+     * @param <T> le type d'objet de retour
+     * @return l'objet recu en réponse lors de la requête
+     */
     private <T> JsonObject callApi(Class<T> requestedObject, String urlString) {
 
         try {
@@ -463,6 +527,13 @@ public class ApiCaller {
         return null;
     }
 
+    /**
+     * Prends une liste d'objet JSON et retourne cette liste sous forme d'objet Java de n'importe quel type
+     * @param requestedObject le type d'objet de retour
+     * @param urlString l'url à appeler
+     * @param <T> le type de retour
+     * @return une liste d'objet Java du type demandé
+     */
     private <T> Result<List<T>> parseJsonList(Class<T> requestedObject, String urlString) {
         // Getting our Json Object from the API
         JsonObject responseJsonObject = callApi(requestedObject, urlString);
@@ -477,6 +548,13 @@ public class ApiCaller {
         return new Result.Success<>(list);
     }
 
+    /**
+     * Prends un objet JSON et le retourne sous forme d'objet Java de n'importe quel type
+     * @param requestedObject le type d'objet de retour
+     * @param urlString l'url à appeler
+     * @param <T> le type de retour
+     * @return un objet Java du type demandé
+     */
     private <T> Result<T> parseJsonObject(Class<T> requestedObject, String urlString){
         // Getting our Json Object from the API
         JsonObject responseJsonObject = callApi(requestedObject, urlString);
@@ -493,6 +571,11 @@ public class ApiCaller {
         return gson.fromJson(json, new ListOfSomething<T>(klass));
     }
 
+    /**
+     * Lit une réponse du serveur à partir d'un BufferedInputStream
+     * @param stream le stream à partir duquel on lit
+     * @return la réponse du serveur sous forme de String
+     */
     private String readResponse(BufferedInputStream stream) {
         // Creating our ByteArrayOutputStream to contain the bytes we will read
         ByteArrayOutputStream result = new ByteArrayOutputStream();
@@ -515,6 +598,11 @@ public class ApiCaller {
         return result.toString();
     }
 
+    /**
+     * Envoie Une request à l'url demandé
+     * @param requestBody le body de la request à envoyé sous forme de String
+     * @param urlConnection l'url auquel envoyé la request
+     */
     private void sendRequestString(String requestBody, HttpURLConnection urlConnection){
         try(OutputStream os = urlConnection.getOutputStream()) {
             byte[] input = requestBody.getBytes("utf-8");

@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.pi_android_inventaire.PIAndroidInventaire;
 import com.example.pi_android_inventaire.interfaces.SyncableModel;
+import com.example.pi_android_inventaire.models.Categorie;
 import com.example.pi_android_inventaire.models.Product;
 import com.example.pi_android_inventaire.models.Rapport;
 import com.example.pi_android_inventaire.models.Reservation;
@@ -66,9 +67,10 @@ public class DbSyncService {
                                 PIAndroidInventaire.apiUrlDomain + "rapports?page=1");
                         synchronizeLocalDatabase(Rapport.class,remoteReports, tableName);
                         break;
-                    case "utilisateur":
-                        break;
                     case "categorie":
+                        ArrayList<Categorie> remoteCategories =  fetchFromRemoteDb(Categorie.class,
+                                PIAndroidInventaire.apiUrlDomain + "categories?page=1");
+                        synchronizeLocalDatabase(Categorie.class,remoteCategories, tableName);
                         break;
                     default:
                         break;
@@ -78,11 +80,25 @@ public class DbSyncService {
         });
     }
 
+
+    /**
+     * Vas chercher la liste d'objet dans la base de données distante
+     * @param requestedType le type d'objet voulue
+     * @param url l'url à appelé
+     * @param <T> le type de retour voulue
+     * @return Une liste d'objets présente dans la base de données distante
+     */
     private <T> ArrayList<T> fetchFromRemoteDb(Class<T> requestedType, String url)
     {
         return PIAndroidInventaire.apiCaller.getListSync(requestedType, url);
     }
 
+    /**
+     * Vas chercher la liste d'objet dans la base de données locale
+     * @param impl le type d'objet voulue
+     * @param <T> le type de retour voulue
+     * @return Une liste d'objets présente dans la base de données locale
+     */
     private <T extends SyncableModel> ArrayList<T> fetchFromLocalDb(Class <T> impl, String tableName)
     {
         SQLiteDatabase localDb = PIAndroidInventaire.getDatabaseInstance();
@@ -128,6 +144,13 @@ public class DbSyncService {
         return retreivedObjects;
     }
 
+    /**
+     * Syncronise de facon optimisé la base de données locale avec la base de données distante à partir de deux liste d'objet
+     * @param requestedType le type d'objet a synchronisé
+     * @param remoteList la liste d'objets distantes
+     * @param tableName la liste d'objets locale
+     * @param <T> le type d'objet synchronisé
+     */
     private <T extends SyncableModel> void synchronizeLocalDatabase(Class<T> requestedType,ArrayList<T> remoteList, String tableName)
     {
         if (remoteList != null) {
