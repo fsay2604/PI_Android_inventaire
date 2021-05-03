@@ -72,10 +72,7 @@ public class ModifierReservation extends AppCompatActivity implements View.OnCli
         r = (Reservation) getIntent().getSerializableExtra("Reservation");
 
         nomProduit = (TextView) findViewById(R.id.textView_modifierReservation_nomProduit);
-        /**
-         * TODO: Changer ce setText pour avoir le nom du produit a la place de son id -> nomProduit.setText(r.getProduit().getNom());
-         */
-        nomProduit.setText(Integer.toString(r.getProduit_id()));
+        nomProduit.setText(r.getProduit().getNom());
 
         date = (TextView) findViewById(R.id.textView_modifierReservation_selectDate);
         date.setText(r.getDate_retour_prevue());

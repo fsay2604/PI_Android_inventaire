@@ -132,7 +132,7 @@ public class Reservation implements Serializable, SyncableModel { // l<implement
          * TODO: Decommenter la fonction setProduit quand il y aura de l'info dans la BD.
          * Cette methode lance une requete pour aller chercher le produit correspondant a this.id_produit dans la table.
          */
-        //this.setProduit(); // Met a jour l'objet produit
+        this.setProduit(); // Met a jour l'objet produit
     }
 
     /**

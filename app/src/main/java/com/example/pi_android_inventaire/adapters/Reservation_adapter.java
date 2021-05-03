@@ -66,10 +66,7 @@ public class Reservation_adapter extends RecyclerView.Adapter<Reservation_adapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        /**
-         * TODO: Changer le param pour Integer.toString(mAll_reservations.get(position).getProduit().getName(); un fois la classe produit termine
-         */
-        holder.nomProduit.setText(Integer.toString(mAll_reservations.get(position).getProduit_id()));
+        holder.nomProduit.setText(mAll_reservations.get(position).getProduit().getNom());
 
         /**
          * TODO: Changer le param pour Integer.toString(mAll_reservations.get(position).getProduit().getCategorieName(); un fois la classe produit termine
