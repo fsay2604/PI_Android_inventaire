@@ -10,6 +10,8 @@
  Historique de modifications :
  Date                       Nom                 Description
  =========================================================
+ 2021-05-02         Philippe Boulanger              Oui
+ 2021-05-02         David Marcoux                   Oui
 
  ****************************************/
 package com.example.pi_android_inventaire.activities;
