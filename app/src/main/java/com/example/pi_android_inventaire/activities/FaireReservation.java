@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import com.example.pi_android_inventaire.R;
+import com.example.pi_android_inventaire.models.Product;
 import com.example.pi_android_inventaire.models.Reservation;
 
 public class FaireReservation extends AppCompatActivity implements View.OnClickListener {
@@ -67,19 +68,16 @@ public class FaireReservation extends AppCompatActivity implements View.OnClickL
         // Et assignation de cette id a la reservation.
         // La variable Product p de l'objet Reservation s'initialise automatiquement lors de l'appel de r.setProduit_id().
         r = new Reservation();
+        Product p = (Product) getIntent().getSerializableExtra("product");
+        //r.setProduit_id(p.getId());
 
-        r.setProduit_id(Integer.parseInt(getIntent().getExtras().getString("id")));
-
-        /**
-         * TODO: Decommenter 1 quand  on aura acces au nom du produit
-         */
-        //nom_produit = (TextView) findViewById(R.id.textView_faireReservation_nomProduit);
-        //nom_produit.setText(Produit.get_produit_by_id(getIntent().getExtras().getInt("id")).getNom());
-
+        nom_produit = (TextView) findViewById(R.id.textView_faireReservation_nomProduit);
+        nom_produit.setText(p.getNom());
 
         nom_etudiant = (TextView) findViewById(R.id.textView_faireReservation_NomClient);
         nom_etudiant.setText(MainActivity.currentUser.getFirstName() + " " + MainActivity.currentUser.getLastName());
 
+        qty = (EditText) findViewById(R.id.editTextNumber_faireReservation_quantite);
     }
 
     /**
