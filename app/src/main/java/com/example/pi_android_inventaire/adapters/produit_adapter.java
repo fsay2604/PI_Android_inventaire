@@ -61,7 +61,7 @@ public class produit_adapter extends RecyclerView.Adapter<produit_adapter.MyView
         holder.categorie.setText(all_products.get(position).getCategorieName(all_products.get(position).getCategorie()));
         holder.qte.setText(Integer.toString(all_products.get(position).getQteDisponible()));
         holder.id.setText(Integer.toString(all_products.get(position).getId()));
-        //holder.image.setImageResource(all_products.get(position).getImage());
+        //holder.image.setImageResource(position);
 
     }
 

@@ -53,13 +53,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/nameView"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:layout_weight="0"
                     android:text="@string/liste_Produits_nom"
                     android:textColor="#000000"
@@ -69,7 +69,7 @@
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="140dp"
-                    android:layout_height="57dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:text="LED RGB"
                     android:textColor="#000000"
