@@ -70,7 +70,7 @@ public class RegisterUser extends AppCompatActivity {
 
     private void postRequest(){
         RequestQueue queue = Volley.newRequestQueue(RegisterUser.this);
-        String url ="https://0d6ecac9266f.ngrok.io/api/users";
+        String url ="  https://d9f5e93b7d80.ngrok.io/api/users";
 
         JSONObject obj = new JSONObject();
         try {

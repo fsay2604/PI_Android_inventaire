@@ -17,7 +17,6 @@
  Date           Nom             Description
  =========================================================
  2021-04-29      Philippe Boulanger
- 2021-05-02     Marc Antoine Griffiths Lorange
  ****************************************/
 package com.example.pi_android_inventaire.activities;
 
@@ -102,6 +101,7 @@ public class Connexion extends AppCompatActivity {
         mMotDePasse = findViewById(R.id.passwordText);
         mConnexionBtn = findViewById(R.id.connexionBtn);
         forgotTextLink = findViewById(R.id.forgotPassword);
+        singUpBtn = findViewById(R.id.register_btn);
 
 
         // Checking if we have an user stored in shared pref for the autologin feature
@@ -115,7 +115,14 @@ public class Connexion extends AppCompatActivity {
             }
         }
 
-
+        singUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // redirection vers la page de connexion
+                Intent intentConnexion = new Intent(Connexion.this, RegisterUser.class);
+                startActivity(intentConnexion);
+            }
+        });
 
         mConnexionBtn.setOnClickListener(new View.OnClickListener() {
             /*
@@ -259,7 +266,7 @@ public class Connexion extends AppCompatActivity {
         User loggedUser = null;
         // Checking if we actually retreived values
         if (!(email.isEmpty() && password.isEmpty())) {
-             loggedUser = PIAndroidInventaire.apiCaller.loginUser(
+            loggedUser = PIAndroidInventaire.apiCaller.loginUser(
                     email,
                     password,
                     PIAndroidInventaire.apiUrlDomain + "login",
